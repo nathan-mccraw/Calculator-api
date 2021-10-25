@@ -1,0 +1,12 @@
+C:\Users\nateR\OneDrive\Documents\GitHub\calculator-api\InfrastructureLibrary\bin\Debug\net5.0\InfrastructureLibrary.deps.json
+C:\Users\nateR\OneDrive\Documents\GitHub\calculator-api\InfrastructureLibrary\bin\Debug\net5.0\InfrastructureLibrary.dll
+C:\Users\nateR\OneDrive\Documents\GitHub\calculator-api\InfrastructureLibrary\bin\Debug\net5.0\ref\InfrastructureLibrary.dll
+C:\Users\nateR\OneDrive\Documents\GitHub\calculator-api\InfrastructureLibrary\bin\Debug\net5.0\InfrastructureLibrary.pdb
+C:\Users\nateR\OneDrive\Documents\GitHub\calculator-api\InfrastructureLibrary\obj\Debug\net5.0\InfrastructureLibrary.csproj.AssemblyReference.cache
+C:\Users\nateR\OneDrive\Documents\GitHub\calculator-api\InfrastructureLibrary\obj\Debug\net5.0\InfrastructureLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\nateR\OneDrive\Documents\GitHub\calculator-api\InfrastructureLibrary\obj\Debug\net5.0\InfrastructureLibrary.AssemblyInfoInputs.cache
+C:\Users\nateR\OneDrive\Documents\GitHub\calculator-api\InfrastructureLibrary\obj\Debug\net5.0\InfrastructureLibrary.AssemblyInfo.cs
+C:\Users\nateR\OneDrive\Documents\GitHub\calculator-api\InfrastructureLibrary\obj\Debug\net5.0\InfrastructureLibrary.csproj.CoreCompileInputs.cache
+C:\Users\nateR\OneDrive\Documents\GitHub\calculator-api\InfrastructureLibrary\obj\Debug\net5.0\InfrastructureLibrary.dll
+C:\Users\nateR\OneDrive\Documents\GitHub\calculator-api\InfrastructureLibrary\obj\Debug\net5.0\ref\InfrastructureLibrary.dll
+C:\Users\nateR\OneDrive\Documents\GitHub\calculator-api\InfrastructureLibrary\obj\Debug\net5.0\InfrastructureLibrary.pdb
