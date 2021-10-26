@@ -1,0 +1,10 @@
+<div id="calculatorScreen" class="border border-1 border-dark pe-2 ps-2">
+  <div id="screenSuperScript">
+    <span *ngIf="firstOperand">{{ firstOperand }}</span
+    ><span *ngIf="storedOperator"> {{ storedOperator }}</span
+    ><span> {{ screenValue }}</span>
+  </div>
+  <div id="mainScreen" class="text-end h2">
+    {{ screenValue }}
+  </div>
+</div>

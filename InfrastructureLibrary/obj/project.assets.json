@@ -8,25 +8,25 @@
     "net5.0": []
   },
   "packageFolders": {
-    "C:\\Users\\nateR\\.nuget\\packages\\": {},
+    "C:\\Users\\Nate\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
     "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\nateR\\onedrive\\documents\\github\\calculator-api\\InfrastructureLibrary\\InfrastructureLibrary.csproj",
+      "projectUniqueName": "D:\\Github\\Calculator-api\\InfrastructureLibrary\\InfrastructureLibrary.csproj",
       "projectName": "InfrastructureLibrary",
-      "projectPath": "C:\\Users\\nateR\\onedrive\\documents\\github\\calculator-api\\InfrastructureLibrary\\InfrastructureLibrary.csproj",
-      "packagesPath": "C:\\Users\\nateR\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\nateR\\onedrive\\documents\\github\\calculator-api\\InfrastructureLibrary\\obj\\",
+      "projectPath": "D:\\Github\\Calculator-api\\InfrastructureLibrary\\InfrastructureLibrary.csproj",
+      "packagesPath": "C:\\Users\\Nate\\.nuget\\packages\\",
+      "outputPath": "D:\\Github\\Calculator-api\\InfrastructureLibrary\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
         "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
-        "C:\\Users\\nateR\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Nate\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"

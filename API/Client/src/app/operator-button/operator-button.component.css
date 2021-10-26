@@ -1,0 +1,14 @@
+.operator-button {
+  background-color: rgb(105, 151, 211);
+  border: 1px solid black;
+  color: whitesmoke;
+}
+
+.btn-circle {
+  width: 50px;
+  height: 50px;
+  padding: 7px 10px;
+  border-radius: 25px;
+  font-size: 20px;
+  text-align: center;
+}

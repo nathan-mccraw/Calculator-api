@@ -10,3 +10,15 @@ C:\Users\nateR\OneDrive\Documents\GitHub\calculator-api\InfrastructureLibrary\ob
 C:\Users\nateR\OneDrive\Documents\GitHub\calculator-api\InfrastructureLibrary\obj\Debug\net5.0\InfrastructureLibrary.dll
 C:\Users\nateR\OneDrive\Documents\GitHub\calculator-api\InfrastructureLibrary\obj\Debug\net5.0\ref\InfrastructureLibrary.dll
 C:\Users\nateR\OneDrive\Documents\GitHub\calculator-api\InfrastructureLibrary\obj\Debug\net5.0\InfrastructureLibrary.pdb
+D:\Github\Calculator-api\InfrastructureLibrary\bin\Debug\net5.0\InfrastructureLibrary.deps.json
+D:\Github\Calculator-api\InfrastructureLibrary\bin\Debug\net5.0\InfrastructureLibrary.dll
+D:\Github\Calculator-api\InfrastructureLibrary\bin\Debug\net5.0\ref\InfrastructureLibrary.dll
+D:\Github\Calculator-api\InfrastructureLibrary\bin\Debug\net5.0\InfrastructureLibrary.pdb
+D:\Github\Calculator-api\InfrastructureLibrary\obj\Debug\net5.0\InfrastructureLibrary.csproj.AssemblyReference.cache
+D:\Github\Calculator-api\InfrastructureLibrary\obj\Debug\net5.0\InfrastructureLibrary.GeneratedMSBuildEditorConfig.editorconfig
+D:\Github\Calculator-api\InfrastructureLibrary\obj\Debug\net5.0\InfrastructureLibrary.AssemblyInfoInputs.cache
+D:\Github\Calculator-api\InfrastructureLibrary\obj\Debug\net5.0\InfrastructureLibrary.AssemblyInfo.cs
+D:\Github\Calculator-api\InfrastructureLibrary\obj\Debug\net5.0\InfrastructureLibrary.csproj.CoreCompileInputs.cache
+D:\Github\Calculator-api\InfrastructureLibrary\obj\Debug\net5.0\InfrastructureLibrary.dll
+D:\Github\Calculator-api\InfrastructureLibrary\obj\Debug\net5.0\ref\InfrastructureLibrary.dll
+D:\Github\Calculator-api\InfrastructureLibrary\obj\Debug\net5.0\InfrastructureLibrary.pdb
