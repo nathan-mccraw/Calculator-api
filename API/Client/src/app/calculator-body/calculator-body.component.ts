@@ -37,18 +37,12 @@ export class CalculatorBodyComponent implements OnInit {
   }
 
   onClear() {
-    //this.currentOperand = '0';
     this.screenValue = '0';
   }
 
   onAppendOperand(num: string) {
     if (num === '.' && this.screenValue.includes('.')) return;
 
-    //if (this.currentOperand === '0') {
-    //  this.currentOperand = num;
-    //} else {
-    //  this.currentOperand += num;
-    //}
     if (this.screenValue === '0') {
       this.screenValue = num;
     } else {
