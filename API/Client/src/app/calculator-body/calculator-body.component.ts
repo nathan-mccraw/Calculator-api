@@ -124,7 +124,6 @@ export class CalculatorBodyComponent implements OnInit {
         this.currentOperand = '0';
       },
       (error) => {
-        console.log(error);
         this.currentOperand = '0';
         alert(
           `Invalid Expression: ${error.error}\n\nPlease retype the operator and the last operand to try again.\nOr to start over, clear all by clicking "AC" or pressing the 'a' key)`
