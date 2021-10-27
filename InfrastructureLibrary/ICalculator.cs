@@ -7,7 +7,5 @@ namespace InfrastructureLibrary
         IEnumerable<string> AvailableOperators();
 
         decimal Calculate(decimal firstOperand, decimal secondOperand, string operation);
-
-        decimal Calculate();
     }
 }

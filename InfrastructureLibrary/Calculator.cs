@@ -8,45 +8,22 @@ namespace InfrastructureLibrary
 {
     public class Calculator : ICalculator
     {
-        public decimal FirstOperand { get; set; }
-        public decimal SecondOperand { get; set; }
-        public string Operation { get; set; }
-
         public IEnumerable<string> AvailableOperators()
         {
-            return new string[] { "+", "/" };
+            return new string[] { "+", "/", "*" };
         }
 
         public decimal Calculate(decimal firstOperand, decimal secondOperand, string operation)
         {
-            decimal answer = 0;
-
-            if (operation == "+")
+            decimal answer = operation switch
             {
-                answer = firstOperand + secondOperand;
-            }
-            else if (operation == "/")
-            {
-                answer = (firstOperand / secondOperand);
-            }
+                "+" => firstOperand + secondOperand,
+                "/" => firstOperand / secondOperand,
+                "*" => firstOperand * secondOperand,
+                _ => throw new Exception("Operator does not exist"),
+            };
 
-            return answer;
-        }
-
-        public decimal Calculate()
-        {
-            decimal answer = 0;
-
-            if (Operation == "+")
-            {
-                answer = FirstOperand + SecondOperand;
-            }
-            else if (Operation == "/")
-            {
-                answer = (FirstOperand / SecondOperand);
-            }
-
-            return answer;
+            return Math.Round(answer, 6) / 1.0000000000m;
         }
     }
 }

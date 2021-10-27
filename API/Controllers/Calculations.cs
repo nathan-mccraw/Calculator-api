@@ -1,10 +1,7 @@
 ﻿using InfrastructureLibrary;
-using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,19 +11,28 @@ namespace API.Controllers
     [ApiController]
     public class Calculations : ControllerBase
     {
-        private ICalculator _calculator;
+        private readonly ICalculator _calculator;
 
         public Calculations(ICalculator calculator)
         {
             _calculator = calculator;
         }
 
-        // GET: api/<Calculations>
+        // Post: api/<Calculations>
         [HttpPost]
-        public decimal PostCalculation(Calculator input)
+        [ValidateModel]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult PostCalculation(CalculatorExpression input)
         {
-            _calculator = input;
-            return _calculator.Calculate();
+            try
+            {
+                return Ok(_calculator.Calculate(input.FirstOperand, input.SecondOperand, input.Operation));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

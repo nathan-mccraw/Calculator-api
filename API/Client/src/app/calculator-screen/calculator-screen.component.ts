@@ -7,8 +7,9 @@ import { Component, Input } from '@angular/core';
 })
 export class CalculatorScreenComponent {
   @Input() firstOperand = '';
-  @Input() screenValue = '';
+  @Input() currentOperand = '';
   @Input() storedOperator = '';
+  @Input() stickScreen = false;
 
   constructor() {}
 }

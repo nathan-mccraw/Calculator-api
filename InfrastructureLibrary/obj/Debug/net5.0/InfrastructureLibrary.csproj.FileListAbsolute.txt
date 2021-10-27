@@ -22,3 +22,15 @@ D:\Github\Calculator-api\InfrastructureLibrary\obj\Debug\net5.0\InfrastructureLi
 D:\Github\Calculator-api\InfrastructureLibrary\obj\Debug\net5.0\InfrastructureLibrary.dll
 D:\Github\Calculator-api\InfrastructureLibrary\obj\Debug\net5.0\ref\InfrastructureLibrary.dll
 D:\Github\Calculator-api\InfrastructureLibrary\obj\Debug\net5.0\InfrastructureLibrary.pdb
+C:\Offline Repo\Calculator-api\InfrastructureLibrary\bin\Debug\net5.0\InfrastructureLibrary.deps.json
+C:\Offline Repo\Calculator-api\InfrastructureLibrary\bin\Debug\net5.0\InfrastructureLibrary.dll
+C:\Offline Repo\Calculator-api\InfrastructureLibrary\bin\Debug\net5.0\ref\InfrastructureLibrary.dll
+C:\Offline Repo\Calculator-api\InfrastructureLibrary\bin\Debug\net5.0\InfrastructureLibrary.pdb
+C:\Offline Repo\Calculator-api\InfrastructureLibrary\obj\Debug\net5.0\InfrastructureLibrary.csproj.AssemblyReference.cache
+C:\Offline Repo\Calculator-api\InfrastructureLibrary\obj\Debug\net5.0\InfrastructureLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Offline Repo\Calculator-api\InfrastructureLibrary\obj\Debug\net5.0\InfrastructureLibrary.AssemblyInfoInputs.cache
+C:\Offline Repo\Calculator-api\InfrastructureLibrary\obj\Debug\net5.0\InfrastructureLibrary.AssemblyInfo.cs
+C:\Offline Repo\Calculator-api\InfrastructureLibrary\obj\Debug\net5.0\InfrastructureLibrary.csproj.CoreCompileInputs.cache
+C:\Offline Repo\Calculator-api\InfrastructureLibrary\obj\Debug\net5.0\InfrastructureLibrary.dll
+C:\Offline Repo\Calculator-api\InfrastructureLibrary\obj\Debug\net5.0\ref\InfrastructureLibrary.dll
+C:\Offline Repo\Calculator-api\InfrastructureLibrary\obj\Debug\net5.0\InfrastructureLibrary.pdb

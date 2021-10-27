@@ -2,9 +2,10 @@
   <div id="screenSuperScript">
     <span *ngIf="firstOperand">{{ firstOperand }}</span
     ><span *ngIf="storedOperator"> {{ storedOperator }}</span
-    ><span> {{ screenValue }}</span>
+    ><span *ngIf="storedOperator"> {{ currentOperand }}</span>
   </div>
   <div id="mainScreen" class="text-end h2">
-    {{ screenValue }}
+    <span *ngIf="!stickScreen">{{ currentOperand }}</span
+    ><span *ngIf="stickScreen">{{ firstOperand }}</span>
   </div>
 </div>
