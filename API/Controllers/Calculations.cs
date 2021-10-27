@@ -20,7 +20,6 @@ namespace API.Controllers
 
         // Post: api/<Calculations>
         [HttpPost]
-        [ValidateModel]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult PostCalculation(CalculatorExpression input)
