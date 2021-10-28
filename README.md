@@ -4,9 +4,16 @@ Completed by Nathan McCraw using Angular 12 and .Net Core 5
 
 ## Installation
 
+TLDR
+In CLI @ Calculator-api/API/Client
+npm install
+In CLI @ Calculator-api/API
+dotnet run
+- Navigate browser to localhost 5001
+
 Upon code clone/fork/download, you will need to install the npm depencies as specified by the package.json file. To do so, in the command line interface navigate to Calculator-api/API/Client and run: npm install
 
-To start the application, you will need to run the serve, which will build and serve the Angular single page application on port 5001. Navigate to Calculator-api/API and in the command line interface run: dotnet run
+To start the application, you will need to run the server, which will build and serve the Angular single page application on port 5001. Navigate to Calculator-api/API and in the command line interface run: dotnet run
 
 Launch browser and go to https://localhost:5001/
 
