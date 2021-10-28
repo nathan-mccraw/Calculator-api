@@ -49,6 +49,13 @@ namespace CalculatorLibrary.Tests
         }
 
         [Test]
+        [TestCase(1, 0, "/")]
+        public void Calculations_DivideByZero_ReturnsException(decimal firstOperand, decimal secondOperand, string operation)
+        {
+            Assert.That(() => _calculator.Calculate(firstOperand, secondOperand, operation), Throws.TypeOf<DivideByZeroException>());
+        }
+
+        [Test]
         [TestCase("+")]
         [TestCase("/")]
         public void AvailableOperators_Always_ReturnsExpected(string expected)
@@ -56,6 +63,14 @@ namespace CalculatorLibrary.Tests
             IEnumerable<string> actual;
             actual = _calculator.AvailableOperators();
             Assert.Contains(expected, (System.Collections.ICollection)actual);
+        }
+
+        [Test]
+        [TestCase("=")]
+        [TestCase("2")]
+        public void AvailableOperators_OperatorDoesNotExist_DoesNotContain(string notExpected)
+        {
+            CollectionAssert.DoesNotContain(_calculator.AvailableOperators(), notExpected);
         }
     }
 }

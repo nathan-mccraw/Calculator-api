@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { OperatorsService } from '../services/operators/operators.service';
-import { CalculateService } from '../services/calculate/calculate.service';
-import { Expression } from '../Model/expression.model';
+import { OperatorsService } from '../../services/operators/operators.service';
+import { CalculateService } from '../../services/calculate/calculate.service';
+import { Expression } from '../../Model/expression.model';
 
 @Component({
   selector: 'app-calculator-body',
@@ -59,6 +59,7 @@ export class CalculatorBodyComponent implements OnInit {
   }
 
   onClear() {
+    console.log('All Clear');
     this.currentOperand = '0';
   }
 
@@ -119,9 +120,13 @@ export class CalculatorBodyComponent implements OnInit {
   calculate(expression: Expression) {
     this.calculateService.postCalculation(expression).subscribe(
       (answer) => {
-        this.firstOperand = answer;
-        this.secondOperand = '';
-        this.currentOperand = '0';
+        if (answer === '0') {
+          this.onAllClear();
+        } else {
+          this.firstOperand = answer;
+          this.secondOperand = '';
+          this.currentOperand = '0';
+        }
       },
       (error) => {
         this.currentOperand = '0';

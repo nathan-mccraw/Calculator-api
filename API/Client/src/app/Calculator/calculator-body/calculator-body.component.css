@@ -1,0 +1,27 @@
+#calcBody {
+  background: repeating-linear-gradient(gray, rgb(75, 75, 75));
+  border-radius: 10px;
+}
+
+#calcTitle {
+  font-family: "Zen Antique", serif;
+}
+
+#operatorButtons {
+  height: 304px;
+}
+
+.num-button {
+  background-color: orange;
+  background-image: radial-gradient(rgb(175, 140, 95), rgb(182, 129, 30));
+  border: 1px solid black;
+}
+
+.btn-circle {
+  width: 50px;
+  height: 50px;
+  padding: 7px 10px;
+  border-radius: 25px;
+  font-size: 20px;
+  text-align: center;
+}

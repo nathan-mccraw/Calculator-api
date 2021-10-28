@@ -3,7 +3,7 @@
   class="border border-4 p-2 shadow"
   (window:keydown)="onKeyPress($event.key)"
 >
-  <div class="mb-1 text-center">Piedmont Plastics</div>
+  <div id="calcTitle" class="mb-1 text-center">Piedmont Plastics</div>
   <app-calculator-screen
     [firstOperand]="firstOperand"
     [storedOperator]="storedOperator"
@@ -123,7 +123,7 @@
         </button>
       </div>
     </div>
-    <div class="col-auto d-flex flex-column p-0">
+    <div id="operatorButtons" class="col-auto d-flex flex-column flex-wrap p-0">
       <app-operator-button
         *ngFor="let operator of operators"
         [operation]="operator"

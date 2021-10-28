@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InfrastructureLibrary
 {
@@ -10,7 +7,7 @@ namespace InfrastructureLibrary
     {
         public IEnumerable<string> AvailableOperators()
         {
-            return new string[] { "+", "/", };
+            return new string[] { "+", "/"};
         }
 
         public decimal Calculate(decimal firstOperand, decimal secondOperand, string operation)

@@ -1,17 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using InfrastructureLibrary;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
 namespace API
@@ -29,17 +22,17 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<ICalculator, Calculator>();
-            services.AddCors(options =>
-            {
-                options.AddDefaultPolicy(builder =>
-                {
-                    builder.AllowAnyOrigin();
-                    builder.AllowAnyMethod();
-                    builder.AllowAnyHeader();
-                });
-            });
-            //services.AddSpaStaticFiles(config => 
-            //    config.RootPath = "client/dist");
+            //services.AddCors(options =>
+            //{
+            //    options.AddDefaultPolicy(builder =>
+            //    {
+            //        builder.AllowAnyOrigin();
+            //        builder.AllowAnyMethod();
+            //        builder.AllowAnyHeader();
+            //    });
+            //});
+            services.AddSpaStaticFiles(config =>
+                config.RootPath = "client/dist");
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -61,25 +54,25 @@ namespace API
 
             app.UseRouting();
 
-            app.UseCors();
+            //app.UseCors();
 
             app.UseAuthorization();
 
-            //app.UseSpaStaticFiles();
+            app.UseSpaStaticFiles();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
 
-            //app.UseSpa(spa =>
-            //{
-            //    spa.Options.SourcePath = "client";
-            //    if (env.IsDevelopment())
-            //    {
-            //        spa.UseAngularCliServer("start");
-            //    }
-            //});
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "client";
+                if (env.IsDevelopment())
+                {
+                    spa.UseAngularCliServer("start");
+                }
+            });
         }
     }
 }
