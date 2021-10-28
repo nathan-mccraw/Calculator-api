@@ -1,7 +1,18 @@
 ## Installation
 
-By default, this application runs on port 5001. If you change the port the application deploys on, the application will still deploy and the Angular application will still be served but the API calls to retrieve the operators for the calculator and the API call to perform the application will not function.
+Upon code clone/fork/download, you will need to install the npm depencies as specified by the package.json file. To do so, in the command line interface navigate to Calculator-api/API/Client and run: npm install
 
-To medigate this, you will need to change the port
+To start the application, you will need to run the serve, which will build and serve the Angular single page application on port 5001. Navigate to Calculator-api/API and in the command line interface run: dotnet run
 
-Upon code clone/fork/download, you will need to install the npm depencies as specified by the package.json file. To do so, in the command line interface navigate to Calculator-api/API/Client and run: npm install.
+Launch browser and go to https://localhost:5001/
+
+## Design Documents
+
+[Piedmont Plastics Calculator Static Frontend.pdf](https://github.com/nathan-mccraw/Calculator-api/files/7435922/Piedmont.Plastics.Calculator.Static.Frontend.pdf)
+
+[Piedmont Plastics Calculator Overview.pdf](https://github.com/nathan-mccraw/Calculator-api/files/7435924/Piedmont.Plastics.Calculator.Overview.pdf)
+
+
+## Application
+
+![Calculator Screen Shot](https://user-images.githubusercontent.com/84479635/139299521-edc54368-4919-483e-97db-2855d63e2591.JPG)
