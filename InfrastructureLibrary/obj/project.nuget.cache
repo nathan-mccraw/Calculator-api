@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "hDp0vEeX7XOoAEOqpDt8rVQOGjXd4/wBRec1xlnqAB+TqymRY7mLVafedx4NlQXvu0UVSwHBt5GrFyq8YnvjAg==",
+  "dgSpecHash": "B691SqpxKwKomJoU1pSyiSJw/JhgK9RNUaIiBGcsYTPfqCu2X3QYiS5INtmARmia9aYsd3VKKDckAJXRapwNKg==",
   "success": true,
-  "projectFilePath": "C:\\Offline Repo\\Calculator-api\\InfrastructureLibrary\\InfrastructureLibrary.csproj",
+  "projectFilePath": "D:\\Github\\calculator-api\\InfrastructureLibrary\\InfrastructureLibrary.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
