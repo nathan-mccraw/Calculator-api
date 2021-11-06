@@ -1,7 +1,0 @@
-C:\Offline Repo\Calculator-api\CalculatorDB\bin\Debug\CalculatorDB.dacpac
-C:\Offline Repo\Calculator-api\CalculatorDB\bin\Debug\CalculatorDB.dll
-C:\Offline Repo\Calculator-api\CalculatorDB\bin\Debug\CalculatorDB.pdb
-C:\Offline Repo\Calculator-api\CalculatorDB\obj\Debug\CalculatorDB.dll
-C:\Offline Repo\Calculator-api\CalculatorDB\obj\Debug\CalculatorDB.pdb
-C:\Offline Repo\Calculator-api\CalculatorDB\bin\Debug\Scripts\Script.PostDeployment.sql
-C:\Offline Repo\Calculator-api\CalculatorDB\obj\Debug\CalculatorDB.sqlproj.AssemblyReference.cache

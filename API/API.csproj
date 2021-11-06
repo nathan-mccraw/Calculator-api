@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DataLibrary\DataLibrary.csproj" />
-    <ProjectReference Include="..\InfrastructureLibrary\InfrastructureLibrary.csproj" />
+    <ProjectReference Include="..\InfrastructureLibrary\Core.csproj" />
   </ItemGroup>
 
 </Project>

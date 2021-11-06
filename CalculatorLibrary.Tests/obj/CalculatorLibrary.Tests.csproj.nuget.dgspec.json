@@ -34,8 +34,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Offline Repo\\Calculator-api\\InfrastructureLibrary\\InfrastructureLibrary.csproj": {
-                "projectPath": "C:\\Offline Repo\\Calculator-api\\InfrastructureLibrary\\InfrastructureLibrary.csproj"
+              "C:\\Offline Repo\\Calculator-api\\InfrastructureLibrary\\Core.csproj": {
+                "projectPath": "C:\\Offline Repo\\Calculator-api\\InfrastructureLibrary\\Core.csproj"
               }
             }
           }
@@ -86,12 +86,12 @@
         }
       }
     },
-    "C:\\Offline Repo\\Calculator-api\\InfrastructureLibrary\\InfrastructureLibrary.csproj": {
+    "C:\\Offline Repo\\Calculator-api\\InfrastructureLibrary\\Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Offline Repo\\Calculator-api\\InfrastructureLibrary\\InfrastructureLibrary.csproj",
-        "projectName": "InfrastructureLibrary",
-        "projectPath": "C:\\Offline Repo\\Calculator-api\\InfrastructureLibrary\\InfrastructureLibrary.csproj",
+        "projectUniqueName": "C:\\Offline Repo\\Calculator-api\\InfrastructureLibrary\\Core.csproj",
+        "projectName": "Core",
+        "projectPath": "C:\\Offline Repo\\Calculator-api\\InfrastructureLibrary\\Core.csproj",
         "packagesPath": "C:\\Users\\nateR\\.nuget\\packages\\",
         "outputPath": "C:\\Offline Repo\\Calculator-api\\InfrastructureLibrary\\obj\\",
         "projectStyle": "PackageReference",

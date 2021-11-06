@@ -7,7 +7,7 @@ namespace InfrastructureLibrary
     {
         public IEnumerable<string> AvailableOperators()
         {
-            return new string[] { "+", "/", "-" };
+            return new string[] { "+", "/", "-", "*" };
         }
 
         public decimal Calculate(decimal firstOperand, decimal secondOperand, string operation)
@@ -17,6 +17,7 @@ namespace InfrastructureLibrary
                 "+" => firstOperand + secondOperand,
                 "/" => firstOperand / secondOperand,
                 "-" => firstOperand - secondOperand,
+                "*" => firstOperand * secondOperand,
                 _ => throw new Exception("Operator does not exist"),
             };
 
