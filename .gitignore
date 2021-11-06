@@ -1,6 +1,6 @@
-*.obj
-*.bin
-*.vs
-*.dist
+obj
+bin
+.vs*
+dist
 CalculatorDB.publish.xml
 node_modules
