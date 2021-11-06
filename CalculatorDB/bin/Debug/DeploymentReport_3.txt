@@ -1,0 +1,29 @@
+﻿** Highlights
+     Tables that will be rebuilt
+       [dbo].[Calculations]
+     Clustered indexes that will be dropped
+       None
+     Clustered indexes that will be created
+       None
+     Possible data issues
+       The column [dbo].[Calculations].[User_Id] is being dropped, data loss could occur.
+       The column [dbo].[Calculations].[UserId] on table [dbo].[Calculations] must be added, but the column has no default
+         value and does not allow NULL values. If the table contains data, the ALTER script will not work. To avoid this issue
+         you must either: add a default value to the column, mark it as allowing NULL values, or enable the generation of
+         smart-defaults as a deployment option.
+
+** User actions
+     Table rebuild
+       [dbo].[Calculations] (Table)
+     Alter
+       [dbo].[Calculations_Insert] (Procedure)
+       [dbo].[spCalculations_All] (Procedure)
+       [dbo].[spCalculations_ByUserId] (Procedure)
+
+** Supporting actions
+     Refresh
+       [dbo].[spCalculations_Delete] (Procedure)
+
+The column [dbo].[Calculations].[User_Id] is being dropped, data loss could occur.
+The column [dbo].[Calculations].[UserId] on table [dbo].[Calculations] must be added, but the column has no default value and does not allow NULL values. If the table contains data, the ALTER script will not work. To avoid this issue you must either: add a default value to the column, mark it as allowing NULL values, or enable the generation of smart-defaults as a deployment option.
+

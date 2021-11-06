@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
-
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace API.Controllers
@@ -20,9 +19,9 @@ namespace API.Controllers
 
         // GET: api/<Operations>
         [HttpGet]
-        public IEnumerable<string> GetAvailableOperations()
+        public ActionResult<IEnumerable<string>> GetAvailableOperations()
         {
-            return _calculator.AvailableOperators();
+            return Ok(_calculator.AvailableOperators());
         }
     }
 }

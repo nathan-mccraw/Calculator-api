@@ -1,0 +1,14 @@
+C:\Offline Repo\Calculator-api\DataLibrary\bin\Debug\net5.0\DataLibrary.deps.json
+C:\Offline Repo\Calculator-api\DataLibrary\bin\Debug\net5.0\DataLibrary.dll
+C:\Offline Repo\Calculator-api\DataLibrary\bin\Debug\net5.0\ref\DataLibrary.dll
+C:\Offline Repo\Calculator-api\DataLibrary\bin\Debug\net5.0\DataLibrary.pdb
+C:\Offline Repo\Calculator-api\DataLibrary\bin\Debug\net5.0\InfrastructureLibrary.dll
+C:\Offline Repo\Calculator-api\DataLibrary\bin\Debug\net5.0\InfrastructureLibrary.pdb
+C:\Offline Repo\Calculator-api\DataLibrary\obj\Debug\net5.0\DataLibrary.csproj.AssemblyReference.cache
+C:\Offline Repo\Calculator-api\DataLibrary\obj\Debug\net5.0\DataLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Offline Repo\Calculator-api\DataLibrary\obj\Debug\net5.0\DataLibrary.AssemblyInfoInputs.cache
+C:\Offline Repo\Calculator-api\DataLibrary\obj\Debug\net5.0\DataLibrary.AssemblyInfo.cs
+C:\Offline Repo\Calculator-api\DataLibrary\obj\Debug\net5.0\DataLibrary.csproj.CoreCompileInputs.cache
+C:\Offline Repo\Calculator-api\DataLibrary\obj\Debug\net5.0\DataLibrary.dll
+C:\Offline Repo\Calculator-api\DataLibrary\obj\Debug\net5.0\ref\DataLibrary.dll
+C:\Offline Repo\Calculator-api\DataLibrary\obj\Debug\net5.0\DataLibrary.pdb

@@ -1,0 +1,56 @@
+﻿** Highlights
+     Tables that will be rebuilt
+       [dbo].[Calculations]
+     Clustered indexes that will be dropped
+       None
+     Clustered indexes that will be created
+       None
+     Possible data issues
+       The column [dbo].[Calculations].[Operand1] is being dropped, data loss could occur.
+       The column [dbo].[Calculations].[Operand2] is being dropped, data loss could occur.
+       The column [dbo].[Calculations].[First_Operand] on table [dbo].[Calculations] must be added, but the column has no
+         default value and does not allow NULL values. If the table contains data, the ALTER script will not work. To avoid this
+         issue you must either: add a default value to the column, mark it as allowing NULL values, or enable the generation of
+         smart-defaults as a deployment option.
+       The column [dbo].[Calculations].[Second_Operand] on table [dbo].[Calculations] must be added, but the column has no
+         default value and does not allow NULL values. If the table contains data, the ALTER script will not work. To avoid this
+         issue you must either: add a default value to the column, mark it as allowing NULL values, or enable the generation of
+         smart-defaults as a deployment option.
+       The column [dbo].[Calculations].[User_Id] on table [dbo].[Calculations] must be added, but the column has no default
+         value and does not allow NULL values. If the table contains data, the ALTER script will not work. To avoid this issue
+         you must either: add a default value to the column, mark it as allowing NULL values, or enable the generation of
+         smart-defaults as a deployment option.
+       The column [dbo].[Users].[FirstName] is being dropped, data loss could occur.
+       The column [dbo].[Users].[LastName] is being dropped, data loss could occur.
+       The column [dbo].[Users].[First_Name] on table [dbo].[Users] must be added, but the column has no default value and does
+         not allow NULL values. If the table contains data, the ALTER script will not work. To avoid this issue you must either:
+         add a default value to the column, mark it as allowing NULL values, or enable the generation of smart-defaults as a
+         deployment option.
+       The column [dbo].[Users].[Last_Name] on table [dbo].[Users] must be added, but the column has no default value and does
+         not allow NULL values. If the table contains data, the ALTER script will not work. To avoid this issue you must either:
+         add a default value to the column, mark it as allowing NULL values, or enable the generation of smart-defaults as a
+         deployment option.
+
+** User actions
+     Table rebuild
+       [dbo].[Calculations] (Table)
+     Alter
+       [dbo].[Users] (Table)
+     Create
+       [dbo].[Calculations_Insert] (Procedure)
+       [dbo].[spCalculations_All] (Procedure)
+       [dbo].[spCalculations_ByUserId] (Procedure)
+       [dbo].[spCalculations_Delete] (Procedure)
+
+** Supporting actions
+
+The column [dbo].[Calculations].[Operand1] is being dropped, data loss could occur.
+The column [dbo].[Calculations].[Operand2] is being dropped, data loss could occur.
+The column [dbo].[Calculations].[First_Operand] on table [dbo].[Calculations] must be added, but the column has no default value and does not allow NULL values. If the table contains data, the ALTER script will not work. To avoid this issue you must either: add a default value to the column, mark it as allowing NULL values, or enable the generation of smart-defaults as a deployment option.
+The column [dbo].[Calculations].[Second_Operand] on table [dbo].[Calculations] must be added, but the column has no default value and does not allow NULL values. If the table contains data, the ALTER script will not work. To avoid this issue you must either: add a default value to the column, mark it as allowing NULL values, or enable the generation of smart-defaults as a deployment option.
+The column [dbo].[Calculations].[User_Id] on table [dbo].[Calculations] must be added, but the column has no default value and does not allow NULL values. If the table contains data, the ALTER script will not work. To avoid this issue you must either: add a default value to the column, mark it as allowing NULL values, or enable the generation of smart-defaults as a deployment option.
+The column [dbo].[Users].[FirstName] is being dropped, data loss could occur.
+The column [dbo].[Users].[LastName] is being dropped, data loss could occur.
+The column [dbo].[Users].[First_Name] on table [dbo].[Users] must be added, but the column has no default value and does not allow NULL values. If the table contains data, the ALTER script will not work. To avoid this issue you must either: add a default value to the column, mark it as allowing NULL values, or enable the generation of smart-defaults as a deployment option.
+The column [dbo].[Users].[Last_Name] on table [dbo].[Users] must be added, but the column has no default value and does not allow NULL values. If the table contains data, the ALTER script will not work. To avoid this issue you must either: add a default value to the column, mark it as allowing NULL values, or enable the generation of smart-defaults as a deployment option.
+
