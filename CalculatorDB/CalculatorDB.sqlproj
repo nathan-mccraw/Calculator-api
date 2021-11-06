@@ -68,6 +68,9 @@
     <Build Include="dbo\Stored Procedures\spCalculations_ByUserId.sql" />
     <Build Include="dbo\Stored Procedures\spCalculations_Insert.sql" />
     <Build Include="dbo\Stored Procedures\spCalculations_Delete.sql" />
+    <Build Include="dbo\Stored Procedures\spUsers_All.sql" />
+    <Build Include="dbo\Stored Procedures\spUsers_Insert.sql" />
+    <Build Include="dbo\Stored Procedures\spUsers_ByUserName.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql">

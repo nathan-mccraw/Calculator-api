@@ -1,10 +1,10 @@
 ﻿CREATE PROCEDURE [dbo].[spCalculations_Insert]
-	@UserId int,
-	@FirstOperand decimal(10,0),
-	@Operator nvarchar(5),
-	@SecondOperand decimal(10,0),
-	@Answer decimal(10,0),
-	@Id int output
+	@UserId INT,
+	@FirstOperand DECIMAL(10,0),
+	@Operator NVARCHAR(5),
+	@SecondOperand DECIMAL(10,0),
+	@Answer DECIMAL(10,0),
+	@Id INT OUTPUT
 AS
 BEGIN
 	SET NOCOUNT ON;

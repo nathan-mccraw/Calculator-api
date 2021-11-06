@@ -1,8 +1,8 @@
 ﻿CREATE PROCEDURE [dbo].[spCalculations_ByUserId]
-	@userId int
+	@userId INT
 AS
 BEGIN
-	set nocount on;
+	SET NOCOUNT ON;
 
 	SELECT [Id], [UserId], [FirstOperand], [Operator], [SecondOperand], [Answer]
 	FROM dbo.[Calculations]

@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[spCalculations_Delete]
-	@Id int
+	@Id INT
 AS
 BEGIN
 	SET NOCOUNT ON;

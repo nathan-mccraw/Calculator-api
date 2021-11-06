@@ -2,7 +2,7 @@
 AS
 BEGIN
 
-	set nocount on;
+	SET NOCOUNT ON;
 
 	SELECT [Id], [UserId], [FirstOperand], [Operator], [SecondOperand], [Answer]
 	FROM dbo.Calculations;

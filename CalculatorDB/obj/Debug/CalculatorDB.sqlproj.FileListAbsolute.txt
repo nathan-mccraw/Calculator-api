@@ -5,7 +5,3 @@ C:\Offline Repo\Calculator-api\CalculatorDB\obj\Debug\CalculatorDB.dll
 C:\Offline Repo\Calculator-api\CalculatorDB\obj\Debug\CalculatorDB.pdb
 C:\Offline Repo\Calculator-api\CalculatorDB\bin\Debug\Scripts\Script.PostDeployment.sql
 C:\Offline Repo\Calculator-api\CalculatorDB\obj\Debug\CalculatorDB.sqlproj.AssemblyReference.cache
-C:\Offline Repo\Calculator-api\CalculatorDB\obj\Debug\Model.xml
-C:\Offline Repo\Calculator-api\CalculatorDB\obj\Debug\refactor.xml
-C:\Offline Repo\Calculator-api\CalculatorDB\obj\Debug\postdeploy.sql
-C:\Offline Repo\Calculator-api\CalculatorDB\obj\Debug\predeploy.sql

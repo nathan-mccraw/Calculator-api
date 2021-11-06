@@ -24,13 +24,37 @@ namespace DataLibrary.Repository
         public async Task<int> CreateUser(UserModel user)
         {
             DynamicParameters p = new DynamicParameters();
-            p.Add("First_Name", user.FirstName);
-            p.Add("Last_Name", user.LastName);
+            p.Add("Username", user.Username);
+            p.Add("FirstName", user.FirstName);
+            p.Add("LastName", user.LastName);
             p.Add("Id", DbType.Int32, direction: ParameterDirection.Output);
 
-            await _dataAccess.SaveData("dbo.spaUsers_Insert", p, _connectionString.SqlConnectionName);
+            await _dataAccess.SaveData("dbo.spUsers_Insert", p, _connectionString.SqlConnectionName);
 
             return p.Get<int>("Id");
+        }
+
+        public async Task<bool> DoesUserNameExist(string username)
+        {
+            var existingUsers = await _dataAccess.LoadData<UserModel, dynamic>("dbo.spUsers_ByUserName",
+                                                            new { Username = username },
+                                                            _connectionString.SqlConnectionName);
+
+            if (existingUsers.Count == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public async Task<List<UserModel>> GetAllUsers()
+        {
+            return await _dataAccess.LoadData<UserModel, dynamic>("dbo.spUsers_All",
+                                                                  new { },
+                                                                  _connectionString.SqlConnectionName);
         }
     }
 }
