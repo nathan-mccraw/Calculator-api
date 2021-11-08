@@ -27,3 +27,14 @@ Launch browser and go to https://localhost:5001/
 ## Application
 
 ![Calculator Screen Shot](https://user-images.githubusercontent.com/84479635/139299521-edc54368-4919-483e-97db-2855d63e2591.JPG)
+
+## Update
+
+Added SQL Server and Dapper to display calculations history on a seperate page using Angular routing
+
+![CalculatorUI](https://user-images.githubusercontent.com/84479635/140686286-5db0a46e-399a-42b9-aaca-0b0079ac0083.JPG)
+
+![AddUser](https://user-images.githubusercontent.com/84479635/140686296-3ee5d75b-2df4-4621-8083-8099104101b6.JPG)
+
+![TableUI](https://user-images.githubusercontent.com/84479635/140686302-3b3b4c8c-bc46-4c68-9cdc-b05a024ac47f.JPG)
+
