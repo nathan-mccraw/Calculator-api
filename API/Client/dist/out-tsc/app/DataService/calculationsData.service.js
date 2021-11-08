@@ -10,33 +10,34 @@ let calculationsDataService = class calculationsDataService {
     }
     broadcastCalcsChange(calcs) {
         this.calculationsWithUserData.next(calcs);
-        console.log(this.calculationsWithUserData);
     }
     updateCalcData() {
         let newCalcs = [];
+        let calcsNoUsers = [];
         this.calcService
             .getCalculations()
-            .pipe(map((calcs) => {
-            calcs.forEach((calc) => {
-                let newCalc = {
-                    firstOperand: calc.firstOperand,
-                    operator: calc.operator,
-                    secondOperand: calc.secondOperand,
-                    answer: calc.answer,
-                };
+            .pipe(map((resp) => {
+            for (let calc of resp)
+                calcsNoUsers.push(calc);
+            calcsNoUsers.forEach((calc) => {
+                let calcUser;
                 this.userService
                     .getUserById(calc.userId)
-                    .pipe(map((userData) => {
-                    newCalc.user = userData;
+                    .pipe(map((resp) => {
+                    calcUser = resp;
+                    let newCalc = {
+                        user: calcUser,
+                        firstOperand: calc.firstOperand,
+                        operator: calc.operator,
+                        secondOperand: calc.secondOperand,
+                        answer: calc.answer,
+                    };
+                    return newCalc;
                 }))
-                    .subscribe(() => {
-                    newCalcs.push(newCalc);
-                });
+                    .subscribe((calc) => newCalcs.push(calc));
             });
-            return calcs;
         }))
             .subscribe();
-        console.log('updated calcs');
         this.broadcastCalcsChange(newCalcs);
     }
 };

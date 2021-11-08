@@ -22,15 +22,6 @@ namespace API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(options =>
-            {
-                options.AddDefaultPolicy(builder =>
-                {
-                    builder.AllowAnyOrigin();
-                    builder.AllowAnyMethod();
-                    builder.AllowAnyHeader();
-                });
-            });
             services.AddSingleton(new ConnectionStringData
             {
                 SqlConnectionName = "Default"
@@ -40,8 +31,8 @@ namespace API
             services.AddSingleton<ICalculationsRepo, CalculationsRepo>();
             services.AddScoped<ICalculator, Calculator>();
             services.AddControllers();
-            //services.AddSpaStaticFiles(config =>
-            //    config.RootPath = "client/dist");
+            services.AddSpaStaticFiles(config =>
+                config.RootPath = "client/dist");
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
@@ -61,25 +52,23 @@ namespace API
 
             app.UseRouting();
 
-            app.UseCors();
-
             app.UseAuthorization();
 
-            //app.UseSpaStaticFiles();
+            app.UseSpaStaticFiles();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
 
-            //app.UseSpa(spa =>
-            //{
-            //    spa.Options.SourcePath = "client";
-            //    if (env.IsDevelopment())
-            //    {
-            //        spa.UseAngularCliServer("start");
-            //    }
-            //});
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "client";
+                if (env.IsDevelopment())
+                {
+                    spa.UseAngularCliServer("start");
+                }
+            });
         }
     }
 }
