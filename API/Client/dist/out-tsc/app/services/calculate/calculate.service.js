@@ -5,13 +5,18 @@ let CalculateService = class CalculateService {
         this.http = http;
     }
     postCalculation(calculation) {
-        return this.http
-            .post('https://localhost:5001/api/calculations', calculation);
+        return this.http.post('https://localhost:5001/api/calculations', calculation);
+    }
+    getCalculations() {
+        return this.http.get('https://localhost:5001/api/calculations');
+    }
+    getCalculationsByUserId(userId) {
+        return this.http.get(`https://localhost:5001/api/calculations/${userId}`);
     }
 };
 CalculateService = __decorate([
     Injectable({
-        providedIn: 'root'
+        providedIn: 'root',
     })
 ], CalculateService);
 export { CalculateService };

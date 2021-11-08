@@ -1,134 +1,149 @@
-<div
-  id="calcBody"
-  class="border border-4 p-2 shadow"
-  (window:keydown)="onKeyPress($event.key)"
->
-  <div id="calcTitle" class="mb-1 text-center">Piedmont Plastics</div>
-  <app-calculator-screen
-    [firstOperand]="firstOperand"
-    [storedOperator]="storedOperator"
-    [currentOperand]="currentOperand"
-    [stickScreen]="stickScreen"
+<div class="position-absolute top-50 start-50 translate-middle">
+  <div
+    id="calcBody"
+    class="border border-4 p-2 shadow"
+    (window:keydown)="onKeyPress($event.key)"
   >
-  </app-calculator-screen>
-  <div class="row justify-content-between">
-    <div class="clearButtons col-auto">
-      <button
-        class="btn btn-secondary border border-1 border-dark m-2"
-        (click)="onAllClear()"
-      >
-        AC
-      </button>
-      <button
-        class="btn btn-secondary border border-1 border-dark m-2"
-        (click)="onClear()"
-      >
-        C
-      </button>
+    <div id="titleBar">
+      <div id="calcTitle" class="text-center companyName">
+        Piedmont Plastics
+      </div>
+      <div class="text-center h6">
+        <span>{{ currentUser.firstName }} </span>
+        <span *ngIf="currentUser.firstName != currentUser.lastName">{{
+          currentUser.lastName
+        }}</span>
+      </div>
     </div>
-    <div class="negativeButton col-auto">
-      <button
-        class="btn btn-secondary border border-1 border-dark m-2"
-        (click)="onNegativeClick()"
-      >
-        +/-
-      </button>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-auto p-0">
-      <div class="row m-2 me-0">
+    <app-calculator-screen
+      [firstOperand]="firstOperand"
+      [storedOperator]="storedOperator"
+      [currentOperand]="currentOperand"
+      [stickScreen]="stickScreen"
+    >
+    </app-calculator-screen>
+    <div class="row justify-content-between">
+      <div class="clearButtons col-auto">
         <button
-          class="col-auto btn btn-circle num-button m-2"
-          (click)="onAppendOperand('7')"
+          class="btn btn-secondary border border-1 border-dark m-2"
+          (click)="onAllClear()"
         >
-          7
+          AC
         </button>
         <button
-          class="col-auto btn btn-circle num-button m-2"
-          (click)="onAppendOperand('8')"
+          class="btn btn-secondary border border-1 border-dark m-2"
+          (click)="onClear()"
         >
-          8
-        </button>
-        <button
-          class="col-auto btn btn-circle num-button m-2"
-          (click)="onAppendOperand('9')"
-        >
-          9
+          C
         </button>
       </div>
-      <div class="row m-2 me-0">
+      <div class="negativeButton col-auto">
         <button
-          class="col-auto btn btn-circle num-button m-2"
-          (click)="onAppendOperand('4')"
+          class="btn btn-secondary border border-1 border-dark m-2"
+          (click)="onNegativeClick()"
         >
-          4
-        </button>
-        <button
-          class="col-auto btn btn-circle num-button m-2"
-          (click)="onAppendOperand('5')"
-        >
-          5
-        </button>
-        <button
-          class="col-auto btn btn-circle num-button m-2"
-          (click)="onAppendOperand('6')"
-        >
-          6
-        </button>
-      </div>
-      <div class="row m-2 me-0">
-        <button
-          class="col-auto btn btn-circle num-button m-2"
-          (click)="onAppendOperand('1')"
-        >
-          1
-        </button>
-        <button
-          class="col-auto btn btn-circle num-button m-2"
-          (click)="onAppendOperand('2')"
-        >
-          2
-        </button>
-        <button
-          class="col-auto btn btn-circle num-button m-2"
-          (click)="onAppendOperand('3')"
-        >
-          3
-        </button>
-      </div>
-      <div class="row m-2 me-0">
-        <button
-          class="col-auto btn btn-circle num-button m-2"
-          (click)="onAppendOperand('0')"
-        >
-          0
-        </button>
-        <button
-          class="col-auto btn btn-circle num-button m-2"
-          (click)="onAppendOperand('.')"
-        >
-          .
-        </button>
-        <button
-          class="
-            col-auto
-            btn btn-circle btn-success
-            border border-1 border-dark
-            m-2
-          "
-          (click)="onCalculate()"
-        >
-          =
+          +/-
         </button>
       </div>
     </div>
-    <div id="operatorButtons" class="col-auto d-flex flex-column flex-wrap p-0">
-      <app-operator-button
-        *ngFor="let operator of operators"
-        [operation]="operator"
-        (click)="onOperatorClick(operator)"
-      ></app-operator-button>
+    <div class="row">
+      <div class="col-auto p-0">
+        <div class="row m-2 me-0">
+          <button
+            class="col-auto btn btn-circle num-button m-2"
+            (click)="onAppendOperand('7')"
+          >
+            7
+          </button>
+          <button
+            class="col-auto btn btn-circle num-button m-2"
+            (click)="onAppendOperand('8')"
+          >
+            8
+          </button>
+          <button
+            class="col-auto btn btn-circle num-button m-2"
+            (click)="onAppendOperand('9')"
+          >
+            9
+          </button>
+        </div>
+        <div class="row m-2 me-0">
+          <button
+            class="col-auto btn btn-circle num-button m-2"
+            (click)="onAppendOperand('4')"
+          >
+            4
+          </button>
+          <button
+            class="col-auto btn btn-circle num-button m-2"
+            (click)="onAppendOperand('5')"
+          >
+            5
+          </button>
+          <button
+            class="col-auto btn btn-circle num-button m-2"
+            (click)="onAppendOperand('6')"
+          >
+            6
+          </button>
+        </div>
+        <div class="row m-2 me-0">
+          <button
+            class="col-auto btn btn-circle num-button m-2"
+            (click)="onAppendOperand('1')"
+          >
+            1
+          </button>
+          <button
+            class="col-auto btn btn-circle num-button m-2"
+            (click)="onAppendOperand('2')"
+          >
+            2
+          </button>
+          <button
+            class="col-auto btn btn-circle num-button m-2"
+            (click)="onAppendOperand('3')"
+          >
+            3
+          </button>
+        </div>
+        <div class="row m-2 me-0">
+          <button
+            class="col-auto btn btn-circle num-button m-2"
+            (click)="onAppendOperand('0')"
+          >
+            0
+          </button>
+          <button
+            class="col-auto btn btn-circle num-button m-2"
+            (click)="onAppendOperand('.')"
+          >
+            .
+          </button>
+          <button
+            class="
+              col-auto
+              btn btn-circle btn-success
+              border border-1 border-dark
+              m-2
+            "
+            (click)="onCalculate()"
+          >
+            =
+          </button>
+        </div>
+      </div>
+      <div
+        id="operatorButtons"
+        class="col-auto d-flex flex-column flex-wrap p-0"
+      >
+        <app-operator-button
+          *ngFor="let operator of operators"
+          [operation]="operator"
+          (click)="onOperatorClick(operator)"
+        ></app-operator-button>
+      </div>
     </div>
   </div>
 </div>

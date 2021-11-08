@@ -1,10 +1,10 @@
 ﻿using DataLibrary.Repository;
-using InfrastructureLibrary;
-using InfrastructureLibrary.Models;
+using Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using Core.Models;
 
 namespace API.Controllers
 {
@@ -45,21 +45,13 @@ namespace API.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> PostCalculation(CalculatorExpression input, int userId)
+        public async Task<IActionResult> PostCalculation(CalculationModel input)
         {
             try
             {
-                var answer = _calculator.Calculate(input.FirstOperand, input.SecondOperand, input.Operation);
-                CalculationModel calculation = new()
-                {
-                    UserId = userId,
-                    FirstOperand = input.FirstOperand,
-                    SecondOperand = input.SecondOperand,
-                    Operator = input.Operation,
-                    Answer = answer
-                };
-                await _calcRepo.CreateCalculation(calculation);
-                return Ok(answer);
+                input.Answer = _calculator.Calculate(input.FirstOperand, input.SecondOperand, input.Operator);
+                await _calcRepo.CreateCalculation(input);
+                return Ok(input.Answer);
             }
             catch (Exception ex)
             {

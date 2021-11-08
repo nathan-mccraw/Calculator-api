@@ -33,6 +33,20 @@ namespace DataLibrary.Db
             }
         }
 
+        public async Task<T> LoadSingleData<T, U>(string storedProcedure, U parameters, string connectionStringName)
+        {
+            string connectionString = _config.GetConnectionString(connectionStringName);
+
+            using (IDbConnection connection = new SqlConnection(connectionString))
+            {
+                var rows = await connection.QueryAsync<T>(storedProcedure,
+                                                          parameters,
+                                                          commandType: CommandType.StoredProcedure);
+                var data = rows.FirstOrDefault();
+                return data;
+            }
+        }
+
         public async Task<int> SaveData<T>(string storedProcedure, T parameters, string connectionStringName)
         {
             string connectionString = _config.GetConnectionString(connectionStringName);

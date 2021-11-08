@@ -2,9 +2,10 @@ import { __decorate } from "tslib";
 import { Component } from '@angular/core';
 import { Expression } from '../../Model/expression.model';
 let CalculatorBodyComponent = class CalculatorBodyComponent {
-    constructor(operatorsService, calculateService) {
+    constructor(operatorsService, calculateService, currentUserService) {
         this.operatorsService = operatorsService;
         this.calculateService = calculateService;
+        this.currentUserService = currentUserService;
         this.operators = [];
         this.storedOperator = '';
         this.firstOperand = '';
@@ -14,6 +15,10 @@ let CalculatorBodyComponent = class CalculatorBodyComponent {
     }
     ngOnInit() {
         this.getOperatorsArray();
+        this.subscription = this.currentUserService.currentUser.subscribe((_user) => (this.currentUser = _user));
+    }
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
     getOperatorsArray() {
         this.operatorsService.getOperators().subscribe((operations) => {
@@ -80,7 +85,7 @@ let CalculatorBodyComponent = class CalculatorBodyComponent {
     }
     onOperatorClick(operator) {
         if (this.storedOperator !== '' && this.currentOperand !== '0') {
-            let expression = new Expression(this.firstOperand, this.currentOperand, this.storedOperator);
+            let expression = new Expression(this.currentUser.id, this.firstOperand, this.currentOperand, this.storedOperator);
             this.calculate(expression);
         }
         else if (this.firstOperand !== '') {
@@ -96,7 +101,7 @@ let CalculatorBodyComponent = class CalculatorBodyComponent {
     onCalculate() {
         if (this.storedOperator === '')
             return;
-        let expression = new Expression(this.firstOperand, this.currentOperand, this.storedOperator);
+        let expression = new Expression(this.currentUser.id, this.firstOperand, this.currentOperand, this.storedOperator);
         this.storedOperator = '';
         this.calculate(expression);
     }

@@ -1,6 +1,6 @@
 ﻿using Dapper;
 using DataLibrary.Db;
-using InfrastructureLibrary.Models;
+using Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -54,6 +54,13 @@ namespace DataLibrary.Repository
         {
             return await _dataAccess.LoadData<UserModel, dynamic>("dbo.spUsers_All",
                                                                   new { },
+                                                                  _connectionString.SqlConnectionName);
+        }
+
+        public async Task<UserModel> GetUserById(int userId)
+        {
+            return await _dataAccess.LoadSingleData<UserModel, dynamic>("dbo.spUsers_ById",
+                                                                  new { UserId = userId },
                                                                   _connectionString.SqlConnectionName);
         }
     }

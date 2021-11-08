@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { OperatorsService } from '../../services/operators/operators.service';
 import { CalculateService } from '../../services/calculate/calculate.service';
 import { Expression } from '../../Model/expression.model';
+import { user } from 'src/app/Model/user.model';
+import { CurrentUserService } from './../../DataService/currentUser.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-calculator-body',
@@ -11,13 +14,23 @@ import { Expression } from '../../Model/expression.model';
 export class CalculatorBodyComponent implements OnInit {
   ngOnInit(): void {
     this.getOperatorsArray();
+    this.subscription = this.currentUserService.currentUser.subscribe(
+      (_user) => (this.currentUser = _user)
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   constructor(
     private operatorsService: OperatorsService,
-    private calculateService: CalculateService
+    private calculateService: CalculateService,
+    private currentUserService: CurrentUserService
   ) {}
 
+  subscription: Subscription;
+  currentUser: user;
   operators: string[] = [];
   storedOperator: string = '';
   firstOperand: string = '';
@@ -89,6 +102,7 @@ export class CalculatorBodyComponent implements OnInit {
   onOperatorClick(operator: string) {
     if (this.storedOperator !== '' && this.currentOperand !== '0') {
       let expression = new Expression(
+        this.currentUser.id,
         this.firstOperand,
         this.currentOperand,
         this.storedOperator
@@ -109,6 +123,7 @@ export class CalculatorBodyComponent implements OnInit {
     if (this.storedOperator === '') return;
 
     let expression = new Expression(
+      this.currentUser.id,
       this.firstOperand,
       this.currentOperand,
       this.storedOperator

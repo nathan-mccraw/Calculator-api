@@ -1,6 +1,8 @@
 import { __decorate } from "tslib";
 import { Component } from '@angular/core';
 let AppComponent = class AppComponent {
+    constructor() { }
+    ngOnInit() { }
 };
 AppComponent = __decorate([
     Component({

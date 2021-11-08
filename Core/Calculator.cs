@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace InfrastructureLibrary
+namespace Core
 {
     public class Calculator : ICalculator
     {

@@ -1,4 +1,4 @@
-using InfrastructureLibrary;
+using Core;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;

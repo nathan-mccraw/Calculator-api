@@ -1,0 +1,19 @@
+#logo-initials {
+  font-size: 2.5rem;
+}
+
+#logo-graphic {
+  font-size: 2rem;
+}
+
+#addUserIcon {
+  color: black;
+}
+
+#addUser:hover {
+  cursor: pointer;
+}
+
+#userSelect {
+  border-radius: 1rem;
+}

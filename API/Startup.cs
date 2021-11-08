@@ -1,6 +1,6 @@
 using DataLibrary.Db;
 using DataLibrary.Repository;
-using InfrastructureLibrary;
+using Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
@@ -20,18 +20,17 @@ namespace API
             _configuration = configuration;
         }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddCors(options =>
-            //{
-            //    options.AddDefaultPolicy(builder =>
-            //    {
-            //        builder.AllowAnyOrigin();
-            //        builder.AllowAnyMethod();
-            //        builder.AllowAnyHeader();
-            //    });
-            //});
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder =>
+                {
+                    builder.AllowAnyOrigin();
+                    builder.AllowAnyMethod();
+                    builder.AllowAnyHeader();
+                });
+            });
             services.AddSingleton(new ConnectionStringData
             {
                 SqlConnectionName = "Default"
@@ -41,15 +40,14 @@ namespace API
             services.AddSingleton<ICalculationsRepo, CalculationsRepo>();
             services.AddScoped<ICalculator, Calculator>();
             services.AddControllers();
-            services.AddSpaStaticFiles(config =>
-                config.RootPath = "client/dist");
+            //services.AddSpaStaticFiles(config =>
+            //    config.RootPath = "client/dist");
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -63,25 +61,25 @@ namespace API
 
             app.UseRouting();
 
-            //app.UseCors();
+            app.UseCors();
 
             app.UseAuthorization();
 
-            app.UseSpaStaticFiles();
+            //app.UseSpaStaticFiles();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
 
-            app.UseSpa(spa =>
-            {
-                spa.Options.SourcePath = "client";
-                if (env.IsDevelopment())
-                {
-                    spa.UseAngularCliServer("start");
-                }
-            });
+            //app.UseSpa(spa =>
+            //{
+            //    spa.Options.SourcePath = "client";
+            //    if (env.IsDevelopment())
+            //    {
+            //        spa.UseAngularCliServer("start");
+            //    }
+            //});
         }
     }
 }

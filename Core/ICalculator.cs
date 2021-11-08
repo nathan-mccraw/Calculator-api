@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace InfrastructureLibrary
+namespace Core
 {
     public interface ICalculator
     {

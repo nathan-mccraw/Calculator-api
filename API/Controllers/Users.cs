@@ -1,5 +1,5 @@
 ﻿using DataLibrary.Repository;
-using InfrastructureLibrary.Models;
+using Core.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -27,6 +27,15 @@ namespace API.Controllers
         public async Task<IActionResult> GetAllUsers()
         {
             return Ok(await _userRepo.GetAllUsers());
+        }
+
+        // GET: api/<Users>
+        [HttpGet("{userId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetUser(int userId)
+        {
+            return Ok(await _userRepo.GetUserById(userId));
         }
 
         [HttpPost]

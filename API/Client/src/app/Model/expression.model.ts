@@ -1,11 +1,18 @@
 export class Expression {
+  public userId: number;
   public firstOperand: number;
   public secondOperand: number;
-  public operation: string;
+  public operator: string;
 
-  constructor(firstOperand: string, secondOperand: string, operation: string) {
+  constructor(
+    userId: number,
+    firstOperand: string,
+    secondOperand: string,
+    operator: string
+  ) {
+    this.userId = userId;
     this.firstOperand = parseFloat(firstOperand);
     this.secondOperand = parseFloat(secondOperand);
-    this.operation = operation;
+    this.operator = operator;
   }
 }

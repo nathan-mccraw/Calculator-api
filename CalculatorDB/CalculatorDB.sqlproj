@@ -71,6 +71,7 @@
     <Build Include="dbo\Stored Procedures\spUsers_All.sql" />
     <Build Include="dbo\Stored Procedures\spUsers_Insert.sql" />
     <Build Include="dbo\Stored Procedures\spUsers_ByUserName.sql" />
+    <Build Include="dbo\Stored Procedures\spUsers_ById.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql">

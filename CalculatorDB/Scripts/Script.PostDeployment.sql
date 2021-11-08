@@ -19,3 +19,9 @@ begin
     (1, -273, '+', 513, 240),
     (3, 123, '+', 3, 41);
 end
+
+if not exists (SELECT * FROM dbo.Users)
+begin
+    INSERT INTO dbo.Users(Username, FirstName, LastName)
+    VALUES ('Guest', 'Guest', 'Guest'), ('Nate', 'Nathan', 'McCraw'), ('NickF', 'Nick', 'F'), ('NickS', 'Nick', 'S');
+end
