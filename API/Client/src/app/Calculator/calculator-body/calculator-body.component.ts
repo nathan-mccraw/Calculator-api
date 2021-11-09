@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { OperatorsService } from '../../services/operators/operators.service';
-import { CalculateService } from '../../services/calculate/calculate.service';
+import { OperatorsService } from '../../services/HttpServices/operators.service';
+import { CalculateService } from '../../services/HttpServices/calculate.service';
 import { Expression } from '../../Model/expression.model';
 import { user } from 'src/app/Model/user.model';
-import { CurrentUserService } from './../../DataService/currentUser.service';
+import { CurrentUserService } from '../../services/DataServices/currentUser.service';
 import { Subscription } from 'rxjs';
 
 @Component({

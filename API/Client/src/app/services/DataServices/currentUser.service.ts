@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { user } from '../Model/user.model';
+import { user } from '../../Model/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +13,7 @@ export class CurrentUserService {
     lastName: 'Guest',
   });
 
-  broadcastUserChange(newUser: user) {
+  updateCurrentUser(newUser: user) {
     this.currentUser.next(newUser);
   }
 }

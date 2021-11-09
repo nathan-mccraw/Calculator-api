@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { ReplaySubject, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { calculation } from './../Model/calculation.model';
-import { CalculateService } from './../services/calculate/calculate.service';
-import { UsersService } from './../services/users/users.service';
-import { user } from './../Model/user.model';
+import { calculation } from '../../Model/calculation.model';
+import { CalculateService } from '../HttpServices/calculate.service';
+import { UsersService } from '../HttpServices/users.service';
+import { user } from '../../Model/user.model';
 
 @Injectable({
   providedIn: 'root',

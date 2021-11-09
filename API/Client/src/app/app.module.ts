@@ -10,7 +10,7 @@ import { CalculatorBodyComponent } from './Calculator/calculator-body/calculator
 import { NavbarComponent } from './navbar/navbar.component';
 import { TableComponent } from './CalculationsHistory/table/table.component';
 
-import { ModalComponent } from './AddUser/modal/modal.component';
+import { ModalComponent } from './AddUser/modal.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 

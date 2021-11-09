@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { calculation } from './../../Model/calculation.model';
-import { Expression } from './../../Model/expression.model';
-import { calcNoUser } from './../../Model/calcNoUser.model';
+import { Expression } from '../../Model/expression.model';
+import { calcNoUser } from '../../Model/calcNoUser.model';
 
 @Injectable({
   providedIn: 'root',

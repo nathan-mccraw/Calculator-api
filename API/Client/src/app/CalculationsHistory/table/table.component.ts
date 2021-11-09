@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { calculation } from './../../Model/calculation.model';
-import { CalculateService } from './../../services/calculate/calculate.service';
-import { UsersService } from './../../services/users/users.service';
-import { calculationsDataService } from './../../DataService/calculationsData.service';
+import { calculationsDataService } from '../../services/DataServices/calculationsData.service';
 
 @Component({
   selector: 'app-table',

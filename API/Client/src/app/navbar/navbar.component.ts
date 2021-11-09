@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalComponent } from '../AddUser/modal/modal.component';
-import { UsersService } from './../services/users/users.service';
+import { ModalComponent } from '../AddUser/modal.component';
+import { UsersService } from '../services/HttpServices/users.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { CurrentUserService } from './../DataService/currentUser.service';
-import { calculationsDataService } from './../DataService/calculationsData.service';
+import { CurrentUserService } from '../services/DataServices/currentUser.service';
+import { calculationsDataService } from '../services/DataServices/calculationsData.service';
 
 @Component({
   selector: 'app-navbar',
@@ -35,7 +35,7 @@ export class NavbarComponent implements OnInit {
   getNewUser(userId: number) {
     this.usersService
       .getUserById(userId)
-      .subscribe((resp) => this.currentUserService.broadcastUserChange(resp));
+      .subscribe((resp) => this.currentUserService.updateCurrentUser(resp));
   }
 
   refreshTable() {

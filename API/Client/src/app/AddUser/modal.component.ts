@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { user } from './../../Model/user.model';
-import { UsersService } from './../../services/users/users.service';
-import { CurrentUserService } from './../../DataService/currentUser.service';
+import { user } from '../Model/user.model';
+import { UsersService } from '../services/HttpServices/users.service';
+import { CurrentUserService } from '../services/DataServices/currentUser.service';
 
 @Component({
   selector: 'app-modal',
@@ -22,7 +22,7 @@ export class ModalComponent {
     this.userService.createNewUser(this.newUser).subscribe(
       (userId) => {
         this.newUser.id = userId;
-        this.currentUserService.broadcastUserChange(this.newUser);
+        this.currentUserService.updateCurrentUser(this.newUser);
         this.activeModal.close();
       },
       (error) => {
