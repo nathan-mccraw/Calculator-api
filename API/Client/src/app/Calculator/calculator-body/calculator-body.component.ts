@@ -12,6 +12,21 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./calculator-body.component.css'],
 })
 export class CalculatorBodyComponent implements OnInit {
+  subscription: Subscription;
+  currentUser: user;
+  operators: string[] = [];
+  storedOperator: string = '';
+  firstOperand: string = '';
+  secondOperand: string = '';
+  currentOperand: string = '0';
+  stickScreen: boolean = false;
+
+  constructor(
+    private operatorsService: OperatorsService,
+    private calculateService: CalculateService,
+    private currentUserService: CurrentUserService
+  ) {}
+
   ngOnInit(): void {
     this.getOperatorsArray();
     this.subscription = this.currentUserService.currentUser.subscribe(
@@ -22,21 +37,6 @@ export class CalculatorBodyComponent implements OnInit {
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
-
-  constructor(
-    private operatorsService: OperatorsService,
-    private calculateService: CalculateService,
-    private currentUserService: CurrentUserService
-  ) {}
-
-  subscription: Subscription;
-  currentUser: user;
-  operators: string[] = [];
-  storedOperator: string = '';
-  firstOperand: string = '';
-  secondOperand: string = '';
-  currentOperand: string = '0';
-  stickScreen: boolean = false;
 
   getOperatorsArray() {
     this.operatorsService.getOperators().subscribe((operations: string[]) => {

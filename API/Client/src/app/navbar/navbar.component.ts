@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalComponent } from '../AddUser/modal.component';
-import { UsersService } from '../services/HttpServices/users.service';
+import { ModalComponent } from './../AddUser/modal.component';
+import { UsersService } from './../services/HttpServices/users.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CurrentUserService } from '../services/DataServices/currentUser.service';
-import { calculationsDataService } from '../services/DataServices/calculationsData.service';
+import { CalculateService } from './../services/HttpServices/calculate.service';
+import { CalculationsDataService } from './../services/DataServices/calculationsData.service';
 
 @Component({
   selector: 'app-navbar',
@@ -11,14 +12,15 @@ import { calculationsDataService } from '../services/DataServices/calculationsDa
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
+  users: object[];
+
   constructor(
     private usersService: UsersService,
     private modalService: NgbModal,
     private currentUserService: CurrentUserService,
-    private calcDataService: calculationsDataService
+    private calcService: CalculateService,
+    private calcDataService: CalculationsDataService
   ) {}
-
-  users: object[];
 
   ngOnInit(): void {
     this.getUsers();
@@ -39,6 +41,10 @@ export class NavbarComponent implements OnInit {
   }
 
   refreshTable() {
-    this.calcDataService.updateCalcData();
+    this.calcService
+      .getCalculationsWithUser()
+      .subscribe((newCalcs) =>
+        this.calcDataService.broadcastCalcsChange(newCalcs)
+      );
   }
 }

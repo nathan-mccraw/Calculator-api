@@ -9,7 +9,7 @@ import { CalculatorScreenComponent } from './Calculator/calculator-screen/calcul
 import { CalculatorBodyComponent } from './Calculator/calculator-body/calculator-body.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { TableComponent } from './CalculationsHistory/table/table.component';
-import { ModalComponent } from './AddUser/modal/modal.component';
+import { ModalComponent } from './AddUser/modal.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 const routes = [

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { calculation } from './../../Model/calculation.model';
-import { calculationsDataService } from '../../services/DataServices/calculationsData.service';
+import { CalculationsDataService } from '../../services/DataServices/calculationsData.service';
 
 @Component({
   selector: 'app-table',
@@ -9,22 +9,18 @@ import { calculationsDataService } from '../../services/DataServices/calculation
   styleUrls: ['./table.component.css'],
 })
 export class TableComponent implements OnInit {
-  constructor(private calcDataService: calculationsDataService) {}
-
   calculations: calculation[] = [];
   subscription: Subscription;
 
+  constructor(private calcDataService: CalculationsDataService) {}
+
   ngOnInit(): void {
     this.subscription = this.calcDataService.calculationsWithUserData.subscribe(
-      (_calcs) => (this.calculations = _calcs)
+      (calcs) => (this.calculations = calcs)
     );
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
-  }
-
-  getAllCalculations() {
-    this.calcDataService.updateCalcData();
   }
 }

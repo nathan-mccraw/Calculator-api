@@ -11,9 +11,6 @@ let TableComponent = class TableComponent {
     ngOnDestroy() {
         this.subscription.unsubscribe();
     }
-    getAllCalculations() {
-        this.calcDataService.updateCalcData();
-    }
 };
 TableComponent = __decorate([
     Component({

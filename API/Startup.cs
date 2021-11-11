@@ -31,8 +31,15 @@ namespace API
             services.AddSingleton<ICalculationsRepo, CalculationsRepo>();
             services.AddScoped<ICalculator, Calculator>();
             services.AddControllers();
-            services.AddSpaStaticFiles(config =>
-                config.RootPath = "client/dist");
+            services.AddCors(opt =>
+            {
+                opt.AddDefaultPolicy(policy =>
+                {
+                    policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+                });
+            });
+            //services.AddSpaStaticFiles(config =>
+            //    config.RootPath = "client/dist");
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
@@ -54,21 +61,22 @@ namespace API
 
             app.UseAuthorization();
 
-            app.UseSpaStaticFiles();
+            //app.UseSpaStaticFiles();
+            app.UseCors();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
 
-            app.UseSpa(spa =>
-            {
-                spa.Options.SourcePath = "client";
-                if (env.IsDevelopment())
-                {
-                    spa.UseAngularCliServer("start");
-                }
-            });
+            //app.UseSpa(spa =>
+            //{
+            //    spa.Options.SourcePath = "client";
+            //    if (env.IsDevelopment())
+            //    {
+            //        spa.UseAngularCliServer("start");
+            //    }
+            //});
         }
     }
 }

@@ -1,6 +1,6 @@
 import { __decorate } from "tslib";
 import { Component } from '@angular/core';
-import { ModalComponent } from '../AddUser/modal/modal.component';
+import { ModalComponent } from '../AddUser/modal.component';
 let NavbarComponent = class NavbarComponent {
     constructor(usersService, modalService, currentUserService, calcDataService) {
         this.usersService = usersService;
@@ -20,7 +20,7 @@ let NavbarComponent = class NavbarComponent {
     getNewUser(userId) {
         this.usersService
             .getUserById(userId)
-            .subscribe((resp) => this.currentUserService.broadcastUserChange(resp));
+            .subscribe((resp) => this.currentUserService.updateCurrentUser(resp));
     }
     refreshTable() {
         this.calcDataService.updateCalcData();
