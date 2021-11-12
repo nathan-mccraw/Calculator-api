@@ -35,8 +35,8 @@ export class CalculateService {
     return this.http
       .get<calcNoUser[]>('https://localhost:5001/api/calculations')
       .pipe(
-        switchMap((res) => {
-          const requests = res.map((calc) => {
+        switchMap((calcsNoUser) => {
+          const requests = calcsNoUser.map((calc) => {
             return this.userSerivce.getUserById(calc.userId).pipe(
               map((user) => {
                 return { ...calc, user };

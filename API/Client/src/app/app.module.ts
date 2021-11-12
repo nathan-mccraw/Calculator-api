@@ -13,11 +13,12 @@ import { TableComponent } from './CalculationsHistory/table/table.component';
 import { ModalComponent } from './AddUser/modal.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
+import { HistoryPageComponent } from './CalculationsHistory/history-page.component';
 
 const routes: Routes = [
   { path: 'calculator', component: CalculatorBodyComponent },
   { path: '', redirectTo: '/calculator', pathMatch: 'full' },
-  { path: 'CalculationsHistory', component: TableComponent },
+  { path: 'CalculationsHistory', component: HistoryPageComponent },
 ];
 
 @NgModule({
@@ -29,6 +30,7 @@ const routes: Routes = [
     NavbarComponent,
     TableComponent,
     ModalComponent,
+    HistoryPageComponent,
   ],
   imports: [
     BrowserModule,

@@ -23,21 +23,27 @@ namespace DataLibrary.Repository
 
         public Task<List<CalculationModel>> GetCalculations()
         {
-            return _dataAccess.LoadData<CalculationModel, dynamic>("dbo.spCalculations_All",
+            //"dbo.spCalculations_All"
+            string sql = "SELECT * FROM dbo.Calculations ORDER BY Id";
+            return _dataAccess.LoadData<CalculationModel, dynamic>(sql,
                                                                     new { },
                                                                     _connectionString.SqlConnectionName);
         }
 
         public Task<int> DeleteCalculation(int calculationId)
         {
-            return _dataAccess.SaveData("dbo.spCalculations_Delete",
+            //"dbo.spCalculations_Delete"
+            string sql = "DELETE FROM dbo.Calculations WHERE Id=@Id";
+            return _dataAccess.SaveData(sql,
                                         new { Id = calculationId },
                                         _connectionString.SqlConnectionName);
         }
 
         public async Task<List<CalculationModel>> GetCalculationsByUserId(int userId)
         {
-            var recs = await _dataAccess.LoadData<CalculationModel, dynamic>("dbo.spCalculations_ByUserId",
+            //"dbo.spCalculations_ByUserId"
+            string sql = "SELECT * FROM dbo.Calculations WHERE UserId=@userId ORDER BY Id";
+            var recs = await _dataAccess.LoadData<CalculationModel, dynamic>(sql,
                                                                              new { UserId = userId },
                                                                              _connectionString.SqlConnectionName);
             return recs.ToList();
@@ -54,7 +60,10 @@ namespace DataLibrary.Repository
             p.Add("Answer", calculation.Answer);
             p.Add("Id", DbType.Int32, direction: ParameterDirection.Output);
 
-            await _dataAccess.SaveData("dbo.spCalculations_Insert", p, _connectionString.SqlConnectionName);
+            //"dbo.spCalculations_Insert"
+            string sql = "INSERT INTO dbo.[Calculations](UserId, FirstOperand, Operator, SecondOperand, Answer) VALUES(@UserId, @FirstOperand, @Operator, @SecondOperand, @Answer);";
+
+            await _dataAccess.SaveData(sql, p, _connectionString.SqlConnectionName);
 
             return p.Get<int>("Id");
         }

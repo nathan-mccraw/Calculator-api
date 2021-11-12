@@ -1,9 +1,9 @@
 ﻿CREATE PROCEDURE [dbo].[spCalculations_Insert]
 	@UserId INT,
-	@FirstOperand DECIMAL(10,0),
+	@FirstOperand DECIMAL(10,5),
 	@Operator NVARCHAR(5),
-	@SecondOperand DECIMAL(10,0),
-	@Answer DECIMAL(10,0),
+	@SecondOperand DECIMAL(10,5),
+	@Answer DECIMAL(10,5),
 	@Id INT OUTPUT
 AS
 BEGIN
