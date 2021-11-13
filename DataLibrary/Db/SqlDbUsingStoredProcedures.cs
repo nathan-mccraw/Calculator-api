@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace DataLibrary.Db
 {
-    public class SqlDb : IDataAccess
+    public class SqlDbUsingStoredProcedures : IDataAccess
     {
         private readonly IConfiguration _config;
 
-        public SqlDb(IConfiguration config)
+        public SqlDbUsingStoredProcedures(IConfiguration config)
         {
             _config = config;
         }
@@ -25,9 +25,7 @@ namespace DataLibrary.Db
 
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
-                var rows = await connection.QueryAsync<T>(storedProcedure,
-                                                          parameters,
-                                                          commandType: CommandType.StoredProcedure);
+                var rows = await connection.QueryAsync<T>(storedProcedure, parameters, commandType: CommandType.StoredProcedure);
                 var data = rows.ToList();
                 return data;
             }

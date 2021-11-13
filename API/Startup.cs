@@ -26,9 +26,9 @@ namespace API
             {
                 SqlConnectionName = "Default"
             });
-            services.AddSingleton<IDataAccess, SqlDb>();
+            services.AddSingleton<IDataAccess, SqlDbUsingStoredProcedures>();
             services.AddSingleton<IUsersRepo, UsersRepo>();
-            services.AddSingleton<ICalculationsRepo, CalculationsRepo>();
+            services.AddSingleton<ICalculationsRepo, CalculationsRepoSP>();
             services.AddScoped<ICalculator, Calculator>();
             services.AddControllers();
             services.AddCors(opt =>

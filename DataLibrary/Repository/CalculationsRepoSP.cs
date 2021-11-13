@@ -11,12 +11,12 @@ using Core.Models;
 
 namespace DataLibrary.Repository
 {
-    public class CalculationsRepo : ICalculationsRepo
+    public class CalculationsRepoSP : ICalculationsRepo
     {
         private readonly IDataAccess _dataAccess;
         private readonly ConnectionStringData _connectionString;
 
-        public CalculationsRepo(IDataAccess dataAccess, ConnectionStringData connectionString)
+        public CalculationsRepoSP(IDataAccess dataAccess, ConnectionStringData connectionString)
         {
             _dataAccess = dataAccess;
             _connectionString = connectionString;
