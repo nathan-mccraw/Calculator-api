@@ -1,4 +1,4 @@
-﻿using Core.Models;
+﻿using Core.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -6,11 +6,11 @@ namespace DataLibrary.Repository
 {
     public interface IUsersRepo
     {
-        Task<int> CreateUser(UserModel user);
+        Task<int> CreateUser(UserEntity user);
 
-        Task<List<UserModel>> GetAllUsers();
+        Task<List<UserEntity>> GetAllUsers();
 
-        Task<UserModel> GetUserById(int userId);
+        Task<UserEntity> GetUserById(int userId);
 
         Task<bool> DoesUserNameExist(string username);
     }

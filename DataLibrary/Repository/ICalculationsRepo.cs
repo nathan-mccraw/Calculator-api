@@ -1,4 +1,5 @@
-﻿using Core.Models;
+﻿using Core.Entities;
+using Core.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -8,10 +9,11 @@ namespace DataLibrary.Repository
     {
         Task<int> DeleteCalculation(int calculationId);
 
-        Task<List<CalculationModel>> GetCalculations();
+        Task<List<CalculationEntity>> GetCalculations();
 
-        Task<List<CalculationModel>> GetCalculationsByUserId(int userId);
+        Task<List<CalculationEntity>> GetCalculationsByUserId(int userId);
 
-        Task<int> CreateCalculation(CalculationModel calculation);
+        Task<int> CreateAndAddCalculation(CalculationEntity calculation);
+        //Task<int> CountAsync(ClientParams clientParams);
     }
 }

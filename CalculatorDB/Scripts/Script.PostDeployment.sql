@@ -10,15 +10,15 @@ Post-Deployment Script Template
 --------------------------------------------------------------------------------------
 */
 
-if not exists (SELECT * FROM dbo.Calculations)
-begin
-    INSERT INTO dbo.Calculations(UserId, FirstOperand, Operator, SecondOperand, Answer)
-    VALUES (1, 2, '+', 3, 5),
-    (2, 9, '/', 3, 3),
-    (1, 122, '+', 15, 137),
-    (1, -273, '+', 513, 240),
-    (3, 123, '+', 3, 41);
-end
+--if not exists (SELECT * FROM dbo.Calculations)
+--begin
+--    INSERT INTO dbo.Calculations(UserId, FirstOperand, Operator, SecondOperand, Answer)
+--    VALUES (1, 2, '+', 3, 5, ),
+--    (2, 9, '/', 3, 3),
+--    (1, 122, '+', 15, 137),
+--    (1, -273, '+', 513, 240),
+--    (3, 123, '+', 3, 41);
+--end
 
 if not exists (SELECT * FROM dbo.Users)
 begin

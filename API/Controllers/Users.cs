@@ -1,5 +1,5 @@
 ﻿using DataLibrary.Repository;
-using Core.Models;
+using Core.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -41,7 +41,7 @@ namespace API.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CreateUser(UserModel user)
+        public async Task<IActionResult> CreateUser(UserEntity user)
         {
             if (await _userRepo.DoesUserNameExist(user.Username))
             {

@@ -1,6 +1,6 @@
 import { __decorate } from "tslib";
 import { Component } from '@angular/core';
-import { user } from '../Model/user.model';
+import { user } from './../Model/user.model';
 let ModalComponent = class ModalComponent {
     constructor(activeModal, userService, currentUserService) {
         this.activeModal = activeModal;

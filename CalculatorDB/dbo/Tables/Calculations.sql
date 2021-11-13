@@ -5,5 +5,6 @@
 	[FirstOperand] DECIMAL(10,5) NOT NULL,
 	[Operator] VARCHAR(5) NOT NULL,
 	[SecondOperand] DECIMAL(10,5) NOT NULL,
-	[Answer] DECIMAL(10,5) NOT NULL
+	[Answer] DECIMAL(10,5) NOT NULL,
+	[Date] DATE DEFAULT GETDATE()
 )

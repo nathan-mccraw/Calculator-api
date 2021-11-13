@@ -6,7 +6,7 @@ let TableComponent = class TableComponent {
         this.calculations = [];
     }
     ngOnInit() {
-        this.subscription = this.calcDataService.calculationsWithUserData.subscribe((_calcs) => (this.calculations = _calcs));
+        this.subscription = this.calcDataService.calculationsWithUserData.subscribe((calcs) => (this.calculations = calcs));
     }
     ngOnDestroy() {
         this.subscription.unsubscribe();

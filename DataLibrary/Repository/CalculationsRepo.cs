@@ -1,12 +1,13 @@
 ﻿using Dapper;
 using DataLibrary.Db;
-using Core.Models;
+using Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Models;
 
 namespace DataLibrary.Repository
 {
@@ -21,35 +22,29 @@ namespace DataLibrary.Repository
             _connectionString = connectionString;
         }
 
-        public Task<List<CalculationModel>> GetCalculations()
+        public Task<List<CalculationEntity>> GetCalculations()
         {
-            //"dbo.spCalculations_All"
-            string sql = "SELECT * FROM dbo.Calculations ORDER BY Id";
-            return _dataAccess.LoadData<CalculationModel, dynamic>(sql,
+            return _dataAccess.LoadData<CalculationEntity, dynamic>("dbo.spCalculations_All",
                                                                     new { },
                                                                     _connectionString.SqlConnectionName);
         }
 
         public Task<int> DeleteCalculation(int calculationId)
         {
-            //"dbo.spCalculations_Delete"
-            string sql = "DELETE FROM dbo.Calculations WHERE Id=@Id";
-            return _dataAccess.SaveData(sql,
+            return _dataAccess.SaveData("dbo.spCalculations_Delete",
                                         new { Id = calculationId },
                                         _connectionString.SqlConnectionName);
         }
 
-        public async Task<List<CalculationModel>> GetCalculationsByUserId(int userId)
+        public async Task<List<CalculationEntity>> GetCalculationsByUserId(int userId)
         {
-            //"dbo.spCalculations_ByUserId"
-            string sql = "SELECT * FROM dbo.Calculations WHERE UserId=@userId ORDER BY Id";
-            var recs = await _dataAccess.LoadData<CalculationModel, dynamic>(sql,
+            var recs = await _dataAccess.LoadData<CalculationEntity, dynamic>("dbo.spCalculations_ByUserId",
                                                                              new { UserId = userId },
                                                                              _connectionString.SqlConnectionName);
             return recs.ToList();
         }
 
-        public async Task<int> CreateCalculation(CalculationModel calculation)
+        public async Task<int> CreateAndAddCalculation(CalculationEntity calculation)
         {
             DynamicParameters p = new DynamicParameters();
 
@@ -58,14 +53,17 @@ namespace DataLibrary.Repository
             p.Add("Operator", calculation.Operator);
             p.Add("SecondOperand", calculation.SecondOperand);
             p.Add("Answer", calculation.Answer);
+            p.Add("Date", calculation.Date);
             p.Add("Id", DbType.Int32, direction: ParameterDirection.Output);
 
-            //"dbo.spCalculations_Insert"
-            string sql = "INSERT INTO dbo.[Calculations](UserId, FirstOperand, Operator, SecondOperand, Answer) VALUES(@UserId, @FirstOperand, @Operator, @SecondOperand, @Answer);";
-
-            await _dataAccess.SaveData(sql, p, _connectionString.SqlConnectionName);
+            await _dataAccess.SaveData("dbo.spCalculations_Insert", p, _connectionString.SqlConnectionName);
 
             return p.Get<int>("Id");
         }
+
+        //public async Task<int> CountAsync(ClientParams clientParams)
+        //{
+            
+        //}
     }
 }

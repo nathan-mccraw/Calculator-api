@@ -12,10 +12,11 @@ import { TableComponent } from './CalculationsHistory/table/table.component';
 import { ModalComponent } from './AddUser/modal.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
+import { HistoryPageComponent } from './CalculationsHistory/history-page.component';
 const routes = [
     { path: 'calculator', component: CalculatorBodyComponent },
     { path: '', redirectTo: '/calculator', pathMatch: 'full' },
-    { path: 'CalculationsHistory', component: TableComponent },
+    { path: 'CalculationsHistory', component: HistoryPageComponent },
 ];
 let AppModule = class AppModule {
 };
@@ -29,6 +30,7 @@ AppModule = __decorate([
             NavbarComponent,
             TableComponent,
             ModalComponent,
+            HistoryPageComponent,
         ],
         imports: [
             BrowserModule,

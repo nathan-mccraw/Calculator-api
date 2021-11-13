@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using Core.Entities;
+using API.Helpers;
 using Core.Models;
 
 namespace API.Controllers
@@ -29,6 +31,12 @@ namespace API.Controllers
         {
             return Ok(await _calcRepo.GetCalculations());
         }
+        //public async Task<ActionResult<Pagination<CalculationEntity>>> GetCalculations(ClientParams clientParams)
+        //{
+        //    var totalCalcs = await _calcRepo.CountAsync(clientParams);
+        //    var data = await _calcRepo.GetCalculations();
+        //    return Ok(new Pagination<CalculationEntity>(clientParams.PageIndex, clientParams.PageSize, totalCalcs, data));
+        //}
 
         // Get: api/Calculations/5
         [HttpGet("{userId}")]
@@ -45,13 +53,13 @@ namespace API.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> PostCalculation(CalculationModel input)
+        public async Task<IActionResult> PostCalculation(CalculationEntity calcInput)
         {
             try
             {
-                input.Answer = _calculator.Calculate(input.FirstOperand, input.SecondOperand, input.Operator);
-                await _calcRepo.CreateCalculation(input);
-                return Ok(input.Answer);
+                calcInput.Answer = _calculator.Calculate(calcInput.FirstOperand, calcInput.SecondOperand, calcInput.Operator);
+                await _calcRepo.CreateAndAddCalculation(calcInput);
+                return Ok(calcInput.Answer);
             }
             catch (Exception ex)
             {

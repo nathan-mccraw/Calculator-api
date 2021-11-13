@@ -53,9 +53,7 @@ namespace DataLibrary.Db
 
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
-                return await connection.ExecuteAsync(storedProcedure,
-                                                     parameters,
-                                                     commandType: CommandType.StoredProcedure);
+                return await connection.ExecuteAsync(storedProcedure, parameters, commandType: CommandType.StoredProcedure);
             }
         }
     }
