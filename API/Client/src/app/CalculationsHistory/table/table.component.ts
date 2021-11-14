@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { calculation } from './../../Model/calculation.model';
+import { calculationDTO } from '../../Model/calculationDTO.model';
 import { CalculationsDataService } from '../../services/DataServices/calculationsData.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { CalculationsDataService } from '../../services/DataServices/calculation
   styleUrls: ['./table.component.css'],
 })
 export class TableComponent implements OnInit {
-  calculations: calculation[] = [];
+  calculations: calculationDTO[] = [];
   subscription: Subscription;
 
   constructor(private calcDataService: CalculationsDataService) {}
@@ -22,5 +22,15 @@ export class TableComponent implements OnInit {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  formatDate(date) {
+    const formattedDate = new Date(date).toLocaleDateString();
+    return formattedDate;
+  }
+
+  formatTime(date) {
+    const time = new Date(date).toLocaleTimeString();
+    return time;
   }
 }

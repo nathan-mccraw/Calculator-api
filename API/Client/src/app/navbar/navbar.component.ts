@@ -42,9 +42,9 @@ export class NavbarComponent implements OnInit {
 
   refreshTable() {
     this.calcService
-      .getCalculationsWithUser()
-      .subscribe((newCalcs) =>
-        this.calcDataService.broadcastCalcsChange(newCalcs)
+      .getCalculations(10, 0)
+      .subscribe((response) =>
+        this.calcDataService.broadcastCalcsChange(response.data)
       );
   }
 }

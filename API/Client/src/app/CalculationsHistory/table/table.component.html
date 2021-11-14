@@ -1,21 +1,25 @@
-<div class="table-responsive h-75 overflow-auto">
-  <table class="table table-secondary table-striped text-center">
+<div class="table-responsive mh-75 overflow-auto">
+  <table class="table table-secondary table-striped text-center mb-1">
     <thead>
       <tr>
         <th scope="col" class="ps-3 pe-3">Username</th>
-        <th scope="col" class="ps-3 pe-3">First-Operand</th>
-        <th scope="col" class="ps-3 pe-3">Operator</th>
-        <th scope="col" class="ps-3 pe-3">Second-Operand</th>
+        <th scope="col" class="ps-3 pe-3">Operation</th>
         <th scope="col" class="ps-3 pe-3">Answer</th>
+        <th scope="col" class="ps-3 pe=3">Date</th>
+        <th scope="col" class="ps-3 pe=3">Time</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let calc of calculations">
         <td>{{ calc.user.username }}</td>
-        <td>{{ calc.firstOperand }}</td>
-        <td>{{ calc.operator }}</td>
-        <td>{{ calc.secondOperand }}</td>
+        <td>
+          {{ calc.firstOperand }} {{ calc.operator }} {{ calc.secondOperand }}
+        </td>
         <td>{{ calc.answer }}</td>
+        <td>
+          {{ formatDate(calc.date) }}
+        </td>
+        <td>{{ formatTime(calc.date) }}</td>
       </tr>
     </tbody>
   </table>

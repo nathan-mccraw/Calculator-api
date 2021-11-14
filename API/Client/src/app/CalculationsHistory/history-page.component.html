@@ -1,8 +1,33 @@
 <div class="position-absolute top-50 start-50 translate-middle h-75">
   <app-table></app-table>
-  <div class="tableFooter d-flex justify-content-between mt-2">
-    <button class="btn btn-secondary pageBtn">Prev</button>
-    <button (click)="refreshTable()" class="btn btn-success">Refresh</button>
-    <button class="btn btn-secondary pageBtn">Next</button>
+  <div class="tableFooter">
+    <div *ngIf="totalResults > 0" class="d-flex justify-content-between">
+      <span>Page: {{ pageNumber }}</span>
+      <span>Total Results: {{ totalResults }}</span>
+      <span
+        >Showing: {{ pageSize * (pageNumber - 1) }}-{{
+          pageSize * pageNumber
+        }}</span
+      >
+    </div>
+    <div class="tableNav d-flex justify-content-center mt-4">
+      <button
+        *ngIf="totalResults > 0"
+        (click)="prevPage()"
+        [disabled]="isPrevDisabled"
+        class="btn btn-secondary pageBtn me-auto"
+      >
+        Prev
+      </button>
+      <button (click)="refreshTable()" class="btn btn-success">Refresh</button>
+      <button
+        *ngIf="totalResults > 0"
+        (click)="nextPage()"
+        [disabled]="isNextDisabled"
+        class="btn btn-secondary pageBtn ms-auto"
+      >
+        Next
+      </button>
+    </div>
   </div>
 </div>

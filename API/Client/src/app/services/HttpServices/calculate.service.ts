@@ -1,16 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, switchMap } from 'rxjs/operators';
-import { forkJoin } from 'rxjs';
-import { UsersService } from './users.service';
 import { Expression } from './../../Model/expression.model';
 import { calcNoUser } from './../../Model/calcNoUser.model';
+import { apiResponseDTO } from './../../Model/apiResponse.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CalculateService {
-  constructor(private http: HttpClient, private userSerivce: UsersService) {}
+  constructor(private http: HttpClient) {}
 
   postCalculation(calculation: Expression) {
     return this.http.post<string>(
@@ -19,9 +17,9 @@ export class CalculateService {
     );
   }
 
-  getCalculationsNoUser() {
-    return this.http.get<calcNoUser[]>(
-      'https://localhost:5001/api/calculations'
+  getCalculations(pageSize: number, pageIndex: number) {
+    return this.http.get<apiResponseDTO>(
+      `https://localhost:5001/api/Calculations?PageSize=${pageSize}&PageIndex=${pageIndex}`
     );
   }
 
@@ -29,22 +27,5 @@ export class CalculateService {
     return this.http.get<calcNoUser[]>(
       `https://localhost:5001/api/calculations/${userId}`
     );
-  }
-
-  getCalculationsWithUser() {
-    return this.http
-      .get<calcNoUser[]>('https://localhost:5001/api/calculations')
-      .pipe(
-        switchMap((calcsNoUser) => {
-          const requests = calcsNoUser.map((calc) => {
-            return this.userSerivce.getUserById(calc.userId).pipe(
-              map((user) => {
-                return { ...calc, user };
-              })
-            );
-          });
-          return forkJoin(requests);
-        })
-      );
   }
 }

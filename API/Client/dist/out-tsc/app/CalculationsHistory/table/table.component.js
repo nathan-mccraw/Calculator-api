@@ -11,6 +11,14 @@ let TableComponent = class TableComponent {
     ngOnDestroy() {
         this.subscription.unsubscribe();
     }
+    formatDate(date) {
+        const formattedDate = new Date(date).toLocaleDateString();
+        return formattedDate;
+    }
+    formatTime(date) {
+        const time = new Date(date).toLocaleTimeString();
+        return time;
+    }
 };
 TableComponent = __decorate([
     Component({

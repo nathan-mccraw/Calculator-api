@@ -8,6 +8,12 @@ import { CalculationsDataService } from './../services/DataServices/calculations
   styleUrls: ['./history-page.component.css'],
 })
 export class HistoryPageComponent implements OnInit {
+  pageNumber: number = 1;
+  pageSize: number = 10;
+  totalResults: number = 0;
+  isPrevDisabled = true;
+  isNextDisabled = true;
+
   constructor(
     private calcService: CalculateService,
     private calcDataService: CalculationsDataService
@@ -17,9 +23,35 @@ export class HistoryPageComponent implements OnInit {
 
   refreshTable() {
     this.calcService
-      .getCalculationsWithUser()
-      .subscribe((newCalcs) =>
-        this.calcDataService.broadcastCalcsChange(newCalcs)
-      );
+      .getCalculations(this.pageSize, this.pageNumber - 1)
+      .subscribe((response) => {
+        this.pageNumber = response.pageIndex + 1;
+        this.pageSize = response.pageSize;
+        this.totalResults = response.count;
+
+        if (this.pageSize * this.pageNumber < this.totalResults) {
+          this.isNextDisabled = false;
+        } else {
+          this.isNextDisabled = true;
+        }
+
+        if (this.pageNumber > 1) {
+          this.isPrevDisabled = false;
+        } else {
+          this.isPrevDisabled = true;
+        }
+
+        this.calcDataService.broadcastCalcsChange(response.data);
+      });
+  }
+
+  nextPage() {
+    this.pageNumber += 1;
+    this.refreshTable();
+  }
+
+  prevPage() {
+    this.pageNumber -= 1;
+    this.refreshTable();
   }
 }
