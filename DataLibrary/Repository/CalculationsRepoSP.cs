@@ -22,7 +22,7 @@ namespace DataLibrary.Repository
             _connectionString = connectionString;
         }
 
-        public Task<List<CalculationEntity>> GetCalculations()
+        public Task<List<CalculationEntity>> GetCalculations(ClientParams clientParams)
         {
             return _dataAccess.LoadData<CalculationEntity, dynamic>("dbo.spCalculations_All",
                                                                     new { },
@@ -61,9 +61,9 @@ namespace DataLibrary.Repository
             return p.Get<int>("Id");
         }
 
-        //public async Task<int> CountAsync(ClientParams clientParams)
-        //{
-            
-        //}
+        public Task<int> CountAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

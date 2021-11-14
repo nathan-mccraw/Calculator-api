@@ -27,16 +27,12 @@ namespace API.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetAllCalculations()
+        public async Task<ActionResult<Pagination<CalculationEntity>>> GetCalculations([FromQuery] ClientParams clientParams)
         {
-            return Ok(await _calcRepo.GetCalculations());
+            var totalCalcs = await _calcRepo.CountAsync();
+            var data = await _calcRepo.GetCalculations(clientParams);
+            return Ok(new Pagination<CalculationEntity>(clientParams.PageIndex, clientParams.PageSize, totalCalcs, data));
         }
-        //public async Task<ActionResult<Pagination<CalculationEntity>>> GetCalculations(ClientParams clientParams)
-        //{
-        //    var totalCalcs = await _calcRepo.CountAsync(clientParams);
-        //    var data = await _calcRepo.GetCalculations();
-        //    return Ok(new Pagination<CalculationEntity>(clientParams.PageIndex, clientParams.PageSize, totalCalcs, data));
-        //}
 
         // Get: api/Calculations/5
         [HttpGet("{userId}")]
@@ -66,5 +62,10 @@ namespace API.Controllers
                 return BadRequest($"{ex.Message} | {ex.StackTrace}");
             }
         }
+
+        //public async Task<IActionResult> GetAllCalculations()
+        //{
+        //    return Ok(await _calcRepo.GetCalculations());
+        //}
     }
 }

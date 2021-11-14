@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataLibrary.Db
 {
-    internal class SqlDbUsingQuery : IDataAccess
+    public class SqlDbUsingQuery : IDataAccess
     {
         private readonly IConfiguration _config;
 

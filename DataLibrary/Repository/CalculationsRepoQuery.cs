@@ -2,16 +2,13 @@
 using Core.Models;
 using Dapper;
 using DataLibrary.Db;
-using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DataLibrary.Repository
 {
-    internal class CalculationsRepoQuery : ICalculationsRepo
+    public class CalculationsRepoQuery : ICalculationsRepo
     {
         private readonly IDataAccess _dataAccess;
         private readonly ConnectionStringData _connectionString;
@@ -20,6 +17,12 @@ namespace DataLibrary.Repository
         {
             _dataAccess = dataAccess;
             _connectionString = connectionString;
+        }
+
+        public Task<int> CountAsync()
+        {
+            string sql = @"SELECT COUNT(Id) FROM dbo.Calculations";
+            return _dataAccess.LoadSingleData<int, dynamic>(sql, new { }, _connectionString.SqlConnectionName);
         }
 
         public async Task<int> CreateAndAddCalculation(CalculationEntity calculation)
@@ -52,13 +55,13 @@ namespace DataLibrary.Repository
 
         public async Task<List<CalculationEntity>> GetCalculations(ClientParams clientParams)
         {
-            string sql = @"SELET Id, UserId, FirstOperand, Operator, SecondOperand, Answer, Date
+            string sql = @"SELECT Id, UserId, FirstOperand, Operator, SecondOperand, Answer, Date
                            FROM dbo.Calculations
-                           ORDER BY Date
-                           OFFSET @skip
-                           FETCH NEXT @take ROWS ONLY";
+                           ORDER BY Id
+                           OFFSET @skip ROWS
+                           FETCH NEXT @take ROWS ONLY;";
 
-            return await _dataAccess.LoadData<CalculationEntity, dynamic>(sql, new { skip = clientParams.PageIndex, take = clientParams.PageSize }, _connectionString.SqlConnectionName);
+            return await _dataAccess.LoadData<CalculationEntity, dynamic>(sql, new { skip = clientParams.PageIndex * clientParams.PageSize, take = clientParams.PageSize }, _connectionString.SqlConnectionName);
         }
 
         public Task<List<CalculationEntity>> GetCalculationsByUserId(int userId)

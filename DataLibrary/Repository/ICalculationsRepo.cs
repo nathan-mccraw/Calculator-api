@@ -9,11 +9,12 @@ namespace DataLibrary.Repository
     {
         Task<int> DeleteCalculation(int calculationId);
 
-        Task<List<CalculationEntity>> GetCalculations();
+        Task<List<CalculationEntity>> GetCalculations(ClientParams clientParams);
 
         Task<List<CalculationEntity>> GetCalculationsByUserId(int userId);
 
         Task<int> CreateAndAddCalculation(CalculationEntity calculation);
-        //Task<int> CountAsync(ClientParams clientParams);
+
+        Task<int> CountAsync();
     }
 }
