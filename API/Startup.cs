@@ -27,7 +27,7 @@ namespace API
                 SqlConnectionName = "Default"
             });
             services.AddSingleton<IDataAccess, SqlDbUsingQuery>();
-            services.AddSingleton<IUsersRepo, UsersRepo>();
+            services.AddSingleton<IUsersRepo, UsersRepoQuery>();
             services.AddSingleton<ICalculationsRepo, CalculationsRepoQuery>();
             services.AddScoped<ICalculator, Calculator>();
             services.AddControllers();

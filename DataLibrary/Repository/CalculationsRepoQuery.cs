@@ -2,6 +2,8 @@
 using Core.Models;
 using Dapper;
 using DataLibrary.Db;
+using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
@@ -12,11 +14,13 @@ namespace DataLibrary.Repository
     {
         private readonly IDataAccess _dataAccess;
         private readonly ConnectionStringData _connectionString;
+        private readonly IConfiguration _config;
 
-        public CalculationsRepoQuery(IDataAccess dataAccess, ConnectionStringData connectionString)
+        public CalculationsRepoQuery(IDataAccess dataAccess, ConnectionStringData connectionString, IConfiguration config)
         {
             _dataAccess = dataAccess;
             _connectionString = connectionString;
+            _config = config;
         }
 
         public Task<int> CountAsync()
@@ -28,6 +32,7 @@ namespace DataLibrary.Repository
         public async Task<int> CreateAndAddCalculation(CalculationEntity calculation)
         {
             string sql = @"INSERT INTO dbo.[Calculations](UserId, FirstOperand, Operator, SecondOperand, Answer, Date)
+                           OUTPUT INSERTED.Id
 	                       VALUES(@UserId, @FirstOperand, @Operator, @SecondOperand, @Answer, @Date);";
 
             DynamicParameters p = new DynamicParameters();
@@ -38,11 +43,13 @@ namespace DataLibrary.Repository
             p.Add("SecondOperand", calculation.SecondOperand);
             p.Add("Answer", calculation.Answer);
             p.Add("Date", calculation.Date);
-            p.Add("Id", DbType.Int32, direction: ParameterDirection.Output);
+            //p.Add("Id", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
-            await _dataAccess.SaveData(sql, p, _connectionString.SqlConnectionName);
+            int id = await _dataAccess.SaveData(sql, p, _connectionString.SqlConnectionName);
 
-            return p.Get<int>("Id");
+            //int id = p.Get<int>("Id");
+
+            return id;
         }
 
         public Task<int> DeleteCalculation(int calculationId)
@@ -55,13 +62,15 @@ namespace DataLibrary.Repository
 
         public async Task<List<CalculationEntity>> GetCalculations(ClientParams clientParams)
         {
-            string sql = @"SELECT Id, UserId, FirstOperand, Operator, SecondOperand, Answer, Date
+            string calcSql = @"SELECT Id, UserId, FirstOperand, Operator, SecondOperand, Answer, Date
                            FROM dbo.Calculations
                            ORDER BY Id
                            OFFSET @skip ROWS
                            FETCH NEXT @take ROWS ONLY;";
 
-            return await _dataAccess.LoadData<CalculationEntity, dynamic>(sql, new { skip = clientParams.PageIndex * clientParams.PageSize, take = clientParams.PageSize }, _connectionString.SqlConnectionName);
+            return await _dataAccess.LoadData<CalculationEntity, dynamic>(calcSql,
+                                                                          new { skip = clientParams.PageIndex * clientParams.PageSize, take = clientParams.PageSize },
+                                                                          _connectionString.SqlConnectionName);
         }
 
         public Task<List<CalculationEntity>> GetCalculationsByUserId(int userId)

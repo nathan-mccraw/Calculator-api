@@ -5,8 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using Core.Entities;
-using API.Helpers;
+using API.DTOs;
 using Core.Models;
+using System.Collections.Generic;
 
 namespace API.Controllers
 {
@@ -16,22 +17,32 @@ namespace API.Controllers
     {
         private readonly ICalculator _calculator;
         private readonly ICalculationsRepo _calcRepo;
+        private readonly IUsersRepo _usersRepo;
 
-        public Calculations(ICalculator calculator, ICalculationsRepo calcRepo)
+        public Calculations(ICalculator calculator, ICalculationsRepo calcRepo, IUsersRepo usersRepo)
         {
             _calculator = calculator;
             _calcRepo = calcRepo;
+            _usersRepo = usersRepo;
         }
 
         // Get: api/Calculations
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Pagination<CalculationEntity>>> GetCalculations([FromQuery] ClientParams clientParams)
+        public async Task<ActionResult<Pagination<CalculationDTO>>> GetCalculations([FromQuery] ClientParams clientParams)
         {
+            var calcsWithNoUsers = await _calcRepo.GetCalculations(clientParams);
+            var calcData = new List<CalculationDTO>();
+            foreach (CalculationEntity calc in calcsWithNoUsers)
+            {
+                var calcDTO = new CalculationDTO(calc);
+                calcDTO.User = await _usersRepo.GetUserById(calc.UserId);
+                calcData.Add(calcDTO);
+            }
+
             var totalCalcs = await _calcRepo.CountAsync();
-            var data = await _calcRepo.GetCalculations(clientParams);
-            return Ok(new Pagination<CalculationEntity>(clientParams.PageIndex, clientParams.PageSize, totalCalcs, data));
+            return Ok(new Pagination<CalculationDTO>(clientParams.PageIndex, clientParams.PageSize, totalCalcs, calcData));
         }
 
         // Get: api/Calculations/5
@@ -62,10 +73,5 @@ namespace API.Controllers
                 return BadRequest($"{ex.Message} | {ex.StackTrace}");
             }
         }
-
-        //public async Task<IActionResult> GetAllCalculations()
-        //{
-        //    return Ok(await _calcRepo.GetCalculations());
-        //}
     }
 }
