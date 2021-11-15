@@ -1,0 +1,86 @@
+<form class="mb-2">
+    <div id="searchGroup">
+        <div class="input-group">
+            <span class="input-group-text input-group-sm"><i class="fa fa-search"></i></span>
+            <div class="form-floating flex-grow-1">
+                <input [(ngModel)]="formData.search" #search="ngModel" name="search" type="text" class="form-control"
+                    id="search" placeholder="Search" />
+                <label for="floatingInput">Enter Numbers to Search</label>
+            </div>
+            <button type="submit" class="btn btn-secondary">SEARCH</button>
+        </div>
+        <div class="d-flex justify-content-between align-items-center ps-2 pe-2 mb-2">
+            <div>
+                <input type="checkbox" name="All" id="All" class="me-1">
+                <label for="All">All</label>
+            </div>
+            <div>
+                <input type="checkbox" name="firstOperand" id="firstOperand" class="me-1">
+                <label for="All">1st Operand</label>
+            </div>
+            <div>
+                <input type="checkbox" name="secondOperand" id="secondOperand" class="me-1">
+                <label for="secondOperand">2nd Operand</label>
+            </div>
+            <div>
+                <input type="checkbox" name="Answer" id="Answer" class="me-1">
+                <label for="Answer">Answer</label>
+            </div>
+        </div>
+    </div>
+    <div id="sortGroup">
+        <span class="h5 ps-2 me-2">Sort:</span>
+        <div class="btn-group btn-group-sm" role="group" aria-label="Sort by ascending or descending">
+            <input type="radio" class="btn-check" name="SortOrder" id="sortAscending" autocomplete="off" checked>
+            <label class="btn btn-outline-secondary" for="sortAscending">Ascending</label>
+
+            <input type="radio" class="btn-check" name="SortOrder" id="sortDescending" autocomplete="off">
+            <label class="btn btn-outline-secondary" for="sortDescending">Descending</label>
+        </div>
+    </div>
+    <div id="filterGroup" class="d-flex mt-2">
+        <span class="h5 ps-2 me-2">Filter:</span>
+        <div>
+            <div class="btn-group btn-group-sm" role="group" aria-label="Filter by user, operator type, or date">
+                <input type="checkbox" id="filterUser" class="btn-check" name="filterUser" autocomplete="off">
+                <label class="btn btn-outline-secondary" for="filterUser">User</label>
+
+                <input type="checkbox" id="filterOperation" class="btn-check" name="filterOperation" autocomplete="off">
+                <label class="btn btn-outline-secondary" for="filterOperation">Operation</label>
+
+                <input type="checkbox" id="filterDate" class="btn-check" name="filterDate" autocomplete="off">
+                <label class="btn btn-outline-secondary" for="filterDate">Date</label>
+            </div>
+        </div>
+    </div>
+    <div id="sortByUsers" class="ms-4">
+        <span class="h5">Sort By User:</span>
+    </div>
+    <div id="sortByUsers" class="ms-4">
+        <span class="h5">Sort By Operation:</span>
+    </div>
+    <div id="sortByUsers" class="ms-4">
+        <span class="h5">Sort By Date:</span>
+    </div>
+    <div id="resetButtons" class="mt-4">
+        <div class="btn-group" role="group" aria-label="reset buttons">
+            <button type="button" class="btn btn-danger me-4" (click)="resetTable()">Reset Table</button>
+            <button type="button" class="btn btn-warning" (click)="resetSortForm()">Reset Filters</button>
+        </div>
+    </div>
+
+    <!-- <div class="form-floating mb-3">
+        <input [(ngModel)]="newUser.firstName" #firstName="ngModel" name="firstName" type="text" class="form-control"
+            id="firstName" placeholder="First Name" required />
+        <label for="floatingInput">First Name</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input [(ngModel)]="newUser.lastName" #lastName="ngModel" name="lastName" type="text" class="form-control"
+            id="lastName" placeholder="Last Name" required />
+        <label for="floatingInput">Last Name</label>
+    </div>
+    <button [disabled]="username.invalid || firstName.invalid || lastName.invalid" class="btn btn-lg btn-secondary"
+        type="submit">
+        Add User
+    </button> -->
+</form>

@@ -10,10 +10,11 @@ import { CalculatorBodyComponent } from './Calculator/calculator-body/calculator
 import { NavbarComponent } from './navbar/navbar.component';
 import { TableComponent } from './CalculationsHistory/table/table.component';
 
-import { ModalComponent } from './AddUser/modal.component';
+import { AddUserModalComponent } from './AddUser/addUserModal.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { HistoryPageComponent } from './CalculationsHistory/history-page.component';
+import { SortFormComponent } from './CalculationsHistory/sortForm/sortForm.component';
 
 const routes: Routes = [
   { path: 'calculator', component: CalculatorBodyComponent },
@@ -29,8 +30,9 @@ const routes: Routes = [
     CalculatorBodyComponent,
     NavbarComponent,
     TableComponent,
-    ModalComponent,
+    AddUserModalComponent,
     HistoryPageComponent,
+    SortFormComponent
   ],
   imports: [
     BrowserModule,

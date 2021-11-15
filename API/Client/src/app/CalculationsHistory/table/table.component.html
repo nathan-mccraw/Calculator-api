@@ -9,7 +9,7 @@
         <th scope="col" class="ps-3 pe=3">Time</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody *ngIf="calculations.length > 0; else noDataTable">
       <tr *ngFor="let calc of calculations">
         <td>{{ calc.user.username }}</td>
         <td>
@@ -22,5 +22,12 @@
         <td>{{ formatTime(calc.date) }}</td>
       </tr>
     </tbody>
+    <ng-template #noDataTable>
+      <tbody>
+        <tr>
+          <td colspan="5" class="h2 mt-2 text-center">No Data to Display</td>
+        </tr>
+      </tbody>
+    </ng-template>
   </table>
 </div>

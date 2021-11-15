@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CalculateService } from './../services/HttpServices/calculate.service';
 import { CalculationsDataService } from './../services/DataServices/calculationsData.service';
+import { ClientParamsService } from '../services/DataServices/clientParams.service';
+import { ClientParams } from '../Model/clientParams.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-history-page',
@@ -8,50 +11,43 @@ import { CalculationsDataService } from './../services/DataServices/calculations
   styleUrls: ['./history-page.component.css'],
 })
 export class HistoryPageComponent implements OnInit {
-  pageNumber: number = 1;
-  pageSize: number = 10;
-  totalResults: number = 0;
-  isPrevDisabled = true;
-  isNextDisabled = true;
+  clientParams: ClientParams;
+  subscriptions : Subscription;
 
   constructor(
     private calcService: CalculateService,
-    private calcDataService: CalculationsDataService
-  ) {}
+    private calcDataService: CalculationsDataService,
+    private clientParamsService: ClientParamsService
+  ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.subscriptions = this.clientParamsService.clientParams.subscribe((params) => this.clientParams = params);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
 
   refreshTable() {
     this.calcService
-      .getCalculations(this.pageSize, this.pageNumber - 1)
-      .subscribe((response) => {
-        this.pageNumber = response.pageIndex + 1;
-        this.pageSize = response.pageSize;
-        this.totalResults = response.count;
-
-        if (this.pageSize * this.pageNumber < this.totalResults) {
-          this.isNextDisabled = false;
-        } else {
-          this.isNextDisabled = true;
-        }
-
-        if (this.pageNumber > 1) {
-          this.isPrevDisabled = false;
-        } else {
-          this.isPrevDisabled = true;
-        }
-
-        this.calcDataService.broadcastCalcsChange(response.data);
+      .getCalculations(this.clientParams)
+      .subscribe(data => {
+        this.calcDataService.broadcastCalcsChange(data);
       });
   }
 
   nextPage() {
-    this.pageNumber += 1;
+    this.clientParams.pageIndex += 1;
     this.refreshTable();
   }
 
   prevPage() {
-    this.pageNumber -= 1;
+    this.clientParams.pageIndex -= 1;
+    this.refreshTable();
+  }
+
+  onPageClick(pageNumber){
+    this.clientParams.pageIndex = pageNumber - 1;
     this.refreshTable();
   }
 }

@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalComponent } from './../AddUser/modal.component';
+import { AddUserModalComponent } from '../AddUser/addUserModal.component';
 import { UsersService } from './../services/HttpServices/users.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CurrentUserService } from '../services/DataServices/currentUser.service';
-import { CalculateService } from './../services/HttpServices/calculate.service';
-import { CalculationsDataService } from './../services/DataServices/calculationsData.service';
 
 @Component({
   selector: 'app-navbar',
@@ -18,8 +16,6 @@ export class NavbarComponent implements OnInit {
     private usersService: UsersService,
     private modalService: NgbModal,
     private currentUserService: CurrentUserService,
-    private calcService: CalculateService,
-    private calcDataService: CalculationsDataService
   ) {}
 
   ngOnInit(): void {
@@ -27,7 +23,7 @@ export class NavbarComponent implements OnInit {
   }
 
   openModal() {
-    this.modalService.open(ModalComponent);
+    this.modalService.open(AddUserModalComponent);
   }
 
   getUsers() {
@@ -38,13 +34,5 @@ export class NavbarComponent implements OnInit {
     this.usersService
       .getUserById(userId)
       .subscribe((resp) => this.currentUserService.updateCurrentUser(resp));
-  }
-
-  refreshTable() {
-    this.calcService
-      .getCalculations(10, 0)
-      .subscribe((response) =>
-        this.calcDataService.broadcastCalcsChange(response.data)
-      );
   }
 }

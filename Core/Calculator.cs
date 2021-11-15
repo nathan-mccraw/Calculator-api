@@ -7,7 +7,7 @@ namespace Core
     {
         public IEnumerable<string> AvailableOperators()
         {
-            return new string[] { "+", "/", "-", "*" };
+            return new string[] { "*", "/", "-", "+" };
         }
 
         public decimal Calculate(decimal firstOperand, decimal secondOperand, string operation)
