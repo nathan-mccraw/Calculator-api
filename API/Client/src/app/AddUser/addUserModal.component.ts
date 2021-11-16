@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { user } from '../Model/user.model';
+import { User } from '../Model/user.model';
 import { UsersService } from '../services/HttpServices/users.service';
 import { CurrentUserService } from '../services/DataServices/currentUser.service';
 
@@ -10,7 +10,7 @@ import { CurrentUserService } from '../services/DataServices/currentUser.service
   styleUrls: ['./addUserModal.component.css'],
 })
 export class AddUserModalComponent {
-  newUser: user = new user();
+  newUser: User = new User();
 
   constructor(
     public activeModal: NgbActiveModal,

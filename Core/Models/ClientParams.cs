@@ -12,10 +12,11 @@ namespace Core.Models
         public int _pageSize = 10;
         public int PageSize { get => _pageSize; set => _pageSize = value > MaxPageSize ? MaxPageSize : value; }
         public int PageIndex { get; set; } = 1;
-        //public string Sort { get; set; } = "Date";
-        //public bool IsOrderByDescending { get; set; } = false;
-        //public decimal Search { get; set; } = decimal.MinValue;
-        //public string SearchParams { get; set; } = ">";
-        //public int? UserId { get; set; }
+        public decimal Search { get; set; }
+        public string SortOrder { get; set; }
+        public List<int> UserFilter { get; set; }
+        public List<string> OperatorFilter { get; set; }
+        public string DateFilter { get; set; }
+        public string DateFilterCriteria { get; set; }
     }
 }

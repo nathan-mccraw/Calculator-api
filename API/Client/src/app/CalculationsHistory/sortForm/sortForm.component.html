@@ -1,40 +1,52 @@
-<form class="mb-2">
+<form #f="ngForm" (ngSubmit)="onSubmit()" class="mb-2">
     <div id="searchGroup">
         <div class="input-group">
             <span class="input-group-text input-group-sm"><i class="fa fa-search"></i></span>
             <div class="form-floating flex-grow-1">
-                <input [(ngModel)]="formData.search" #search="ngModel" name="search" type="text" class="form-control"
-                    id="search" placeholder="Search" />
+                <input [(ngModel)]="formState.search" name="search" type="text" class="form-control" placeholder=" " />
                 <label for="floatingInput">Enter Numbers to Search</label>
             </div>
             <button type="submit" class="btn btn-secondary">SEARCH</button>
         </div>
         <div class="d-flex justify-content-between align-items-center ps-2 pe-2 mb-2">
             <div>
-                <input type="checkbox" name="All" id="All" class="me-1">
-                <label for="All">All</label>
+                <label for="All">
+                    <input [(ngModel)]="formState.isSearchAll" type="checkbox" name="All" class="me-1">
+                    All
+                </label>
             </div>
             <div>
-                <input type="checkbox" name="firstOperand" id="firstOperand" class="me-1">
-                <label for="All">1st Operand</label>
+                <label for="firstOperand">
+                    <input [(ngModel)]="formState.isSearchFirstOperand" [disabled]="formState.isSearchAll"
+                        type="checkbox" name="firstOperand" class="me-1">
+                    1st Operand
+                </label>
             </div>
             <div>
-                <input type="checkbox" name="secondOperand" id="secondOperand" class="me-1">
-                <label for="secondOperand">2nd Operand</label>
+                <label for="secondOperand">
+                    <input [(ngModel)]="formState.isSearchSecondOperand" [disabled]="formState.isSearchAll"
+                        type="checkbox" name="secondOperand" class="me-1">
+                    2nd Operand
+                </label>
             </div>
             <div>
-                <input type="checkbox" name="Answer" id="Answer" class="me-1">
-                <label for="Answer">Answer</label>
+                <label for="Answer">
+                    <input [(ngModel)]="formState.isSearchAnswer" [disabled]="formState.isSearchAll" type="checkbox"
+                        name="Answer" class="me-1">
+                    Answer
+                </label>
             </div>
         </div>
     </div>
     <div id="sortGroup">
         <span class="h5 ps-2 me-2">Sort:</span>
         <div class="btn-group btn-group-sm" role="group" aria-label="Sort by ascending or descending">
-            <input type="radio" class="btn-check" name="SortOrder" id="sortAscending" autocomplete="off" checked>
+            <input [(ngModel)]="formState.sortOrder" type="radio" class="btn-check" name="SortOrder" id="sortAscending"
+                value="Ascending" autocomplete="off">
             <label class="btn btn-outline-secondary" for="sortAscending">Ascending</label>
 
-            <input type="radio" class="btn-check" name="SortOrder" id="sortDescending" autocomplete="off">
+            <input [(ngModel)]="formState.sortOrder" type="radio" class="btn-check" name="SortOrder" id="sortDescending"
+                value="Descending" autocomplete="off">
             <label class="btn btn-outline-secondary" for="sortDescending">Descending</label>
         </div>
     </div>
@@ -42,45 +54,57 @@
         <span class="h5 ps-2 me-2">Filter:</span>
         <div>
             <div class="btn-group btn-group-sm" role="group" aria-label="Filter by user, operator type, or date">
-                <input type="checkbox" id="filterUser" class="btn-check" name="filterUser" autocomplete="off">
+                <input #displayUserFilter="ngModel" [(ngModel)]="formState.isUserFilter" type="checkbox" id="filterUser"
+                    class="btn-check" name="filterUser" (click)="getUpdatedUsersList()">
                 <label class="btn btn-outline-secondary" for="filterUser">User</label>
 
-                <input type="checkbox" id="filterOperation" class="btn-check" name="filterOperation" autocomplete="off">
+                <input #displayOperatorFilter="ngModel" [(ngModel)]="formState.isOperatorFilter" type="checkbox"
+                    id="filterOperation" class="btn-check" name="filterOperation" (click)="getUpdatedOperatorsList()">
                 <label class="btn btn-outline-secondary" for="filterOperation">Operation</label>
 
-                <input type="checkbox" id="filterDate" class="btn-check" name="filterDate" autocomplete="off">
+                <input #displayDateFilter="ngModel" [(ngModel)]="formState.isDateFilter" type="checkbox" id="filterDate"
+                    class="btn-check" name="filterDate">
                 <label class="btn btn-outline-secondary" for="filterDate">Date</label>
             </div>
         </div>
     </div>
-    <div id="sortByUsers" class="ms-4">
-        <span class="h5">Sort By User:</span>
-    </div>
-    <div id="sortByUsers" class="ms-4">
-        <span class="h5">Sort By Operation:</span>
-    </div>
-    <div id="sortByUsers" class="ms-4">
-        <span class="h5">Sort By Date:</span>
-    </div>
-    <div id="resetButtons" class="mt-4">
-        <div class="btn-group" role="group" aria-label="reset buttons">
-            <button type="button" class="btn btn-danger me-4" (click)="resetTable()">Reset Table</button>
-            <button type="button" class="btn btn-warning" (click)="resetSortForm()">Reset Filters</button>
+
+    <div *ngIf="displayUserFilter.value" id="sortByUsers" class="d-flex align-items-center ms-4 mt-2">
+        <span class="h5 me-2">Filter By User:</span>
+        <div *ngFor="let user of formData.usersList" class="me-4">
+            <label for="{{user.id}}">
+                <input (click)="UpdateUsersListInForm(user.id)" type="checkbox" name="{{user.id}}" value="{{user.id}}"
+                    class="me-1">
+                {{user.username}}
+            </label>
         </div>
     </div>
 
-    <!-- <div class="form-floating mb-3">
-        <input [(ngModel)]="newUser.firstName" #firstName="ngModel" name="firstName" type="text" class="form-control"
-            id="firstName" placeholder="First Name" required />
-        <label for="floatingInput">First Name</label>
+    <div *ngIf="displayOperatorFilter.value" id="sortByOperatoration" class="d-flex align-items-center ms-4 mt-2">
+        <span class="h5 me-2">Filter By Operation:</span>
+        <div *ngFor="let op of formData.operatorsList; let i = index" class="me-2">
+            <input (click)="UpdateOperatorsListInForm(op)" type="checkbox" name={{i}} id={{i}} value="op"
+                class="btn-check">
+            <label class="btn btn-outline-secondary" for={{i}}>{{op}}</label>
+        </div>
     </div>
-    <div class="form-floating mb-3">
-        <input [(ngModel)]="newUser.lastName" #lastName="ngModel" name="lastName" type="text" class="form-control"
-            id="lastName" placeholder="Last Name" required />
-        <label for="floatingInput">Last Name</label>
+
+    <div *ngIf="displayDateFilter.value" id="sortByDate" class="d-flex w-100 ms-4 mt-2">
+        <span class="h5 me-2 col-auto">Filter By Date:</span>
+        <select class="form-select form-select-sm" style="width: auto;" name="filterDateCriteria"
+            [(ngModel)]="formState.dateFilterCriteria">
+            <option value="On Selected Date" selected>On Selected Date</option>
+            <option value="Before Selected Date">Before Selected Date</option>
+            <option value="After Selected Date">After Selected Date</option>
+        </select>
+        <input type="date" class="col-auto" name="filterDate" [(ngModel)]="formState.dateFilter">
+
     </div>
-    <button [disabled]="username.invalid || firstName.invalid || lastName.invalid" class="btn btn-lg btn-secondary"
-        type="submit">
-        Add User
-    </button> -->
+
+    <div id="resetButtons" class="mt-4 d-flex justify-content-end">
+        <div class="btn-group" role="group" aria-label="reset buttons">
+            <button type="button" class="btn btn-danger me-4" (click)="resetTable()">Reset Search</button>
+            <button type="button" class="btn btn-warning" (click)="resetSortForm()">Reset Filters</button>
+        </div>
+    </div>
 </form>

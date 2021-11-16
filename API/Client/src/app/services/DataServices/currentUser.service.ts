@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { user } from '../../Model/user.model';
+import { User } from '../../Model/user.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CurrentUserService {
-  currentUser: Subject<user> = new BehaviorSubject({
+  currentUser: Subject<User> = new BehaviorSubject({
     id: 1,
     username: 'Guest',
     firstName: 'Guest',
     lastName: 'Guest',
   });
 
-  updateCurrentUser(newUser: user) {
+  updateCurrentUser(newUser: User) {
     this.currentUser.next(newUser);
   }
 }

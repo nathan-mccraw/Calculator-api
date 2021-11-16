@@ -1,44 +1,34 @@
 import { __decorate } from "tslib";
 import { Component } from '@angular/core';
 let HistoryPageComponent = class HistoryPageComponent {
-    constructor(calcService, calcDataService) {
+    constructor(calcService, calcDataService, clientParamsService) {
         this.calcService = calcService;
         this.calcDataService = calcDataService;
-        this.pageNumber = 1;
-        this.pageSize = 10;
-        this.totalResults = 0;
-        this.isPrevDisabled = true;
-        this.isNextDisabled = true;
+        this.clientParamsService = clientParamsService;
     }
-    ngOnInit() { }
+    ngOnInit() {
+        this.subscriptions = this.clientParamsService.clientParams.subscribe((params) => this.clientParams = params);
+    }
+    ngOnDestroy() {
+        this.subscriptions.unsubscribe();
+    }
     refreshTable() {
         this.calcService
-            .getCalculations(this.pageSize, this.pageNumber - 1)
-            .subscribe((response) => {
-            this.pageNumber = response.pageIndex + 1;
-            this.pageSize = response.pageSize;
-            this.totalResults = response.count;
-            if (this.pageSize * this.pageNumber < this.totalResults) {
-                this.isNextDisabled = false;
-            }
-            else {
-                this.isNextDisabled = true;
-            }
-            if (this.pageNumber > 1) {
-                this.isPrevDisabled = false;
-            }
-            else {
-                this.isPrevDisabled = true;
-            }
-            this.calcDataService.broadcastCalcsChange(response.data);
+            .getCalculations(this.clientParams)
+            .subscribe(data => {
+            this.calcDataService.broadcastCalcsChange(data);
         });
     }
     nextPage() {
-        this.pageNumber += 1;
+        this.clientParams.pageIndex += 1;
         this.refreshTable();
     }
     prevPage() {
-        this.pageNumber -= 1;
+        this.clientParams.pageIndex -= 1;
+        this.refreshTable();
+    }
+    onPageClick(pageNumber) {
+        this.clientParams.pageIndex = pageNumber - 1;
         this.refreshTable();
     }
 };

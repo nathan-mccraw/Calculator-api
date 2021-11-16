@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { user } from '../../Model/user.model';
+import { User } from '../../Model/user.model';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
 export class UsersService {
   constructor(private http: HttpClient) {}
 
-  PostNewUser(user: user) {
+  PostNewUser(user: User) {
     return this.http
       .post<number>('https://localhost:5001/api/Users', user)
       .pipe(
@@ -21,10 +21,10 @@ export class UsersService {
   }
 
   getAllUsers() {
-    return this.http.get<user[]>('https://localhost:5001/api/Users');
+    return this.http.get<User[]>('https://localhost:5001/api/Users');
   }
 
   getUserById(userId: number) {
-    return this.http.get<user>(`https://localhost:5001/api/Users/${userId}`);
+    return this.http.get<User>(`https://localhost:5001/api/Users/${userId}`);
   }
 }

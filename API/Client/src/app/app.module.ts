@@ -12,7 +12,7 @@ import { TableComponent } from './CalculationsHistory/table/table.component';
 
 import { AddUserModalComponent } from './AddUser/addUserModal.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HistoryPageComponent } from './CalculationsHistory/history-page.component';
 import { SortFormComponent } from './CalculationsHistory/sortForm/sortForm.component';
 
@@ -38,6 +38,7 @@ const routes: Routes = [
     BrowserModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule.forRoot(routes),
     NgbModule,
   ],

@@ -17,7 +17,7 @@ export class ClientParamsService {
 
   constructor() {}
 
-  broadcastCalcsChange(newParams: ClientParams) {
+  broadcastClientParamsChange(newParams: ClientParams) {
     this.clientParams.next(newParams);
   }
 }

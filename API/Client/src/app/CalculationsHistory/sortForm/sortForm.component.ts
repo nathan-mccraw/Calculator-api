@@ -1,11 +1,15 @@
 import { Component, OnInit } from "@angular/core";
 import { Subscription } from "rxjs";
-import { FormDataService } from "./../../services/DataServices/formData.service";
-import { FormData } from "./../../Model/formData.model";
+import { SortFormService } from "./../../services/DataServices/sortForm.service";
+import { FormState } from "./../../Model/formState.model";
 import { CalculationsDataService } from "./../../services/DataServices/calculationsData.service";
 import { CalculateService } from "./../../services/HttpServices/calculate.service";
 import { ClientParamsService } from "src/app/services/DataServices/clientParams.service";
 import { ClientParams } from "src/app/Model/clientParams.model";
+import { User } from "./../../Model/user.model";
+import { UsersService } from "./../../services/HttpServices/users.service";
+import { OperatorsService } from "./../../services/HttpServices/operators.service";
+import { SortFormData } from "./../../Model/formData.model";
 
 @Component({
     selector: 'app-sortForm',
@@ -13,17 +17,23 @@ import { ClientParams } from "src/app/Model/clientParams.model";
     styleUrls: ['./sortForm.component.css'],
   })
   export class SortFormComponent implements OnInit {
-    formData: FormData;
+    formState: FormState;
+    formData: SortFormData;
     clientParams: ClientParams;
+    users: User[] = [];
+    operatorsList: string[];
     subscriptions: Subscription[] = [];
 
-    constructor(private formDataService: FormDataService, 
+    constructor(private formService: SortFormService, 
                 private calcDataService: CalculationsDataService, 
                 private calcService: CalculateService, 
-                private clientParamsService: ClientParamsService) {}
+                private clientParamsService: ClientParamsService,
+                private usersService: UsersService,
+                private operatorsService: OperatorsService) {}
   
     ngOnInit(): void {
-        this.subscriptions.push(this.formDataService.formData.subscribe((newData) => this.formData = newData));
+        this.subscriptions.push(this.formService.formState.subscribe((newState) => this.formState = newState));
+        this.subscriptions.push(this.formService.formData.subscribe((newData) => this.formData = newData));
         this.subscriptions.push(this.clientParamsService.clientParams.subscribe((newParams) => this.clientParams = newParams));
     }
   
@@ -33,31 +43,40 @@ import { ClientParams } from "src/app/Model/clientParams.model";
         });
     }
 
+    getUpdatedUsersList(){
+        this.usersService.getAllUsers().subscribe((updatedUsers) => this.formData.usersList = updatedUsers);
+    }
+
+    getUpdatedOperatorsList(){
+        this.operatorsService.getOperators().subscribe((updatedOperators) => this.formData.operatorsList = updatedOperators);
+    }
+
+    UpdateUsersListInForm(userId: number){
+        const index = this.formState.userFilter.indexOf(userId);
+        if(index === -1){
+            this.formState.userFilter.push(userId);
+        } else {
+            this.formState.userFilter.splice(index,1);
+        }
+    }
+
+    UpdateOperatorsListInForm(operator: string){
+        const index = this.formState.operatorFilter.indexOf(operator);
+        if(index === -1){
+            this.formState.operatorFilter.push(operator);
+        } else {
+            this.formState.operatorFilter.splice(index,1);
+        }
+    }
+
     resetSortForm(){
-        const newFormData = {
-            search: null,
-            searchCriteriaAll: false,
-            searchCriteriaFirstOperand: false,
-            searchCriteriaSecondOperand: false,
-            searchCriteriaAnswer: false,
-            sort: "Ascending",
-            userFilter: "",
-            dateFiler: "",
-            dateCriteria: "",
-            operatorFilter: ""
-        };
-        this.formDataService.updateFormData(newFormData); 
+        const newFormState = new FormState;
+        this.formService.updateFormState(newFormState); 
     }
     
     resetTable(){
-        this.clientParams = {
-            pageIndex: 0, 
-            pageSize: 10, 
-            pages: [],
-            count: 0, 
-            isNextDisabled: true, 
-            isPrevDisabled: true
-        };
+        const newClientParams = new ClientParams;
+        this.clientParamsService.broadcastClientParamsChange(newClientParams);
         this.refreshTable();
     }
 
@@ -67,5 +86,14 @@ import { ClientParams } from "src/app/Model/clientParams.model";
           .subscribe(data => {
             this.calcDataService.broadcastCalcsChange(data);
           });
+      }
+
+      onSubmit(){
+        this.formService.updateFormState(this.formState);
+        this.calcService
+        .getCalculations(this.clientParams)
+        .subscribe(data => {
+          this.calcDataService.broadcastCalcsChange(data);
+        });
       }
   }

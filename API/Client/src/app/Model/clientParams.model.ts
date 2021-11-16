@@ -1,9 +1,9 @@
 
 export class ClientParams {
-    public pageIndex: number;
-    public pageSize: number;
+    public pageIndex: number = 0;
+    public pageSize: number = 10;
     public pages: number[] = [];
-    public count: number;
-    public isPrevDisabled: boolean;
-    public isNextDisabled: boolean;
+    public count: number = 0;
+    public isPrevDisabled: boolean = true;
+    public isNextDisabled: boolean = true;
   }

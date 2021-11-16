@@ -1,19 +1,17 @@
 import { __decorate } from "tslib";
 import { Component } from '@angular/core';
-import { ModalComponent } from './../AddUser/modal.component';
+import { AddUserModalComponent } from '../AddUser/addUserModal.component';
 let NavbarComponent = class NavbarComponent {
-    constructor(usersService, modalService, currentUserService, calcService, calcDataService) {
+    constructor(usersService, modalService, currentUserService) {
         this.usersService = usersService;
         this.modalService = modalService;
         this.currentUserService = currentUserService;
-        this.calcService = calcService;
-        this.calcDataService = calcDataService;
     }
     ngOnInit() {
         this.getUsers();
     }
     openModal() {
-        this.modalService.open(ModalComponent);
+        this.modalService.open(AddUserModalComponent);
     }
     getUsers() {
         this.usersService.getAllUsers().subscribe((resp) => (this.users = resp));
@@ -22,11 +20,6 @@ let NavbarComponent = class NavbarComponent {
         this.usersService
             .getUserById(userId)
             .subscribe((resp) => this.currentUserService.updateCurrentUser(resp));
-    }
-    refreshTable() {
-        this.calcService
-            .getCalculations(10, 0)
-            .subscribe((response) => this.calcDataService.broadcastCalcsChange(response.data));
     }
 };
 NavbarComponent = __decorate([

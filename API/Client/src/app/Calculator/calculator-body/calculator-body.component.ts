@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { OperatorsService } from '../../services/HttpServices/operators.service';
 import { CalculateService } from '../../services/HttpServices/calculate.service';
 import { Expression } from '../../Model/expression.model';
-import { user } from 'src/app/Model/user.model';
+import { User } from 'src/app/Model/user.model';
 import { CurrentUserService } from '../../services/DataServices/currentUser.service';
 import { Subscription } from 'rxjs';
 
@@ -13,7 +13,7 @@ import { Subscription } from 'rxjs';
 })
 export class CalculatorBodyComponent implements OnInit {
   subscription: Subscription;
-  currentUser: user;
+  currentUser: User;
   operators: string[] = [];
   storedOperator: string = '';
   firstOperand: string = '';

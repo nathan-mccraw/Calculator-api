@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Expression } from './../../Model/expression.model';
 import { calcNoUser } from './../../Model/calcNoUser.model';
@@ -6,13 +6,65 @@ import { apiResponseDTO } from './../../Model/apiResponse.model';
 import { ClientParams } from './../../Model/clientParams.model';
 import { map } from 'rxjs/operators';
 import { ClientParamsService } from '../DataServices/clientParams.service';
-import { CalculationsDataService } from '../DataServices/calculationsData.service';
+import { SortFormService } from '../DataServices/sortForm.service';
+import { FormState } from './../../Model/formState.model';
+import { Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CalculateService {
-  constructor(private http: HttpClient, private clientParamsService: ClientParamsService) {}
+export class CalculateService{
+  sortForm: FormState;
+  subscriptions: Subscription;
+
+  constructor(private http: HttpClient, 
+              private clientParamsService: ClientParamsService,
+              private sortFormService: SortFormService) {
+                this.subscriptions = this.sortFormService.formState.subscribe((newState) => this.sortForm = newState);
+              }
+
+  ngOnDestroy(){
+    this.subscriptions.unsubscribe();
+  }
+
+  private buildQueryURL(cp: ClientParams){
+    console.log(this.sortForm);
+    let urlString: string = `https://localhost:5001/api/Calculations?PageSize=${cp.pageSize}&PageIndex=${cp.pageIndex}`;
+
+    if(this.sortForm.search != null){
+      urlString += `&Search=${this.sortForm.search}`;
+    }
+
+    urlString += `&SortOrder=${this.sortForm.sortOrder}`;
+
+    if(this.sortForm.isUserFilter){
+      this.sortForm.userFilter.forEach(userId => {
+        urlString += `&UserFilter=${userId}`
+      });
+    }
+
+    if(this.sortForm.isOperatorFilter){
+      const specialCharacters = [',','/','?',':','@','&','=','+','$','#'];
+      this.sortForm.operatorFilter.forEach(operator => {
+        let encodedOp: string;
+        if(specialCharacters.includes(operator)){
+          encodedOp = encodeURIComponent(operator);
+        } else {
+          encodedOp = encodeURI(operator);
+        }
+        
+        urlString += `&OperatorFilter=${encodedOp}`
+      });
+    }
+
+    if(this.sortForm.isDateFilter){
+      urlString += `&DateFilter=${this.sortForm.dateFilter}`;
+      const encodedCrit = encodeURI(this.sortForm.dateFilterCriteria);
+      urlString += `&DateFilterCriteria=${encodedCrit}`;
+    }
+
+    console.log(urlString);
+  }
 
   postCalculation(calculation: Expression) {
     return this.http.post<string>(
@@ -22,6 +74,7 @@ export class CalculateService {
   }
 
   getCalculations(cp: ClientParams) {
+    const urlString = this.buildQueryURL(cp);
     return this.http.get<apiResponseDTO>(
       `https://localhost:5001/api/Calculations?PageSize=${cp.pageSize}&PageIndex=${cp.pageIndex}`
     ).pipe(map((response) => {
@@ -48,7 +101,7 @@ export class CalculateService {
         newParams.isPrevDisabled = true;
       }
 
-      this.clientParamsService.broadcastCalcsChange(newParams);
+      this.clientParamsService.broadcastClientParamsChange(newParams);
       return response.data;
     }));
   }
