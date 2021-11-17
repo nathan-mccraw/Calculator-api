@@ -13,57 +13,73 @@ import { Subscription } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class CalculateService{
+export class CalculateService {
   sortForm: FormState;
   subscriptions: Subscription;
 
-  constructor(private http: HttpClient, 
-              private clientParamsService: ClientParamsService,
-              private sortFormService: SortFormService) {
-                this.subscriptions = this.sortFormService.formState.subscribe((newState) => this.sortForm = newState);
-              }
+  constructor(
+    private http: HttpClient,
+    private clientParamsService: ClientParamsService,
+    private sortFormService: SortFormService
+  ) {
+    this.subscriptions = this.sortFormService.formState.subscribe(
+      (newState) => (this.sortForm = newState)
+    );
+  }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.subscriptions.unsubscribe();
   }
 
-  private buildQueryURL(cp: ClientParams){
+  private buildQueryURL(cp: ClientParams) {
     console.log(this.sortForm);
     let urlString: string = `https://localhost:5001/api/Calculations?PageSize=${cp.pageSize}&PageIndex=${cp.pageIndex}`;
 
-    if(this.sortForm.search != null){
+    if (this.sortForm.search != null) {
       urlString += `&Search=${this.sortForm.search}`;
     }
 
     urlString += `&SortOrder=${this.sortForm.sortOrder}`;
 
-    if(this.sortForm.isUserFilter){
-      this.sortForm.userFilter.forEach(userId => {
-        urlString += `&UserFilter=${userId}`
+    if (this.sortForm.isUserFilter) {
+      this.sortForm.userFilter.forEach((userId) => {
+        urlString += `&UserFilter=${userId}`;
       });
     }
 
-    if(this.sortForm.isOperatorFilter){
-      const specialCharacters = [',','/','?',':','@','&','=','+','$','#'];
-      this.sortForm.operatorFilter.forEach(operator => {
+    if (this.sortForm.isOperatorFilter) {
+      const specialCharacters = [
+        ',',
+        '/',
+        '?',
+        ':',
+        '@',
+        '&',
+        '=',
+        '+',
+        '$',
+        '#',
+      ];
+      this.sortForm.operatorFilter.forEach((operator) => {
         let encodedOp: string;
-        if(specialCharacters.includes(operator)){
+        if (specialCharacters.includes(operator)) {
           encodedOp = encodeURIComponent(operator);
         } else {
           encodedOp = encodeURI(operator);
         }
-        
-        urlString += `&OperatorFilter=${encodedOp}`
+
+        urlString += `&OperatorFilter=${encodedOp}`;
       });
     }
 
-    if(this.sortForm.isDateFilter){
+    if (this.sortForm.isDateFilter) {
       urlString += `&DateFilter=${this.sortForm.dateFilter}`;
       const encodedCrit = encodeURI(this.sortForm.dateFilterCriteria);
       urlString += `&DateFilterCriteria=${encodedCrit}`;
     }
 
     console.log(urlString);
+    return urlString;
   }
 
   postCalculation(calculation: Expression) {
@@ -75,35 +91,35 @@ export class CalculateService{
 
   getCalculations(cp: ClientParams) {
     const urlString = this.buildQueryURL(cp);
-    return this.http.get<apiResponseDTO>(
-      `https://localhost:5001/api/Calculations?PageSize=${cp.pageSize}&PageIndex=${cp.pageIndex}`
-    ).pipe(map((response) => {
-      const newParams = new ClientParams();
-      newParams.pageIndex = response.pageIndex;
-      newParams.pageSize = response.pageSize;
-      newParams.count = response.count;
+    return this.http.get<apiResponseDTO>(urlString).pipe(
+      map((response) => {
+        const newParams = new ClientParams();
+        newParams.pageIndex = response.pageIndex;
+        newParams.pageSize = response.pageSize;
+        newParams.count = response.count;
 
-      let index = 0;
-      do{
-        newParams.pages.push(index+1);
-        index++;
-      }while(newParams.pageSize * index < newParams.count)
+        let index = 0;
+        do {
+          newParams.pages.push(index + 1);
+          index++;
+        } while (newParams.pageSize * index < newParams.count);
 
-      if (newParams.pageIndex + 1 < newParams.pages.length) {
-        newParams.isNextDisabled = false;
-      } else {
-        newParams.isNextDisabled = true;
-      }
+        if (newParams.pageIndex + 1 < newParams.pages.length) {
+          newParams.isNextDisabled = false;
+        } else {
+          newParams.isNextDisabled = true;
+        }
 
-      if (newParams.pageIndex > 0) {
-        newParams.isPrevDisabled = false;
-      } else {
-        newParams.isPrevDisabled = true;
-      }
+        if (newParams.pageIndex > 0) {
+          newParams.isPrevDisabled = false;
+        } else {
+          newParams.isPrevDisabled = true;
+        }
 
-      this.clientParamsService.broadcastClientParamsChange(newParams);
-      return response.data;
-    }));
+        this.clientParamsService.broadcastClientParamsChange(newParams);
+        return response.data;
+      })
+    );
   }
 
   getCalculationsByUserId(userId: number) {

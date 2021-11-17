@@ -4,6 +4,7 @@ using Dapper;
 using DataLibrary.Db;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
@@ -14,19 +15,22 @@ namespace DataLibrary.Repository
     {
         private readonly IDataAccess _dataAccess;
         private readonly ConnectionStringData _connectionString;
-        private readonly IConfiguration _config;
 
-        public CalculationsRepoQuery(IDataAccess dataAccess, ConnectionStringData connectionString, IConfiguration config)
+        public CalculationsRepoQuery(IDataAccess dataAccess, ConnectionStringData connectionString)
         {
             _dataAccess = dataAccess;
             _connectionString = connectionString;
-            _config = config;
         }
 
-        public Task<int> CountAsync()
+        public Task<int> CountAsync(ClientParams cp)
         {
-            string sql = @"SELECT COUNT(Id) FROM dbo.Calculations";
-            return _dataAccess.LoadSingleData<int, dynamic>(sql, new { }, _connectionString.SqlConnectionName);
+            Specifications specs = new Specifications
+            {
+                SqlStatement = "SELECT COUNT(c.Id)"
+            };
+            BuildSpecifications(cp, specs);
+
+            return _dataAccess.LoadSingleData<int, dynamic>(specs.SqlStatement, specs.Parameters, _connectionString.SqlConnectionName);
         }
 
         public async Task<int> CreateAndAddCalculation(CalculationEntity calculation)
@@ -80,6 +84,98 @@ namespace DataLibrary.Repository
                            WHERE UserId = @userId;";
 
             return _dataAccess.LoadData<CalculationEntity, dynamic>(sql, new { UserId = userId }, _connectionString.SqlConnectionName);
+        }
+
+        public async Task<List<CalcWithUserEntity>> GetCalculationsWithUser(ClientParams cp)
+        {
+            Specifications specs = new Specifications
+            {
+                SqlStatement = "SELECT c.Id, u.Username, c.FirstOperand, c.Operator, c.SecondOperand, c.Answer, c.Date"
+            };
+            BuildSpecifications(cp, specs);
+
+            return await _dataAccess.LoadData<CalcWithUserEntity, dynamic>(specs.SqlStatement, specs.Parameters, _connectionString.SqlConnectionName);
+        }
+
+        private Specifications BuildSpecifications(ClientParams cp, Specifications specs)
+        {
+            bool isCountStatement = specs.SqlStatement.Contains("COUNT");
+
+            specs.SqlStatement += @" FROM dbo.Calculations c
+                                     INNER JOIN dbo.Users u
+                                     ON c.UserId = u.Id";
+
+            if (cp.Search != null)
+            {
+                specs.Parameters.Add("search", cp.Search);
+                specs.SqlStatement += @" WHERE c.FirstOperand LIKE '%@search%'
+                         OR c.SecondOperand LIKE '%@search%'
+                         OR c.Answer LIKE '%@search%'";
+            }
+
+            if (cp.UserFilter != null)
+            {
+                specs.Parameters.Add("userId0", cp.UserFilter[0]);
+                specs.SqlStatement += " WHERE u.Id IN (@userId0";
+
+                for (int i = 1; i < cp.UserFilter.Count; i++)
+                {
+                    specs.Parameters.Add($"userId{i}", cp.UserFilter[i]);
+                    specs.SqlStatement += $", @userId{i}";
+                }
+
+                specs.SqlStatement += ")";
+            }
+
+            if (cp.OperatorFilter != null)
+            {
+                specs.Parameters.Add("op0", cp.OperatorFilter[0]);
+                specs.SqlStatement += " WHERE c.Operator IN (@op0";
+
+                for (int i = 1; i < cp.OperatorFilter.Count; i++)
+                {
+                    specs.Parameters.Add($"op{i}", cp.OperatorFilter[i]);
+                    specs.SqlStatement += $", @op{i}";
+                }
+
+                specs.SqlStatement += ")";
+            }
+
+            if (cp.DateFilterCriteria != null)
+            {
+                DateTime date = DateTime.Parse(cp.DateFilter);
+                specs.SqlStatement += cp.DateFilterCriteria switch
+                {
+                    "Before Selected Date" => $" WHERE c.Date < {date}",
+                    "After Selected Date" => $" WHERE c.Date > {date}",
+                    _ => $" WHERE c.Date = {date}"
+                };
+            }
+
+            if (!isCountStatement)
+            {
+                specs.SqlStatement += cp.OrderBy switch
+                {
+                    "Username" => " ORDER BY u.Username",
+                    "FirstOperand" => " ORDER BY c.FirstOperand",
+                    "SecondOperand" => " ORDER BY c.SecondOperand",
+                    "Answer" => " ORDER BY c.Answer",
+                    _ => " ORDER BY c.Date",
+                };
+
+                specs.SqlStatement += cp.SortOrder switch
+                {
+                    "DESC" => " DESC",
+                    _ => " ASC"
+                };
+
+                specs.Parameters.Add("skip", cp.PageIndex * cp.PageSize);
+                specs.Parameters.Add("take", cp.PageSize);
+
+                specs.SqlStatement += " OFFSET @skip ROWS FETCH NEXT @take ROWS ONLY;";
+            }
+
+            return specs;
         }
     }
 }

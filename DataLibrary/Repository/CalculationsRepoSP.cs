@@ -65,5 +65,15 @@ namespace DataLibrary.Repository
         {
             throw new NotImplementedException();
         }
+
+        public Task<List<CalcWithUserEntity>> GetCalculationsWithUser(ClientParams clientParams)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> CountAsync(ClientParams clientParams)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

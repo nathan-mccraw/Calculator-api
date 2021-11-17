@@ -11,7 +11,7 @@
     </thead>
     <tbody *ngIf="calculations.length > 0; else noDataTable">
       <tr *ngFor="let calc of calculations">
-        <td>{{ calc.user.username }}</td>
+        <td>{{ calc.username }}</td>
         <td>
           {{ calc.firstOperand }} {{ calc.operator }} {{ calc.secondOperand }}
         </td>
