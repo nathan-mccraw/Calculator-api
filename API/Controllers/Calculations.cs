@@ -32,13 +32,13 @@ namespace API.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Pagination<CalcWithUserEntity>>> GetCalculations([FromQuery] ClientParams clientParams)
+        public async Task<ActionResult<Pagination<CalcWithUsernameEntity>>> GetCalculations([FromQuery] ClientParams clientParams)
         {
             var calcs = await _calcRepo.GetCalculationsWithUser();
-            IEnumerable<CalcWithUserEntity> sortedCalcs = _sortAndFilter.SortAndFilterCalculations(clientParams, calcs);
+            IEnumerable<CalcWithUsernameEntity> sortedCalcs = _sortAndFilter.SortAndFilterCalculations(clientParams, calcs);
             int totalCalcs = sortedCalcs.Count();
 
-            return Ok(new Pagination<CalcWithUserEntity>(clientParams.PageIndex, clientParams.PageSize, totalCalcs, sortedCalcs));
+            return Ok(new Pagination<CalcWithUsernameEntity>(clientParams.PageIndex, clientParams.PageSize, totalCalcs, sortedCalcs));
         }
 
         // Get: api/Calculations/5
@@ -61,7 +61,7 @@ namespace API.Controllers
             try
             {
                 calcInput.Answer = _calculator.Calculate(calcInput.FirstOperand, calcInput.SecondOperand, calcInput.Operator);
-                await _calcRepo.CreateAndAddCalculation(calcInput);
+                await _calcRepo.AddCalculation(calcInput);
                 return Ok(calcInput.Answer);
             }
             catch (Exception ex)

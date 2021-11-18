@@ -46,7 +46,7 @@ export class HistoryPageComponent implements OnInit {
     this.refreshTable();
   }
 
-  onPageClick(pageNumber){
+  onPageNumberClick(pageNumber: number){
     this.clientParams.pageIndex = pageNumber - 1;
     this.refreshTable();
   }

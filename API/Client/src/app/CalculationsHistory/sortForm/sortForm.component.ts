@@ -17,7 +17,7 @@ import { SortFormData } from './../../Model/formData.model';
   styleUrls: ['./sortForm.component.css'],
 })
 export class SortFormComponent implements OnInit {
-  formState: FormState;
+  formState: FormState = new FormState;
   formData: SortFormData;
   clientParams: ClientParams;
   users: User[] = [];
@@ -57,10 +57,26 @@ export class SortFormComponent implements OnInit {
     });
   }
 
+  onUserFilterClick(){
+    this.getUpdatedUsersList();
+    if(this.formState.isUserFilter === false){
+      this.formState.userFilter = [];
+      console.log(this.formState.userFilter);
+    }
+  }
+
   getUpdatedUsersList() {
     this.usersService
       .getAllUsers()
       .subscribe((updatedUsers) => (this.formData.usersList = updatedUsers));
+  }
+
+  onOperatorFilterClick(){
+    this.getUpdatedOperatorsList();
+    if(this.formState.isOperatorFilter === false){
+      this.formState.operatorFilter = [];
+      console.log(this.formState.operatorFilter);
+    }
   }
 
   getUpdatedOperatorsList() {
@@ -69,6 +85,13 @@ export class SortFormComponent implements OnInit {
       .subscribe(
         (updatedOperators) => (this.formData.operatorsList = updatedOperators)
       );
+  }
+
+  onDateFilterClick(){
+    if(this.formState.isDateFilter === false){
+      this.formState.dateFilter = null;
+      this.formState.dateFilterCriteria = "On Selected Date";
+    }
   }
 
   updateSearchListInForm(searchIn: string) {
@@ -116,9 +139,14 @@ export class SortFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.formService.updateFormState(this.formState);
-    this.calcService.getCalculations(this.clientParams).subscribe((data) => {
-      this.calcDataService.broadcastCalcsChange(data);
-    });
+    if(!isNaN(this.formState.search)){
+      this.formService.updateFormState(this.formState);
+      this.calcService.getCalculations(this.clientParams).subscribe((data) => {
+        this.calcDataService.broadcastCalcsChange(data);
+      });
+    } else {
+      alert("Invalid search, only value decimal numbers are accepted");
+    }
+    
   }
 }

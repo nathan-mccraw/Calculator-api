@@ -29,7 +29,9 @@ let TableComponent = class TableComponent {
             this.formState.sortOrder = 'ASC';
         }
         this.sortFormDataService.updateFormState(this.formState);
-        this.calcHttpService.getCalculations(this.clientParams).subscribe();
+        this.calcHttpService
+            .getCalculations(this.clientParams)
+            .subscribe((data) => this.calcDataService.broadcastCalcsChange(data));
     }
     formatDate(date) {
         const formattedDate = new Date(date).toLocaleDateString();

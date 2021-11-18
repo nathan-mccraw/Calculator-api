@@ -27,7 +27,7 @@ let HistoryPageComponent = class HistoryPageComponent {
         this.clientParams.pageIndex -= 1;
         this.refreshTable();
     }
-    onPageClick(pageNumber) {
+    onPageNumberClick(pageNumber) {
         this.clientParams.pageIndex = pageNumber - 1;
         this.refreshTable();
     }

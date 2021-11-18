@@ -12,49 +12,6 @@ let CalculateService = class CalculateService {
     ngOnDestroy() {
         this.subscriptions.unsubscribe();
     }
-    buildQueryURL(cp) {
-        let urlString = `https://localhost:5001/api/Calculations?PageSize=${cp.pageSize}&PageIndex=${cp.pageIndex}`;
-        if (this.sortForm.search != null) {
-            urlString += `&Search=${this.sortForm.search}`;
-        }
-        urlString += `&SortOrder=${this.sortForm.sortOrder}`;
-        urlString += `&OrderBy=${this.sortForm.orderBy}`;
-        if (this.sortForm.isUserFilter) {
-            this.sortForm.userFilter.forEach((userId) => {
-                urlString += `&UserFilter=${userId}`;
-            });
-        }
-        if (this.sortForm.isOperatorFilter) {
-            const specialCharacters = [
-                ',',
-                '/',
-                '?',
-                ':',
-                '@',
-                '&',
-                '=',
-                '+',
-                '$',
-                '#',
-            ];
-            this.sortForm.operatorFilter.forEach((operator) => {
-                let encodedOp;
-                if (specialCharacters.includes(operator)) {
-                    encodedOp = encodeURIComponent(operator);
-                }
-                else {
-                    encodedOp = encodeURI(operator);
-                }
-                urlString += `&OperatorFilter=${encodedOp}`;
-            });
-        }
-        if (this.sortForm.isDateFilter) {
-            urlString += `&DateFilter=${this.sortForm.dateFilter}`;
-            const encodedCrit = encodeURI(this.sortForm.dateFilterCriteria);
-            urlString += `&DateFilterCriteria=${encodedCrit}`;
-        }
-        return urlString;
-    }
     postCalculation(calculation) {
         return this.http.post('https://localhost:5001/api/calculations', calculation);
     }
@@ -86,8 +43,37 @@ let CalculateService = class CalculateService {
             return response.data;
         }));
     }
-    getCalculationsByUserId(userId) {
-        return this.http.get(`https://localhost:5001/api/calculations/${userId}`);
+    buildQueryURL(cp) {
+        let urlString = `https://localhost:5001/api/Calculations?PageSize=${cp.pageSize}&PageIndex=${cp.pageIndex}`;
+        if (this.sortForm.search != null) {
+            urlString += `&Search=${this.sortForm.search}`;
+        }
+        urlString += `&SortOrder=${this.sortForm.sortOrder}`;
+        urlString += `&OrderBy=${this.sortForm.orderBy}`;
+        if (this.sortForm.isUserFilter) {
+            this.sortForm.userFilter.forEach((userId) => {
+                urlString += `&UserFilter=${userId}`;
+            });
+        }
+        if (this.sortForm.isOperatorFilter) {
+            const specialCharacters = [',', '/', '?', ':', '@', '&', '=', '+', '$', '#'];
+            this.sortForm.operatorFilter.forEach((operator) => {
+                let encodedOp;
+                if (specialCharacters.includes(operator)) {
+                    encodedOp = encodeURIComponent(operator);
+                }
+                else {
+                    encodedOp = encodeURI(operator);
+                }
+                urlString += `&OperatorFilter=${encodedOp}`;
+            });
+        }
+        if (this.sortForm.isDateFilter) {
+            urlString += `&DateFilter=${this.sortForm.dateFilter}`;
+            const encodedCrit = encodeURI(this.sortForm.dateFilterCriteria);
+            urlString += `&DateFilterCriteria=${encodedCrit}`;
+        }
+        return urlString;
     }
 };
 CalculateService = __decorate([

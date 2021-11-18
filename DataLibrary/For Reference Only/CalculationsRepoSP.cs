@@ -44,7 +44,7 @@ namespace DataLibrary.Repository
             return recs.ToList();
         }
 
-        public async Task<int> CreateAndAddCalculation(CalculationEntity calculation)
+        public async Task<int> AddCalculation(CalculationEntity calculation)
         {
             DynamicParameters p = new DynamicParameters();
 
@@ -66,7 +66,7 @@ namespace DataLibrary.Repository
             throw new NotImplementedException();
         }
 
-        public Task<List<CalcWithUserEntity>> GetCalculationsWithUser()
+        public Task<List<CalcWithUsernameEntity>> GetCalculationsWithUser()
         {
             throw new NotImplementedException();
         }

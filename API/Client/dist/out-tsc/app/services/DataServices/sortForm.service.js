@@ -13,7 +13,6 @@ let SortFormService = class SortFormService {
     }
     updateFormState(newState) {
         this.formState.next(newState);
-        console.log(this.formState);
     }
 };
 SortFormService = __decorate([

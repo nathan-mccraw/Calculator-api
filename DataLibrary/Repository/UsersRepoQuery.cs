@@ -20,18 +20,17 @@ namespace DataLibrary.Repository
 
         public async Task<int> CreateUser(UserEntity user)
         {
-            string sql = @"INSERT INTO dbo.Users Id, Username, Firstname, Lastname
-                           VALUES(@Id, @Username, @Firstname, @Lastname);";
+            string sql = @"INSERT INTO dbo.Users(Username, Firstname, Lastname)
+                           VALUES(@Username, @Firstname, @Lastname);";
 
             DynamicParameters p = new DynamicParameters();
             p.Add("Username", user.Username);
             p.Add("FirstName", user.FirstName);
             p.Add("LastName", user.LastName);
-            p.Add("Id", DbType.Int32, direction: ParameterDirection.Output);
 
-            await _dataAccess.SaveData(sql, p, _connectionString.SqlConnectionName);
+            int id = await _dataAccess.SaveData(sql, p, _connectionString.SqlConnectionName);
 
-            return p.Get<int>("Id");
+            return id;
         }
 
         public async Task<bool> DoesUserNameExist(string username)

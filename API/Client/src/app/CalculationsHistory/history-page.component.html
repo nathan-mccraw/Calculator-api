@@ -7,7 +7,7 @@
       <span>Page: {{ clientParams.pageIndex + 1 }}</span>
       <div class="btn-group ms-4 me-4 mt-2" role="group" aria-label="Page number buttons">
         <button *ngFor="let page of clientParams.pages" type="button" class="btn btn-secondary"
-          (click)="onPageClick(page)">{{page}}</button>
+          (click)="onPageNumberClick(page)">{{page}}</button>
       </div>
       <span>Showing: {{ clientParams.pageSize * clientParams.pageIndex }}-{{
         clientParams.pageSize * (clientParams.pageIndex + 1)
@@ -19,7 +19,6 @@
         Prev
       </button>
       <span>Total Results: {{ clientParams.count }}</span>
-      <!-- <button (click)="refreshTable()" class="btn btn-success">Refresh</button> -->
       <button *ngIf="clientParams.count > 0" (click)="nextPage()" [disabled]="clientParams.isNextDisabled"
         class="btn btn-secondary pageBtn ms-auto">
         Next

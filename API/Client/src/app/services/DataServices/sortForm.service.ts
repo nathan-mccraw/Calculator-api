@@ -17,6 +17,5 @@ import { SortFormData } from "./../../Model/formData.model";
 
     updateFormState(newState: FormState){
       this.formState.next(newState);
-      console.log(this.formState);
     }
   }

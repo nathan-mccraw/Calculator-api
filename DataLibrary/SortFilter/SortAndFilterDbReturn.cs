@@ -3,16 +3,14 @@ using Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataLibrary.SortFilter
 {
     public class SortAndFilterDbReturn : ISortAndFilter
     {
-        public IEnumerable<CalcWithUserEntity> SortAndFilterCalculations(ClientParams cp, List<CalcWithUserEntity> data)
+        public IEnumerable<CalcWithUsernameEntity> SortAndFilterCalculations(ClientParams cp, List<CalcWithUsernameEntity> data)
         {
-            IEnumerable<CalcWithUserEntity> sortedData = data;
+            IEnumerable<CalcWithUsernameEntity> sortedData = data;
 
             if (cp.Search != null)
             {

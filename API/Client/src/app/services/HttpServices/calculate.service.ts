@@ -1,7 +1,6 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Expression } from './../../Model/expression.model';
-import { calcNoUser } from './../../Model/calcNoUser.model';
 import { apiResponseDTO } from './../../Model/apiResponse.model';
 import { ClientParams } from './../../Model/clientParams.model';
 import { map } from 'rxjs/operators';
@@ -29,57 +28,6 @@ export class CalculateService {
 
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
-  }
-
-  private buildQueryURL(cp: ClientParams) {
-    let urlString: string = `https://localhost:5001/api/Calculations?PageSize=${cp.pageSize}&PageIndex=${cp.pageIndex}`;
-
-    if (this.sortForm.search != null) {
-      urlString += `&Search=${this.sortForm.search}`;
-    }
-
-    urlString += `&SortOrder=${this.sortForm.sortOrder}`;
-
-    urlString += `&OrderBy=${this.sortForm.orderBy}`;
-
-    if (this.sortForm.isUserFilter) {
-      this.sortForm.userFilter.forEach((userId) => {
-        urlString += `&UserFilter=${userId}`;
-      });
-    }
-
-    if (this.sortForm.isOperatorFilter) {
-      const specialCharacters = [
-        ',',
-        '/',
-        '?',
-        ':',
-        '@',
-        '&',
-        '=',
-        '+',
-        '$',
-        '#',
-      ];
-      this.sortForm.operatorFilter.forEach((operator) => {
-        let encodedOp: string;
-        if (specialCharacters.includes(operator)) {
-          encodedOp = encodeURIComponent(operator);
-        } else {
-          encodedOp = encodeURI(operator);
-        }
-
-        urlString += `&OperatorFilter=${encodedOp}`;
-      });
-    }
-
-    if (this.sortForm.isDateFilter) {
-      urlString += `&DateFilter=${this.sortForm.dateFilter}`;
-      const encodedCrit = encodeURI(this.sortForm.dateFilterCriteria);
-      urlString += `&DateFilterCriteria=${encodedCrit}`;
-    }
-
-    return urlString;
   }
 
   postCalculation(calculation: Expression) {
@@ -122,9 +70,44 @@ export class CalculateService {
     );
   }
 
-  getCalculationsByUserId(userId: number) {
-    return this.http.get<calcNoUser[]>(
-      `https://localhost:5001/api/calculations/${userId}`
-    );
+  private buildQueryURL(cp: ClientParams) {
+    let urlString: string = `https://localhost:5001/api/Calculations?PageSize=${cp.pageSize}&PageIndex=${cp.pageIndex}`;
+
+    if (this.sortForm.search != null) {
+      urlString += `&Search=${this.sortForm.search}`;
+    }
+
+    urlString += `&SortOrder=${this.sortForm.sortOrder}`;
+
+    urlString += `&OrderBy=${this.sortForm.orderBy}`;
+
+    if (this.sortForm.isUserFilter) {
+      this.sortForm.userFilter.forEach((userId) => {
+        urlString += `&UserFilter=${userId}`;
+      });
+    }
+
+    if (this.sortForm.isOperatorFilter) {
+      const specialCharacters = [',','/','?',':','@','&','=','+','$','#'];
+      
+      this.sortForm.operatorFilter.forEach((operator) => {
+        let encodedOp: string;
+        if (specialCharacters.includes(operator)) {
+          encodedOp = encodeURIComponent(operator);
+        } else {
+          encodedOp = encodeURI(operator);
+        }
+
+        urlString += `&OperatorFilter=${encodedOp}`;
+      });
+    }
+
+    if (this.sortForm.isDateFilter) {
+      urlString += `&DateFilter=${this.sortForm.dateFilter}`;
+      const encodedCrit = encodeURI(this.sortForm.dateFilterCriteria);
+      urlString += `&DateFilterCriteria=${encodedCrit}`;
+    }
+
+    return urlString;
   }
 }

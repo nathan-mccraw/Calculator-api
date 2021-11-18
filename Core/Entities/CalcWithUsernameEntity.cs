@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Core.Entities
 {
-    public class CalcWithUserEntity
+    public class CalcWithUsernameEntity
     {
         public int Id { get; set; }
         public string Username { get; set; }

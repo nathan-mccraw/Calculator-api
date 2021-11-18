@@ -10,6 +10,7 @@ let SortFormComponent = class SortFormComponent {
         this.clientParamsService = clientParamsService;
         this.usersService = usersService;
         this.operatorsService = operatorsService;
+        this.formState = new FormState;
         this.users = [];
         this.subscriptions = [];
     }
@@ -23,15 +24,35 @@ let SortFormComponent = class SortFormComponent {
             sub.unsubscribe();
         });
     }
+    onUserFilterClick() {
+        this.getUpdatedUsersList();
+        if (this.formState.isUserFilter === false) {
+            this.formState.userFilter = [];
+            console.log(this.formState.userFilter);
+        }
+    }
     getUpdatedUsersList() {
         this.usersService
             .getAllUsers()
             .subscribe((updatedUsers) => (this.formData.usersList = updatedUsers));
     }
+    onOperatorFilterClick() {
+        this.getUpdatedOperatorsList();
+        if (this.formState.isOperatorFilter === false) {
+            this.formState.operatorFilter = [];
+            console.log(this.formState.operatorFilter);
+        }
+    }
     getUpdatedOperatorsList() {
         this.operatorsService
             .getOperators()
             .subscribe((updatedOperators) => (this.formData.operatorsList = updatedOperators));
+    }
+    onDateFilterClick() {
+        if (this.formState.isDateFilter === false) {
+            this.formState.dateFilter = null;
+            this.formState.dateFilterCriteria = "On Selected Date";
+        }
     }
     updateSearchListInForm(searchIn) {
         const index = this.formState.searchFilter.indexOf(searchIn);
@@ -75,10 +96,15 @@ let SortFormComponent = class SortFormComponent {
         });
     }
     onSubmit() {
-        this.formService.updateFormState(this.formState);
-        this.calcService.getCalculations(this.clientParams).subscribe((data) => {
-            this.calcDataService.broadcastCalcsChange(data);
-        });
+        if (!isNaN(this.formState.search)) {
+            this.formService.updateFormState(this.formState);
+            this.calcService.getCalculations(this.clientParams).subscribe((data) => {
+                this.calcDataService.broadcastCalcsChange(data);
+            });
+        }
+        else {
+            alert("Invalid search, only value decimal numbers are accepted");
+        }
     }
 };
 SortFormComponent = __decorate([
