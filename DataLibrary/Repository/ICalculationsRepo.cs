@@ -9,9 +9,9 @@ namespace DataLibrary.Repository
     {
         Task<int> DeleteCalculation(int calculationId);
 
-        Task<List<CalculationEntity>> GetCalculations(ClientParams clientParams);
+        Task<List<CalculationEntity>> GetCalculations();
 
-        Task<List<CalcWithUserEntity>> GetCalculationsWithUser(ClientParams clientParams);
+        Task<List<CalcWithUserEntity>> GetCalculationsWithUser();
 
         Task<List<CalculationEntity>> GetCalculationsByUserId(int userId);
 

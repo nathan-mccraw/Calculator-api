@@ -10,6 +10,7 @@ namespace Core.Entities
     {
         public int Id { get; set; }
         public string Username { get; set; }
+        public int UserId { get; set; }
         public decimal FirstOperand { get; set; }
         public decimal SecondOperand { get; set; }
         public string Operator { get; set; }

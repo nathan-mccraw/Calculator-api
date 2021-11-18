@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using DataLibrary.SortFilter;
 
 namespace API
 {
@@ -29,6 +30,7 @@ namespace API
             services.AddSingleton<IDataAccess, SqlDbUsingQuery>();
             services.AddSingleton<IUsersRepo, UsersRepoQuery>();
             services.AddSingleton<ICalculationsRepo, CalculationsRepoQuery>();
+            services.AddSingleton<ISortAndFilter, SortAndFilterDbReturn>();
             services.AddScoped<ICalculator, Calculator>();
             services.AddControllers();
             //services.AddCors(opt =>

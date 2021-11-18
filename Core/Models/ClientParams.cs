@@ -16,7 +16,7 @@ namespace Core.Models
         public string Search { get; set; }
         public string SortOrder { get; set; }
         public List<int> UserFilter { get; set; }
-        public List<char> OperatorFilter { get; set; }
+        public List<string> OperatorFilter { get; set; }
         public string DateFilter { get; set; }
         public string DateFilterCriteria { get; set; }
     }

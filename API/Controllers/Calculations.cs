@@ -5,9 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using Core.Entities;
-using API.DTOs;
+using API.Helpers;
 using Core.Models;
 using System.Collections.Generic;
+using DataLibrary.SortFilter;
+using System.Linq;
 
 namespace API.Controllers
 {
@@ -17,11 +19,13 @@ namespace API.Controllers
     {
         private readonly ICalculator _calculator;
         private readonly ICalculationsRepo _calcRepo;
+        private readonly ISortAndFilter _sortAndFilter;
 
-        public Calculations(ICalculator calculator, ICalculationsRepo calcRepo)
+        public Calculations(ICalculator calculator, ICalculationsRepo calcRepo, ISortAndFilter sortAndFilter)
         {
             _calculator = calculator;
             _calcRepo = calcRepo;
+            _sortAndFilter = sortAndFilter;
         }
 
         // Get: api/Calculations
@@ -30,10 +34,11 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Pagination<CalcWithUserEntity>>> GetCalculations([FromQuery] ClientParams clientParams)
         {
-            var calcs = await _calcRepo.GetCalculationsWithUser(clientParams);
-            var totalCalcs = await _calcRepo.CountAsync(clientParams);
+            var calcs = await _calcRepo.GetCalculationsWithUser();
+            IEnumerable<CalcWithUserEntity> sortedCalcs = _sortAndFilter.SortAndFilterCalculations(clientParams, calcs);
+            int totalCalcs = sortedCalcs.Count();
 
-            return Ok(new Pagination<CalcWithUserEntity>(clientParams.PageIndex, clientParams.PageSize, totalCalcs, calcs));
+            return Ok(new Pagination<CalcWithUserEntity>(clientParams.PageIndex, clientParams.PageSize, totalCalcs, sortedCalcs));
         }
 
         // Get: api/Calculations/5

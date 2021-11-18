@@ -16,7 +16,7 @@
       </div>
       <button type="submit" class="btn btn-secondary">SEARCH</button>
     </div>
-    <div
+    <!-- <div
       class="d-flex justify-content-between align-items-center ps-2 pe-2 mb-2"
     >
       <div>
@@ -26,6 +26,8 @@
             type="checkbox"
             name="All"
             class="me-1"
+            value="All"
+            (click)="updateSearchListInForm('all')"
           />
           All
         </label>
@@ -38,6 +40,8 @@
             type="checkbox"
             name="firstOperand"
             class="me-1"
+            value="firstOperand"
+            (click)="updateSearchListInForm('firstOperand')"
           />
           1st Operand
         </label>
@@ -50,6 +54,8 @@
             type="checkbox"
             name="secondOperand"
             class="me-1"
+            value="secondOperand"
+            (click)="updateSearchListInForm('secondOperand')"
           />
           2nd Operand
         </label>
@@ -62,13 +68,15 @@
             type="checkbox"
             name="Answer"
             class="me-1"
+            value="Answer"
+            (click)="updateSearchListInForm('answer')"
           />
           Answer
         </label>
       </div>
-    </div>
+    </div> -->
   </div>
-  <div id="sortGroup">
+  <!-- <div id="sortGroup">
     <span class="h5 ps-2 me-2">Sort:</span>
     <div
       class="btn-group btn-group-sm"
@@ -101,7 +109,7 @@
         >Descending</label
       >
     </div>
-  </div>
+  </div> -->
   <div id="filterGroup" class="d-flex mt-2">
     <span class="h5 ps-2 me-2">Filter:</span>
     <div>

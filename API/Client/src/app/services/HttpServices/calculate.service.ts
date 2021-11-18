@@ -32,7 +32,6 @@ export class CalculateService {
   }
 
   private buildQueryURL(cp: ClientParams) {
-    console.log(this.sortForm);
     let urlString: string = `https://localhost:5001/api/Calculations?PageSize=${cp.pageSize}&PageIndex=${cp.pageIndex}`;
 
     if (this.sortForm.search != null) {
@@ -40,6 +39,8 @@ export class CalculateService {
     }
 
     urlString += `&SortOrder=${this.sortForm.sortOrder}`;
+
+    urlString += `&OrderBy=${this.sortForm.orderBy}`;
 
     if (this.sortForm.isUserFilter) {
       this.sortForm.userFilter.forEach((userId) => {
@@ -78,7 +79,6 @@ export class CalculateService {
       urlString += `&DateFilterCriteria=${encodedCrit}`;
     }
 
-    console.log(urlString);
     return urlString;
   }
 

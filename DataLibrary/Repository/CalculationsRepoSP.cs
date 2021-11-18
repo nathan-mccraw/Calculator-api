@@ -22,7 +22,7 @@ namespace DataLibrary.Repository
             _connectionString = connectionString;
         }
 
-        public Task<List<CalculationEntity>> GetCalculations(ClientParams clientParams)
+        public Task<List<CalculationEntity>> GetCalculations()
         {
             return _dataAccess.LoadData<CalculationEntity, dynamic>("dbo.spCalculations_All",
                                                                     new { },
@@ -66,7 +66,7 @@ namespace DataLibrary.Repository
             throw new NotImplementedException();
         }
 
-        public Task<List<CalcWithUserEntity>> GetCalculationsWithUser(ClientParams clientParams)
+        public Task<List<CalcWithUserEntity>> GetCalculationsWithUser()
         {
             throw new NotImplementedException();
         }

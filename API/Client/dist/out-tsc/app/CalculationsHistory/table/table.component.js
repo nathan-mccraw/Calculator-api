@@ -1,15 +1,35 @@
 import { __decorate } from "tslib";
 import { Component } from '@angular/core';
 let TableComponent = class TableComponent {
-    constructor(calcDataService) {
+    constructor(calcDataService, sortFormDataService, calcHttpService, cp) {
         this.calcDataService = calcDataService;
+        this.sortFormDataService = sortFormDataService;
+        this.calcHttpService = calcHttpService;
+        this.cp = cp;
         this.calculations = [];
+        this.subscriptions = [];
     }
     ngOnInit() {
-        this.subscription = this.calcDataService.calculationsWithUserData.subscribe((calcs) => (this.calculations = calcs));
+        this.subscriptions.push(this.calcDataService.calculationsWithUserData.subscribe((calcs) => (this.calculations = calcs)));
+        this.subscriptions.push(this.sortFormDataService.formState.subscribe((newState) => (this.formState = newState)));
+        this.subscriptions.push(this.cp.clientParams.subscribe((newParams) => (this.clientParams = newParams)));
     }
     ngOnDestroy() {
-        this.subscription.unsubscribe();
+        this.subscriptions.forEach((sub) => {
+            sub.unsubscribe();
+        });
+    }
+    sortForm(sortParam) {
+        if (this.formState.orderBy === sortParam) {
+            this.formState.sortOrder =
+                this.formState.sortOrder === 'ASC' ? 'DESC' : 'ASC';
+        }
+        else {
+            this.formState.orderBy = sortParam;
+            this.formState.sortOrder = 'ASC';
+        }
+        this.sortFormDataService.updateFormState(this.formState);
+        this.calcHttpService.getCalculations(this.clientParams).subscribe();
     }
     formatDate(date) {
         const formattedDate = new Date(date).toLocaleDateString();

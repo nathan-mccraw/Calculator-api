@@ -2,11 +2,9 @@
 using Core.Models;
 using Dapper;
 using DataLibrary.Db;
-using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
+using DataLibrary.SortFilter;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Threading.Tasks;
 
 namespace DataLibrary.Repository
@@ -24,7 +22,7 @@ namespace DataLibrary.Repository
 
         public Task<int> CountAsync(ClientParams cp)
         {
-            Specifications specs = new Specifications
+            SpecificationsSQL specs = new SpecificationsSQL
             {
                 SqlStatement = "SELECT COUNT(c.Id)"
             };
@@ -64,7 +62,7 @@ namespace DataLibrary.Repository
             return _dataAccess.SaveData(sql, new { Id = calculationId }, _connectionString.SqlConnectionName);
         }
 
-        public async Task<List<CalculationEntity>> GetCalculations(ClientParams clientParams)
+        public async Task<List<CalculationEntity>> GetCalculations()
         {
             string calcSql = @"SELECT Id, UserId, FirstOperand, Operator, SecondOperand, Answer, Date
                            FROM dbo.Calculations
@@ -73,7 +71,7 @@ namespace DataLibrary.Repository
                            FETCH NEXT @take ROWS ONLY;";
 
             return await _dataAccess.LoadData<CalculationEntity, dynamic>(calcSql,
-                                                                          new { skip = clientParams.PageIndex * clientParams.PageSize, take = clientParams.PageSize },
+                                                                          new { },
                                                                           _connectionString.SqlConnectionName);
         }
 
@@ -86,18 +84,24 @@ namespace DataLibrary.Repository
             return _dataAccess.LoadData<CalculationEntity, dynamic>(sql, new { UserId = userId }, _connectionString.SqlConnectionName);
         }
 
-        public async Task<List<CalcWithUserEntity>> GetCalculationsWithUser(ClientParams cp)
+        public async Task<List<CalcWithUserEntity>> GetCalculationsWithUser()
         {
-            Specifications specs = new Specifications
-            {
-                SqlStatement = "SELECT c.Id, u.Username, c.FirstOperand, c.Operator, c.SecondOperand, c.Answer, c.Date"
-            };
-            BuildSpecifications(cp, specs);
+            string sql = @"SELECT c.Id, u.Username, u.Id AS UserId, c.FirstOperand, c.Operator, c.SecondOperand, c.Answer, c.Date
+                                 FROM dbo.Calculations c
+                                 INNER JOIN dbo.Users u
+                                 ON c.UserId = u.Id";
 
-            return await _dataAccess.LoadData<CalcWithUserEntity, dynamic>(specs.SqlStatement, specs.Parameters, _connectionString.SqlConnectionName);
+            //Specifications specs = new Specifications
+            //{
+            //    SqlStatement = @"SELECT c.Id, u.Username, c.FirstOperand, c.Operator, c.SecondOperand, c.Answer, c.Date"
+            //};
+            //BuildSpecifications(cp, specs);
+
+            //return await _dataAccess.LoadData<CalcWithUserEntity, dynamic>(specs.SqlStatement, specs.Parameters, _connectionString.SqlConnectionName);
+            return await _dataAccess.LoadData<CalcWithUserEntity, dynamic>(sql, new { }, _connectionString.SqlConnectionName);
         }
 
-        private Specifications BuildSpecifications(ClientParams cp, Specifications specs)
+        private SpecificationsSQL BuildSpecifications(ClientParams cp, SpecificationsSQL specs)
         {
             bool isCountStatement = specs.SqlStatement.Contains("COUNT");
 
@@ -107,7 +111,8 @@ namespace DataLibrary.Repository
 
             if (cp.Search != null)
             {
-                specs.Parameters.Add("search", cp.Search);
+                decimal num = Convert.ToDecimal(cp.Search);
+                specs.Parameters.Add("search", num);
                 specs.SqlStatement += @" WHERE c.FirstOperand LIKE '%@search%'
                          OR c.SecondOperand LIKE '%@search%'
                          OR c.Answer LIKE '%@search%'";
@@ -144,11 +149,14 @@ namespace DataLibrary.Repository
             if (cp.DateFilterCriteria != null)
             {
                 DateTime date = DateTime.Parse(cp.DateFilter);
+                DateTime nextDay = date.AddDays(1);
+                specs.Parameters.Add("date", date);
+                specs.Parameters.Add("nextDay", nextDay);
                 specs.SqlStatement += cp.DateFilterCriteria switch
                 {
-                    "Before Selected Date" => $" WHERE c.Date < {date}",
-                    "After Selected Date" => $" WHERE c.Date > {date}",
-                    _ => $" WHERE c.Date = {date}"
+                    "Before Selected Date" => $" WHERE c.Date < @date",
+                    "After Selected Date" => $" WHERE c.Date > @date",
+                    _ => $" WHERE c.Date >= @date and c.Date < @nextDay"
                 };
             }
 

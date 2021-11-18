@@ -2,10 +2,38 @@
   <table class="table table-secondary table-striped text-center mb-1">
     <thead>
       <tr>
-        <th scope="col" class="ps-3 pe-3">Username</th>
-        <th scope="col" class="ps-3 pe-3">Operation</th>
-        <th scope="col" class="ps-3 pe-3">Answer</th>
-        <th scope="col" class="ps-3 pe=3">Date</th>
+        <th scope="col" class="ps-3 pe-3">
+          Username
+          <i
+            class="fa fa-sort"
+            aria-hidden="true"
+            (click)="sortForm('Username')"
+          ></i>
+        </th>
+        <th scope="col" class="ps-3 pe-3">
+          Operation
+          <i
+            class="fa fa-sort"
+            aria-hidden="true"
+            (click)="sortForm('Operator')"
+          ></i>
+        </th>
+        <th scope="col" class="ps-3 pe-3">
+          Answer
+          <i
+            class="fa fa-sort"
+            aria-hidden="true"
+            (click)="sortForm('Answer')"
+          ></i>
+        </th>
+        <th scope="col" class="ps-3 pe=3">
+          Date
+          <i
+            class="fa fa-sort"
+            aria-hidden="true"
+            (click)="sortForm('Date')"
+          ></i>
+        </th>
         <th scope="col" class="ps-3 pe=3">Time</th>
       </tr>
     </thead>
