@@ -4,6 +4,7 @@ import { CalculationsDataService } from './../services/DataServices/calculations
 import { ClientParamsService } from '../services/DataServices/clientParams.service';
 import { ClientParams } from '../Model/clientParams.model';
 import { Subscription } from 'rxjs';
+import { CalculationsData } from '../Model/calculationsData.model';
 
 @Component({
   selector: 'app-history-page',
@@ -12,28 +13,46 @@ import { Subscription } from 'rxjs';
 })
 export class HistoryPageComponent implements OnInit {
   clientParams: ClientParams;
-  subscriptions : Subscription;
+  calcsData: CalculationsData;
+  subscriptions: Subscription[] = [];
 
   constructor(
     private calcService: CalculateService,
     private calcDataService: CalculationsDataService,
     private clientParamsService: ClientParamsService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.subscriptions = this.clientParamsService.clientParams.subscribe((params) => this.clientParams = params);
+    this.subscriptions.push(
+      this.clientParamsService.clientParams.subscribe(
+        (params) => (this.clientParams = params)
+      )
+    );
+    this.subscriptions.push(
+      this.calcDataService.calculationsData.subscribe(
+        (newCalcData) => (this.calcsData = newCalcData)
+      )
+    );
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
+    this.subscriptions.forEach((sub) => {
+      sub.unsubscribe();
+    });
   }
 
   refreshTable() {
-    this.calcService
-      .getCalculations(this.clientParams)
-      .subscribe(data => {
-        this.calcDataService.broadcastCalcsChange(data);
-      });
+    this.calcService.getCalculations(this.clientParams).subscribe(
+      (newCalcData) => {
+        this.calcsData.calcDTOs = newCalcData;
+        this.calcDataService.updateCalcData(this.calcsData);
+      },
+      (error) => alert('Unable to get Calculations'),
+      () => {
+        this.calcsData.isDataLoading = false;
+        this.calcDataService.updateCalcData(this.calcsData);
+      }
+    );
   }
 
   nextPage() {
@@ -46,7 +65,7 @@ export class HistoryPageComponent implements OnInit {
     this.refreshTable();
   }
 
-  onPageNumberClick(pageNumber: number){
+  onPageNumberClick(pageNumber: number) {
     this.clientParams.pageIndex = pageNumber - 1;
     this.refreshTable();
   }

@@ -27,12 +27,14 @@ namespace API
             {
                 SqlConnectionName = "Default"
             });
+
             services.AddSingleton<IDataAccess, SqlDbUsingQuery>();
             services.AddSingleton<IUsersRepo, UsersRepoQuery>();
             services.AddSingleton<ICalculationsRepo, CalculationsRepoQuery>();
             services.AddSingleton<ISortAndFilter, SortAndFilterDbReturn>();
             services.AddScoped<ICalculator, Calculator>();
-            services.AddControllers();
+            services.AddControllersWithViews();
+
             //services.AddCors(opt =>
             //{
             //    opt.AddDefaultPolicy(policy =>
@@ -41,11 +43,11 @@ namespace API
             //    });
             //});
             services.AddSpaStaticFiles(config =>
-                config.RootPath = "client/dist");
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
-            });
+                config.RootPath = "Client/dist");
+            //services.AddSwaggerGen(c =>
+            //{
+            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
+            //});
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -53,27 +55,41 @@ namespace API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
+            }
+            else
+            {
+                app.UseHsts();
             }
 
+            app.UseDeveloperExceptionPage();
+
+            //app.UseSwagger();
+
+            //app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
+
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            //app.UseAuthorization();
+            if (!env.IsDevelopment())
+            {
+                app.UseSpaStaticFiles();
+            }
 
             app.UseRouting();
 
-            app.UseAuthorization();
-
-            app.UseSpaStaticFiles();
             //app.UseCors();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                //endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller}/{action=index}/{id?}");
             });
 
             app.UseSpa(spa =>
             {
-                spa.Options.SourcePath = "client";
+                spa.Options.SourcePath = "Client";
                 if (env.IsDevelopment())
                 {
                     spa.UseAngularCliServer("start");

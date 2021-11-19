@@ -4,37 +4,73 @@
       <tr>
         <th scope="col" class="ps-3 pe-3">
           Username
-          <span class="sort"><i class="fa fa-sort" aria-hidden="true" (click)="sortForm('Username')"></i></span>
+          <span class="sort"
+            ><i
+              class="fa fa-sort"
+              aria-hidden="true"
+              (click)="sortForm('Username')"
+            ></i
+          ></span>
         </th>
         <th scope="col" class="ps-3 pe-3">
           Operation
-          <span class="sort"><i class="fa fa-sort" aria-hidden="true" (click)="sortForm('Operator')"></i></span>
+          <span class="sort"
+            ><i
+              class="fa fa-sort"
+              aria-hidden="true"
+              (click)="sortForm('Operator')"
+            ></i
+          ></span>
         </th>
         <th scope="col" class="ps-3 pe-3">
           Answer
-          <span class="sort"><i class="fa fa-sort" aria-hidden="true" (click)="sortForm('Answer')"></i></span>
+          <span class="sort"
+            ><i
+              class="fa fa-sort"
+              aria-hidden="true"
+              (click)="sortForm('Answer')"
+            ></i
+          ></span>
         </th>
         <th scope="col" class="ps-3 pe=3">
           Date
-          <span class="sort"><i class="fa fa-sort" aria-hidden="true" (click)="sortForm('Date')"></i></span>
+          <span class="sort"
+            ><i
+              class="fa fa-sort"
+              aria-hidden="true"
+              (click)="sortForm('Date')"
+            ></i
+          ></span>
         </th>
         <th scope="col" class="ps-3 pe=3">Time</th>
       </tr>
     </thead>
-    <tbody *ngIf="calculations.length > 0; else noDataTable">
-      <tr *ngFor="let calc of calculations">
-        <td>{{ calc.username }}</td>
-        <td>
-          {{ calc.firstOperand }} {{ calc.operator }} {{ calc.secondOperand }}
+    <tbody *ngIf="calcsData.isDataLoading === true; else tableWithData">
+      <tr>
+        <td colspan="5" class="h2 mt-2 text-center">LOADING</td>
+      </tr>
+      <tr>
+        <td colspan="5" class="h2 text-center">
+          <i class="fa fa-spinner"></i>
         </td>
-        <td>{{ calc.answer }}</td>
-        <td>
-          {{ formatDate(calc.date) }}
-        </td>
-        <td>{{ formatTime(calc.date) }}</td>
       </tr>
     </tbody>
-    <ng-template #noDataTable>
+    <ng-template #tableWithData>
+      <tbody *ngIf="calcsData.calcDTOs.length > 0; else tableWithNoData">
+        <tr *ngFor="let calc of calcsData.calcDTOs">
+          <td>{{ calc.username }}</td>
+          <td>
+            {{ calc.firstOperand }} {{ calc.operator }} {{ calc.secondOperand }}
+          </td>
+          <td>{{ calc.answer }}</td>
+          <td>
+            {{ formatDate(calc.date) }}
+          </td>
+          <td>{{ formatTime(calc.date) }}</td>
+        </tr>
+      </tbody>
+    </ng-template>
+    <ng-template #tableWithNoData>
       <tbody>
         <tr>
           <td colspan="5" class="h2 mt-2 text-center">No Data to Display</td>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { calculationDTO } from '../../Model/calculationDTO.model';
+import { CalculationsData } from '../../Model/calculationsData.model';
 import { CalculationsDataService } from '../../services/DataServices/calculationsData.service';
 import { SortFormService } from './../../services/DataServices/sortForm.service';
 import { FormState } from './../../Model/formState.model';
@@ -14,7 +14,7 @@ import { ClientParams } from './../../Model/clientParams.model';
   styleUrls: ['./table.component.css'],
 })
 export class TableComponent implements OnInit {
-  calculations: calculationDTO[] = [];
+  calcsData: CalculationsData = new CalculationsData();
   formState: FormState;
   clientParams: ClientParams;
   subscriptions: Subscription[] = [];
@@ -28,8 +28,8 @@ export class TableComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.calcDataService.calculationsWithUserData.subscribe(
-        (calcs) => (this.calculations = calcs)
+      this.calcDataService.calculationsData.subscribe(
+        (newCalcs) => (this.calcsData = newCalcs)
       )
     );
     this.subscriptions.push(
@@ -60,9 +60,17 @@ export class TableComponent implements OnInit {
     }
 
     this.sortFormDataService.updateFormState(this.formState);
-    this.calcHttpService
-      .getCalculations(this.clientParams)
-      .subscribe((data) => this.calcDataService.broadcastCalcsChange(data));
+    this.calcHttpService.getCalculations(this.clientParams).subscribe(
+      (newCalcData) => {
+        this.calcsData.calcDTOs = newCalcData;
+        this.calcDataService.updateCalcData(this.calcsData);
+      },
+      (error) => alert('Unable to get Calculations'),
+      () => {
+        this.calcsData.isDataLoading = false;
+        this.calcDataService.updateCalcData(this.calcsData);
+      }
+    );
   }
 
   formatDate(date) {

@@ -1,28 +1,57 @@
-<div class="position-absolute top-50 start-50 translate-middle h-75">
-  <app-sortForm></app-sortForm>
+<div class="container h-75">
+  <div class="row justify-content-center">
+    <div class="col-auto mt-1">
+      <app-sortForm></app-sortForm>
 
-  <app-table></app-table>
-  <div class="tableFooter">
-    <div *ngIf="clientParams.count > 0" class="d-flex justify-content-between align-items-center">
-      <span>Page: {{ clientParams.pageIndex + 1 }}</span>
-      <div class="btn-group ms-4 me-4 mt-2" role="group" aria-label="Page number buttons">
-        <button *ngFor="let page of clientParams.pages" type="button" class="btn btn-secondary"
-          (click)="onPageNumberClick(page)">{{page}}</button>
+      <app-table></app-table>
+      <div class="tableFooter">
+        <div
+          *ngIf="clientParams.count > 0"
+          class="d-flex justify-content-between align-items-center"
+        >
+          <span>Page: {{ clientParams.pageIndex + 1 }}</span>
+          <div
+            class="btn-group ms-4 me-4 mt-2"
+            role="group"
+            aria-label="Page number buttons"
+          >
+            <button
+              *ngFor="let page of clientParams.pages"
+              type="button"
+              class="btn btn-secondary"
+              (click)="onPageNumberClick(page)"
+            >
+              {{ page }}
+            </button>
+          </div>
+          <span
+            >Showing: {{ clientParams.pageSize * clientParams.pageIndex }}-{{
+              clientParams.pageSize * (clientParams.pageIndex + 1)
+            }}</span
+          >
+        </div>
+        <div
+          class="tableNav d-flex justify-content-center align-items-center mt-4"
+        >
+          <button
+            *ngIf="clientParams.count > 0"
+            (click)="prevPage()"
+            [disabled]="clientParams.isPrevDisabled"
+            class="btn btn-secondary pageBtn me-auto"
+          >
+            Prev
+          </button>
+          <span>Total Results: {{ clientParams.count }}</span>
+          <button
+            *ngIf="clientParams.count > 0"
+            (click)="nextPage()"
+            [disabled]="clientParams.isNextDisabled"
+            class="btn btn-secondary pageBtn ms-auto"
+          >
+            Next
+          </button>
+        </div>
       </div>
-      <span>Showing: {{ clientParams.pageSize * clientParams.pageIndex }}-{{
-        clientParams.pageSize * (clientParams.pageIndex + 1)
-        }}</span>
-    </div>
-    <div class="tableNav d-flex justify-content-center align-items-center mt-4">
-      <button *ngIf="clientParams.count > 0" (click)="prevPage()" [disabled]="clientParams.isPrevDisabled"
-        class="btn btn-secondary pageBtn me-auto">
-        Prev
-      </button>
-      <span>Total Results: {{ clientParams.count }}</span>
-      <button *ngIf="clientParams.count > 0" (click)="nextPage()" [disabled]="clientParams.isNextDisabled"
-        class="btn btn-secondary pageBtn ms-auto">
-        Next
-      </button>
     </div>
   </div>
 </div>

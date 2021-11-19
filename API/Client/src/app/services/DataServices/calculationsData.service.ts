@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { ReplaySubject, Subject } from 'rxjs';
-import { calculationDTO } from '../../Model/calculationDTO.model';
+import { CalculationsData } from '../../Model/calculationsData.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CalculationsDataService {
-  calculationsWithUserData: Subject<calculationDTO[]> = new ReplaySubject();
+  calculationsData: Subject<CalculationsData> = new ReplaySubject();
 
   constructor() {}
 
-  broadcastCalcsChange(calcs: calculationDTO[]) {
-    this.calculationsWithUserData.next(calcs);
+  updateCalcData(newCalcs: CalculationsData) {
+    this.calculationsData.next(newCalcs);
   }
 }

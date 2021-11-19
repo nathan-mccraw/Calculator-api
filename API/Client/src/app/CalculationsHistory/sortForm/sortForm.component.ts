@@ -10,6 +10,7 @@ import { User } from './../../Model/user.model';
 import { UsersService } from './../../services/HttpServices/users.service';
 import { OperatorsService } from './../../services/HttpServices/operators.service';
 import { SortFormData } from './../../Model/formData.model';
+import { CalculationsData } from './../../Model/calculationsData.model';
 
 @Component({
   selector: 'app-sortForm',
@@ -17,11 +18,12 @@ import { SortFormData } from './../../Model/formData.model';
   styleUrls: ['./sortForm.component.css'],
 })
 export class SortFormComponent implements OnInit {
-  formState: FormState = new FormState;
+  formState: FormState;
   formData: SortFormData;
+  calcsData: CalculationsData;
   clientParams: ClientParams;
   users: User[] = [];
-  operatorsList: string[];
+  operatorsList: string[] = [];
   subscriptions: Subscription[] = [];
 
   constructor(
@@ -49,6 +51,12 @@ export class SortFormComponent implements OnInit {
         (newParams) => (this.clientParams = newParams)
       )
     );
+
+    this.subscriptions.push(
+      this.calcDataService.calculationsData.subscribe(
+        (newCalcsData) => (this.calcsData = newCalcsData)
+      )
+    );
   }
 
   ngOnDestroy() {
@@ -57,12 +65,34 @@ export class SortFormComponent implements OnInit {
     });
   }
 
-  onUserFilterClick(){
+  onUserFilterClick() {
+    console.log(this.formState);
     this.getUpdatedUsersList();
-    if(this.formState.isUserFilter === false){
+    if (this.formState.isUserFilter === false) {
       this.formState.userFilter = [];
-      console.log(this.formState.userFilter);
     }
+
+    this.formService.updateFormState(this.formState);
+  }
+
+  onDateFilterClick() {
+    console.log(this.formState);
+    if (this.formState.isDateFilter === false) {
+      this.formState.dateFilter = null;
+      this.formState.dateFilterCriteria = 'On Selected Date';
+    }
+
+    this.formService.updateFormState(this.formState);
+    console.log(this.formService.formState);
+  }
+
+  onOperatorFilterClick() {
+    this.getUpdatedOperatorsList();
+    if (this.formState.isOperatorFilter === false) {
+      this.formState.operatorFilter = [];
+    }
+
+    this.formService.updateFormState(this.formState);
   }
 
   getUpdatedUsersList() {
@@ -71,36 +101,12 @@ export class SortFormComponent implements OnInit {
       .subscribe((updatedUsers) => (this.formData.usersList = updatedUsers));
   }
 
-  onOperatorFilterClick(){
-    this.getUpdatedOperatorsList();
-    if(this.formState.isOperatorFilter === false){
-      this.formState.operatorFilter = [];
-      console.log(this.formState.operatorFilter);
-    }
-  }
-
   getUpdatedOperatorsList() {
     this.operatorsService
       .getOperators()
       .subscribe(
         (updatedOperators) => (this.formData.operatorsList = updatedOperators)
       );
-  }
-
-  onDateFilterClick(){
-    if(this.formState.isDateFilter === false){
-      this.formState.dateFilter = null;
-      this.formState.dateFilterCriteria = "On Selected Date";
-    }
-  }
-
-  updateSearchListInForm(searchIn: string) {
-    const index = this.formState.searchFilter.indexOf(searchIn);
-    if (index === -1) {
-      this.formState.searchFilter.push(searchIn);
-    } else {
-      this.formState.searchFilter.splice(index, 1);
-    }
   }
 
   UpdateUsersListInForm(userId: number) {
@@ -133,20 +139,24 @@ export class SortFormComponent implements OnInit {
   }
 
   refreshTable() {
-    this.calcService.getCalculations(this.clientParams).subscribe((data) => {
-      this.calcDataService.broadcastCalcsChange(data);
-    });
+    this.calcService.getCalculations(this.clientParams).subscribe(
+      (newCalcData) => {
+        this.calcsData.calcDTOs = newCalcData;
+      },
+      (error) => alert('Unable to get Calculations'),
+      () => {
+        this.calcsData.isDataLoading = false;
+        this.calcDataService.updateCalcData(this.calcsData);
+      }
+    );
   }
 
   onSubmit() {
-    if(!isNaN(this.formState.search)){
+    if (!isNaN(this.formState.search)) {
       this.formService.updateFormState(this.formState);
-      this.calcService.getCalculations(this.clientParams).subscribe((data) => {
-        this.calcDataService.broadcastCalcsChange(data);
-      });
+      this.refreshTable();
     } else {
-      alert("Invalid search, only value decimal numbers are accepted");
+      alert('Invalid search, only value decimal numbers are accepted');
     }
-    
   }
 }

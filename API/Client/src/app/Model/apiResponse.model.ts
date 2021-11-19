@@ -1,7 +1,7 @@
-import { calculationDTO } from './calculationDTO.model';
-export class apiResponseDTO {
+import { CalculationDTO } from './calculationsData.model';
+export class ApiResponseDTO {
   public pageIndex: number;
   public pageSize: number;
   public count: number;
-  public data: calculationDTO[];
+  public data: CalculationDTO[];
 }

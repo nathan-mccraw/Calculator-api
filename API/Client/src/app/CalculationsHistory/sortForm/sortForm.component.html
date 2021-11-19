@@ -1,9 +1,17 @@
 <form #f="ngForm" (ngSubmit)="onSubmit()" class="mb-2">
   <div id="searchGroup">
     <div class="input-group">
-      <span class="input-group-text input-group-sm"><i class="fa fa-search"></i></span>
+      <span class="input-group-text input-group-sm"
+        ><i class="fa fa-search"></i
+      ></span>
       <div class="form-floating flex-grow-1">
-        <input [(ngModel)]="formState.search" name="search" type="text" class="form-control" placeholder=" " />
+        <input
+          [(ngModel)]="formState.search"
+          name="search"
+          type="text"
+          class="form-control"
+          placeholder=" "
+        />
         <label for="floatingInput">Enter Numbers to Search Answer</label>
       </div>
       <button type="submit" class="btn btn-secondary">SEARCH</button>
@@ -13,51 +21,107 @@
   <div id="filterGroup" class="d-flex mt-2">
     <span class="h5 ps-2 me-2">Filter:</span>
     <div>
-      <div class="btn-group btn-group-sm" role="group" aria-label="Filter by user, operator type, or date">
-        <input #displayUserFilter="ngModel" [(ngModel)]="formState.isUserFilter" type="checkbox" id="filterUser"
-          class="btn-check" name="filterUser" (click)="onUserFilterClick()" />
+      <div
+        class="btn-group btn-group-sm"
+        role="group"
+        aria-label="Filter by user, operator type, or date"
+      >
+        <input
+          [(ngModel)]="formState.isUserFilter"
+          type="checkbox"
+          id="filterUser"
+          class="btn-check"
+          name="filterUser"
+          (click)="onUserFilterClick()"
+        />
         <label class="btn btn-outline-secondary" for="filterUser">User</label>
 
-        <input #displayOperatorFilter="ngModel" [(ngModel)]="formState.isOperatorFilter" type="checkbox"
-          id="filterOperation" class="btn-check" name="filterOperation" (click)="onOperatorFilterClick()" />
-        <label class="btn btn-outline-secondary" for="filterOperation">Operation</label>
+        <input
+          [(ngModel)]="formState.isOperatorFilter"
+          type="checkbox"
+          id="filterOperation"
+          class="btn-check"
+          name="filterOperation"
+          (click)="onOperatorFilterClick()"
+        />
+        <label class="btn btn-outline-secondary" for="filterOperation"
+          >Operation</label
+        >
 
-        <input #displayDateFilter="ngModel" [(ngModel)]="formState.isDateFilter" type="checkbox" id="filterDate"
-          class="btn-check" name="filterDate" (click)="onDateFilterClick()" />
+        <input
+          [(ngModel)]="formState.isDateFilter"
+          type="checkbox"
+          id="filterDate"
+          class="btn-check"
+          name="filterDate"
+          (click)="onDateFilterClick()"
+        />
         <label class="btn btn-outline-secondary" for="filterDate">Date</label>
       </div>
     </div>
   </div>
 
-  <div *ngIf="displayUserFilter.value" id="sortByUsers" class="d-flex align-items-center ms-4 mt-2">
+  <div
+    *ngIf="formState.isUserFilter"
+    id="sortByUsers"
+    class="d-flex align-items-center ms-4 mt-2"
+  >
     <span class="h5 me-2">Filter By User:</span>
     <div *ngFor="let user of formData.usersList" class="me-4">
       <label for="{{ user.id }}">
-        <input (click)="UpdateUsersListInForm(user.id)" type="checkbox" name="{{ user.id }}" value="{{ user.id }}"
-          class="me-1" />
+        <input
+          (click)="UpdateUsersListInForm(user.id)"
+          type="checkbox"
+          name="{{ user.id }}"
+          value="{{ user.id }}"
+          class="me-1"
+        />
         {{ user.username }}
       </label>
     </div>
   </div>
 
-  <div *ngIf="displayOperatorFilter.value" id="sortByOperatoration" class="d-flex align-items-center ms-4 mt-2">
+  <div
+    *ngIf="formState.isOperatorFilter"
+    id="sortByOperatoration"
+    class="d-flex align-items-center ms-4 mt-2"
+  >
     <span class="h5 me-2">Filter By Operation:</span>
     <div *ngFor="let op of formData.operatorsList; let i = index" class="me-2">
-      <input (click)="UpdateOperatorsListInForm(op)" type="checkbox" name="{{ i }}" id="{{ i }}" value="op"
-        class="btn-check" />
+      <input
+        (click)="UpdateOperatorsListInForm(op)"
+        type="checkbox"
+        name="{{ i }}"
+        id="{{ i }}"
+        value="op"
+        class="btn-check"
+      />
       <label class="btn btn-outline-secondary" for="{{ i }}">{{ op }}</label>
     </div>
   </div>
 
-  <div *ngIf="displayDateFilter.value" id="sortByDate" class="d-flex w-100 ms-4 mt-2">
+  <div
+    *ngIf="formState.isDateFilter"
+    id="sortByDate"
+    class="d-flex w-100 ms-4 mt-2"
+  >
     <span class="h5 me-2 col-auto">Filter By Date:</span>
-    <select class="form-select form-select-sm" style="width: auto" name="filterDateCriteria"
-      [(ngModel)]="formState.dateFilterCriteria">
+    <select
+      class="form-select form-select-sm"
+      style="width: auto"
+      name="filterDateCriteria"
+      [(ngModel)]="formState.dateFilterCriteria"
+    >
       <option value="On Selected Date" selected>On Selected Date</option>
       <option value="Before Selected Date">Before Selected Date</option>
       <option value="After Selected Date">After Selected Date</option>
     </select>
-    <input type="date" class="col-auto" name="filterDate" [(ngModel)]="formState.dateFilter" />
+    <input
+      type="date"
+      class="col-auto"
+      name="dateFilter"
+      [(ngModel)]="formState.dateFilter"
+    />
   </div>
 
   <div id="resetButtons" class="mt-4 d-flex justify-content-end">
