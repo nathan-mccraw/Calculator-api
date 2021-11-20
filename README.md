@@ -29,7 +29,7 @@ Launch browser and go to https://localhost:5001/
 
 ![CalcUI](https://user-images.githubusercontent.com/84479635/142713640-de27f9f5-dd26-44a4-9f0c-0a725b433db7.JPG)
 
-The home page is a calculator app with key press and mouse click functionality.  The operators are served from the backend and dynamically appended to the calculator.  All calculations are completed through a posts request and calculated on the backend (design requirement for this coding challenge).  When the expression is submitted for calculation, the user ID is attached to the expression, and the calculation is stored in a SQL server DB (production app is using Azure SQL DB); the post requet response includes the answer to the calculation.  The user is selected using a drop down list on the right side of the navbar.
+The home page is a calculator app with key press and mouse click functionality.  The operators are served from the backend and dynamically appended to the calculator.  All calculations are completed through a post request and calculated on the backend (design requirement for this coding challenge).  When the expression is submitted for evaulation, the user ID is attached to the expression, and the calculation is stored in a SQL server DB (production app is using Azure SQL DB); the post requet response includes the answer to the calculation.  The user is selected using a drop down list on the right side of the navbar.
 
 ![AddUser](https://user-images.githubusercontent.com/84479635/142713828-e9746653-414a-4c0b-aa27-d6d76f31a974.JPG)
 
@@ -37,7 +37,7 @@ Application includes functionality to add a new user, sending a post request to 
 
 ![TableUI](https://user-images.githubusercontent.com/84479635/142713861-459fd2cb-1c3b-4222-bd13-be515c7e9289.JPG)
 
-Usinng Angular router, a "history" page contains a table displaying all previous calculations.  The results are paginated, only receiving 10 results at a time.  The API is constructed to allow an adjustable number of responses, up to a maximum of 50.  Future updates will include an input to enable the user to adjust the number of results viewed on the table at a time.  Each page is a new http get request, allowing the frontend to remain lightweight.
+Using Angular router, a "history" page contains a table displaying all previous calculations.  Observables are used to maintain The state of the sorting/filtering form when navigating between calculator and the history page. The results are paginated, only receiving 10 results at a time.  The API is constructed to allow an adjustable number of responses, up to a maximum of 50.  Future updates will include an input to enable the user to adjust the number of results viewed on the table at a time.  Each page is a new http get request, allowing the frontend to remain lightweight.
 
 ![TableFilter](https://user-images.githubusercontent.com/84479635/142713920-94911810-9249-40c2-ba19-1ed1f51685cf.JPG)
 
