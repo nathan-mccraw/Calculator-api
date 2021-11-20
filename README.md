@@ -2,7 +2,11 @@
 
 Completed by Nathan McCraw using Angular 12 and .Net Core 5
 
-## Installation
+This app is deployed to Azure and uses Azure SQL databe.  
+
+[Try App Here](https://historicalcalculator.azurewebsites.net/)
+
+## Local Installation
 
 TLDR
 - In CLI @ Calculator-api/API/Client:
@@ -21,25 +25,26 @@ Now we need launch the API, which builds and serves the Angular single page appl
 
 Launch browser and go to https://localhost:5001/
 
-## Design Documents
-
-[Piedmont Plastics Calculator Static Frontend.pdf](https://github.com/nathan-mccraw/Calculator-api/files/7435922/Piedmont.Plastics.Calculator.Static.Frontend.pdf)
-
-[Piedmont Plastics Calculator Overview.pdf](https://github.com/nathan-mccraw/Calculator-api/files/7435924/Piedmont.Plastics.Calculator.Overview.pdf)
-
-
 ## Application
 
-![Calculator Screen Shot](https://user-images.githubusercontent.com/84479635/139299521-edc54368-4919-483e-97db-2855d63e2591.JPG)
+![CalcUI](https://user-images.githubusercontent.com/84479635/142713640-de27f9f5-dd26-44a4-9f0c-0a725b433db7.JPG)
 
-## Update
+The home page is a calculator app with key press and mouse click functionality.  The operators are served from the backend and dynamically appended to the calculator.  All calculations are completed through a posts request and calculated on the backend (design requirement for this coding challenge).  When the expression is submitted for calculation, the user ID is attached to the expression, and the calculation is stored in a SQL server DB (production app is using Azure SQL DB); the post requet response includes the answer to the calculation.  The user is selected using a drop down list on the right side of the navbar.
 
-Added SQL Server and Dapper to display calculations history on a seperate page using Angular routing
+![AddUser](https://user-images.githubusercontent.com/84479635/142713828-e9746653-414a-4c0b-aa27-d6d76f31a974.JPG)
 
-![CalculatorUI](https://user-images.githubusercontent.com/84479635/140686286-5db0a46e-399a-42b9-aaca-0b0079ac0083.JPG)
+Application includes functionality to add a new user, sending a post request to the user table in the DB.  The user interface for the add new user is a centered modal.
 
-![AddUser](https://user-images.githubusercontent.com/84479635/140686296-3ee5d75b-2df4-4621-8083-8099104101b6.JPG)
+![TableUI](https://user-images.githubusercontent.com/84479635/142713861-459fd2cb-1c3b-4222-bd13-be515c7e9289.JPG)
 
-![TableUI](https://user-images.githubusercontent.com/84479635/141890689-01aa88ec-6810-4ecb-99f2-b439380d02ea.JPG)
+Usinng Angular router, a "history" page contains a table displaying all previous calculations.  The results are paginated, only receiving 10 results at a time.  The API is constructed to allow an adjustable number of responses, up to a maximum of 50.  Future updates will include an input to enable the user to adjust the number of results viewed on the table at a time.  Each page is a new http get request, allowing the frontend to remain lightweight.
+
+![TableFilter](https://user-images.githubusercontent.com/84479635/142713920-94911810-9249-40c2-ba19-1ed1f51685cf.JPG)
+
+The table allows sorting and filtering with all possible combinations of parameters to include ASC/DESC of dates, users, calculation answer, and first operand in the expression.  A search functionality allows the user to input a custom decimal number to query answers containing the search input.
+
+Nathan McCraw -- Software Developer [LinkedIn](https://www.linkedin.com/in/nathan-mccraw-5291535b/) | [Personal Website](https://www.nathanmccraw.com/)
+
+
 
 
