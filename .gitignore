@@ -3,5 +3,7 @@
 **/obj
 CalculatorDB.publish.xml
 node_modules
-**/.config
-**/Properties
+.config
+API/Properties
+appsettings
+dist
